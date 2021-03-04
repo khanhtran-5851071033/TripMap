@@ -39,3 +39,5 @@ import 'package:panorama/panorama.dart';
 
 * [Create a Panoramic Image Viewer in Flutter using the panorama plugin](https://developer.school/creating-a-panoramic-image-viewer-in-flutter-using-panorama-plugin/)
 * [Flutter Panorama Plugin](https://www.youtube.com/watch?v=JYSJOQ86spc)
+# TripMap
+UTC2
