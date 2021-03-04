@@ -1,0 +1,36 @@
+name: panorama
+description: Panorama -- A 360-degree panorama viewer.
+version: 0.3.1
+homepage: https://github.com/zesage/panorama
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_cube: ^0.0.6
+  motion_sensors: ^0.0.5
+  avatar_glow: ^1.2.0
+  cupertino_icons: ^0.1.3
+  provider: ^4.3.1
+  sensors: ^0.4.2+6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: "^0.8.1"
+  flutter_launcher_name: ^0.0.1
+
+flutter_launcher_name:
+  name: "Trip Map"
+
+flutter_icons:
+  image_path_android: "images/icon_launcher.png" 
+  image_path_ios: "images/icon_launcher.png" 
+  android: true
+  ios: true
+  adaptive_icon_background: "#4D92F7"
+  adaptive_icon_foreground: "images/icon_launcher.png"
+
+flutter:

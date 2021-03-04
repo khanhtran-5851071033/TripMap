@@ -1,0 +1,37 @@
+name: example
+description: A new Flutter project.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  panorama: 
+    path: ../
+  image_picker: ^0.6.3+4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: "^0.8.1"
+  flutter_launcher_name: ^0.0.1
+
+flutter_launcher_name:
+  name: "Trip Map"
+
+
+flutter_icons:
+  image_path_android: "assets/icon_launcher.png" 
+  image_path_ios: "assets/icon_launcher.png" 
+  android: true
+  ios: true
+  adaptive_icon_background: "#4D92F7"
+  adaptive_icon_foreground: "assets/icon_launcher.png"
+
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
