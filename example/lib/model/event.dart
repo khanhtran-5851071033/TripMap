@@ -31,3 +31,8 @@ class Event {
         this.luotxem;
   }
 }
+
+class EventBlock {
+  String text, imgLink;
+  EventBlock({this.text, this.imgLink});
+}

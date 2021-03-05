@@ -4,4 +4,6 @@ class Util {
   static Size getSize(BuildContext context) {
     return MediaQuery.of(context).size;
   }
+
+  static const Color myColor = Color(0xff29166F);
 }

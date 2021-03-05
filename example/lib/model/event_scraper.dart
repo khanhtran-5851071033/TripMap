@@ -7,6 +7,8 @@ String url = 'https://utc2.edu.vn';
 class EventScraper {
   final _stream = PublishSubject<List<Event>>();
   Stream<List<Event>> get stream => _stream.stream;
+  final _streamContent = PublishSubject<List<EventBlock>>();
+  Stream<List<EventBlock>> get streamContent => _streamContent.stream;
 
   final webScraper = WebScraper(url);
 
@@ -78,7 +80,31 @@ class EventScraper {
     }
   }
 
+  getContent(String link) async {
+    List<EventBlock> listContent = [];
+    if (await webScraper.loadWebPage(link.substring(url.length))) {
+      List<Map<String, dynamic>> noidung = webScraper
+          .getElement('div#noidungtrong>p', ['src'], extraAddress: 'img');
+      for (int i = 0; i < noidung.length; i++) {
+        String a = noidung[i].toString().replaceAll(new RegExp('{'), '');
+        a = a.replaceAll(new RegExp('}'), '');
+        a = a.replaceAll(new RegExp(', attributes: '), '');
+        a = a.replaceAll(new RegExp('title: '), '');
+        List<String> c = a.split('src: ');
+        EventBlock b;
+        if (c.length > 1) {
+          b = EventBlock(text: c[0], imgLink: c[1]);
+        } else {
+          b = EventBlock(text: c[0]);
+        }
+        listContent.add(b);
+      }
+    }
+    _streamContent.sink.add(listContent);
+  }
+
   void dispose() {
     _stream.close();
+    _streamContent.close();
   }
 }

@@ -19,6 +19,7 @@ dependencies:
   rxdart: ^0.25.0
   flutter_spinkit: ^4.1.2
   photo_view: ^0.10.3
+  url_launcher: ^5.6.0
 
 dev_dependencies:
   flutter_test:
@@ -40,6 +41,11 @@ flutter_icons:
 
 
 flutter:
-  uses-material-design: true
   assets:
     - assets/
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: font/Nunito-Regular.ttf
+        - asset: font/Nunito-Italic.ttf
+  uses-material-design: true

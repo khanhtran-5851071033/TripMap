@@ -2,8 +2,12 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:example/model/event.dart';
+import 'package:example/model/event_scraper.dart';
+import 'package:example/view/shared/util.dart';
+import 'package:example/view/widgets/photo_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class NewsDetail extends StatefulWidget {
   final Event list;
@@ -16,11 +20,13 @@ class _NewsDetailState extends State<NewsDetail> {
   ScrollController controller;
   bool showBack = true, scroll = false;
   double top = 0, offset = 0, showAppbar = 0;
+  final blocEvent = EventScraper();
   @override
   void initState() {
     super.initState();
     controller = ScrollController();
-    print(widget.list.tittle);
+    print(widget.list.link);
+    blocEvent.getContent(widget.list.link);
   }
 
   @override
@@ -29,18 +35,14 @@ class _NewsDetailState extends State<NewsDetail> {
     double statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        backgroundColor: Color(0xff29166F),
-        child: Icon(
-          Icons.arrow_back_ios_sharp,
-          size: 20,
-          color: Colors.white,
-        ),
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.pop(context);
+      //   },
+      //   backgroundColor: Color(0xff29166F),
+      //   child:
+      // ),
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.white,
       // appBar: AppBar(
@@ -244,28 +246,68 @@ class _NewsDetailState extends State<NewsDetail> {
                           thickness: 0.6,
                           height: 15,
                         ),
-                        Text(
-                            'Nhằm tạo môi trường đào tạo bám sát với thực tiễn, chiều ngày 26 tháng 02 năm 2021, tại Hội thảo Thư Viện - Trường Đại học GTVT Phân hiệu tại TP. HCM đã tổ chức Lễ ký thỏathuận hợp tác với Viện nghiên cứu và phát triển Logistics Việt Nam (VLI). Đến tham dự buổi Lễ về phía VLI có PGS.TS Hồ hị Thu Hoà - Viện trưởng, ThS. Võ Thị Phương Lan - Ủy viên CH, trưởng ban đào tạo Hiệp hội doanh nghiệp dịch vụ ogistics Việt Nam. TS. Võ Trường Sơn - Phó Giám đốc Phân iệu, cùng các Thầy/Cô là lãnh đạo Phân hiệu và các lãnh đạo ủa Viện VLI.',
-                            style: TextStyle(fontSize: 20)),
-                        CachedNetworkImage(
-                          imageUrl: widget.list.img,
-                          // height: size.height * 0.3,
-                          width: size.width + offset,
-                          // height: offset == 0 ? null : size.width * 0.67 + offset,
-                          fit: BoxFit.fitWidth,
-                          memCacheWidth: size.width.toInt() * 2,
-                        ),
-                        Text(
-                            'Nhằm tạo môi trường đào tạo bám sát với thực tiễn, chiều ngày 26 tháng 02 năm 2021, tại Hội thảo Thư Viện - Trường Đại học GTVT Phân hiệu tại TP. HCM đã tổ chức Lễ ký thỏathuận hợp tác với Viện nghiên cứu và phát triển Logistics Việt Nam (VLI). Đến tham dự buổi Lễ về phía VLI có PGS.TS Hồ hị Thu Hoà - Viện trưởng, ThS. Võ Thị Phương Lan - Ủy viên CH, trưởng ban đào tạo Hiệp hội doanh nghiệp dịch vụ ogistics Việt Nam. TS. Võ Trường Sơn - Phó Giám đốc Phân iệu, cùng các Thầy/Cô là lãnh đạo Phân hiệu và các lãnh đạo ủa Viện VLI.',
-                            style: TextStyle(fontSize: 20)),
-                        CachedNetworkImage(
-                          imageUrl: widget.list.img,
-                          // height: size.height * 0.3,
-                          width: size.width,
-                          // height: offset == 0 ? null : size.width * 0.67 + offset,
-                          fit: BoxFit.fitWidth,
-                          memCacheWidth: size.width.toInt() * 2,
-                        ),
+                        StreamBuilder<List<EventBlock>>(
+                            stream: blocEvent.streamContent,
+                            builder: (context, snapshot) {
+                              return snapshot.hasData
+                                  ? Column(
+                                      children: List.generate(
+                                          snapshot.data.length, (index) {
+                                        return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              child: Text(snapshot
+                                                  .data[index].text
+                                                  .trim()),
+                                            ),
+                                            snapshot.data[index].imgLink == null
+                                                ? Container()
+                                                : GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                PhotoViewWidget(
+                                                                  img: snapshot
+                                                                      .data[
+                                                                          index]
+                                                                      .imgLink,
+                                                                )),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 10),
+                                                      child: CachedNetworkImage(
+                                                        imageUrl: snapshot
+                                                            .data[index]
+                                                            .imgLink,
+                                                        // height: size.height * 0.3,
+                                                        width: size.width,
+                                                        fit: BoxFit.fitWidth,
+                                                        memCacheWidth:
+                                                            size.width.toInt() *
+                                                                2,
+                                                      ),
+                                                    ),
+                                                  ),
+                                          ],
+                                        );
+                                      }),
+                                    )
+                                  : Center(
+                                      child: SpinKitThreeBounce(
+                                        color: Util.myColor,
+                                        size: size.width * 0.06,
+                                      ),
+                                    );
+                            })
                       ]),
                     ),
                   ],
@@ -273,39 +315,61 @@ class _NewsDetailState extends State<NewsDetail> {
               ),
             ),
             Positioned(
+              left: 0,
               top: statusBarHeight,
-              child: AnimatedOpacity(
-                duration: Duration(milliseconds: 200),
-                opacity: showAppbar,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    //  BorderRadius.only(
-                    //   bottomLeft: Radius.circular(15),
-                    //   bottomRight: Radius.circular(15),
-                    // ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black,
-                        blurRadius: 15,
-                        offset: Offset(0, -22),
-                        spreadRadius: 20,
+              child: Stack(
+                children: [
+                  AnimatedOpacity(
+                    duration: Duration(milliseconds: 200),
+                    opacity: showAppbar,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        //  BorderRadius.only(
+                        //   bottomLeft: Radius.circular(15),
+                        //   bottomRight: Radius.circular(15),
+                        // ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 15,
+                            offset: Offset(0, -22),
+                            spreadRadius: 20,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+                      padding: EdgeInsets.fromLTRB(70, 10, 10, 10),
 
-                  width: size.width,
-                  // height: size.width * 0.3,
-                  child: Text(
-                    widget.list.tittle,
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                      width: size.width,
+                      // height: size.width * 0.3,
+                      child: Text(
+                        widget.list.tittle,
+                        style: TextStyle(
+                            wordSpacing: 1.5,
+                            letterSpacing: 0.5,
+                            fontSize: size.width * 0.04,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
-                ),
+                  Positioned(
+                    top: 10,
+                    child: RawMaterialButton(
+                      fillColor: Util.myColor,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      shape: CircleBorder(),
+                      child: Icon(
+                        Icons.arrow_back_ios_sharp,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
               ),
             )
           ],

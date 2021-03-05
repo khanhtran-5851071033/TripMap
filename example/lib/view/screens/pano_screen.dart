@@ -1,3 +1,4 @@
+import 'package:example/view/shared/util.dart';
 import 'package:flutter/material.dart';
 
 import 'package:panorama/panorama.dart';
@@ -55,38 +56,58 @@ class _PanoScreenState extends State<PanoScreen> {
   ];
   List hotSpot = [
     [
-      {"lat": -10.0, "long": 90.0, "id": 1, "name": 'C2'},
-      {"lat": -10.0, "long": 0.0, "id": 2, "name": 'Nga ba'},
+      {"lat": -10.0, "long": 90.0, "id": 1, "name": 'C2', 'type': 'arrow'},
+      {"lat": -10.0, "long": 0.0, "id": 2, "name": 'Nga ba', 'type': 'arrow'},
+      //Building
+      {"lat": 15.0, "long": 75.0, "id": 1, "name": 'C2', 'type': 'image'},
     ],
     [
-      {"lat": -10.0, "long": -90.0, "id": 0, "name": 'Cong'},
+      {"lat": -10.0, "long": -90.0, "id": 0, "name": 'Cong', 'type': 'arrow'},
       // {"lat": -0.0, "long": 0.0, "id": 2, "name": 'nga ba'},
     ],
     [
       // {"lat": -0.0, "long": 0.0, "id": 0, "name": 'Cong'},
-      {"lat": -10.0, "long": 180.0, "id": 0, "name": 'Cong'},
-      {"lat": -10.0, "long": 90.0, "id": 7, "name": 'E2'},
-      {"lat": -10.0, "long": 0.0, "id": 3, "name": ''},
+      {"lat": -10.0, "long": 180.0, "id": 0, "name": 'Cong', 'type': 'arrow'},
+      {"lat": -10.0, "long": 90.0, "id": 7, "name": 'E2', 'type': 'arrow'},
+      {"lat": -10.0, "long": 0.0, "id": 3, "name": '', 'type': 'arrow'},
     ],
     [
-      {"lat": -10.0, "long": 180.0, "id": 2, "name": 'Nga ba'},
-      {"lat": -10.0, "long": 90.0, "id": 4, "name": 'sau e2'},
+      {"lat": -10.0, "long": 180.0, "id": 2, "name": 'Nga ba', 'type': 'arrow'},
+      {"lat": -10.0, "long": 90.0, "id": 4, "name": 'sau e2', 'type': 'arrow'},
     ],
     [
-      {"lat": -10.0, "long": 90.0, "id": 5, "name": 'Nha xe'},
-      {"lat": -10.0, "long": -90.0, "id": 3, "name": 'nga3 sang tao'},
+      {"lat": -10.0, "long": 90.0, "id": 5, "name": 'Nha xe', 'type': 'arrow'},
+      {
+        "lat": -10.0,
+        "long": -90.0,
+        "id": 3,
+        "name": 'nga3 sang tao',
+        'type': 'arrow'
+      },
     ],
     [
-      {"lat": -10.0, "long": 180.0, "id": 6, "name": 'Truoc nha xe'},
-      {"lat": -10.0, "long": -90.0, "id": 4, "name": 'sau e2'},
+      {
+        "lat": -10.0,
+        "long": 180.0,
+        "id": 6,
+        "name": 'Truoc nha xe',
+        'type': 'arrow'
+      },
+      {"lat": -10.0, "long": -90.0, "id": 4, "name": 'sau e2', 'type': 'arrow'},
     ],
     [
-      {"lat": -10.0, "long": -90.0, "id": 7, "name": 'E2'},
-      {"lat": -10.0, "long": 0.0, "id": 5, "name": 'Nha xe'},
+      {"lat": -10.0, "long": -90.0, "id": 7, "name": 'E2', 'type': 'arrow'},
+      {"lat": -10.0, "long": 0.0, "id": 5, "name": 'Nha xe', 'type': 'arrow'},
     ],
     [
-      {"lat": -10.0, "long": -90.0, "id": 2, "name": 'Nga ba'},
-      {"lat": -10.0, "long": 90.0, "id": 6, "name": 'Truoc nha xe'},
+      {"lat": -10.0, "long": -90.0, "id": 2, "name": 'Nga ba', 'type': 'arrow'},
+      {
+        "lat": -10.0,
+        "long": 90.0,
+        "id": 6,
+        "name": 'Truoc nha xe',
+        'type': 'arrow'
+      },
     ]
   ];
 
@@ -98,43 +119,76 @@ class _PanoScreenState extends State<PanoScreen> {
     });
   }
 
-  Widget hotspotButton(int id, String text) {
+  Widget hotspotButton(int id, String text, String type) {
     return Transform(
-      transform: Matrix4.identity()..rotateX(150),
+      transform: type == 'arrow'
+          ? (Matrix4.identity()..rotateX(150))
+          : (Matrix4.identity()..rotateX(0)),
       child: AvatarGlow(
-        glowColor: Colors.yellow[600],
-        endRadius: 80.0,
-        duration: Duration(milliseconds: 2000),
+        glowColor:
+            type == 'arrow' ? Colors.amber.withOpacity(0.8) : Util.myColor,
+        endRadius: 50.0,
+        duration: Duration(milliseconds: 1500),
         repeat: true,
         // showTwoGlows: true,
         repeatPauseDuration: Duration(milliseconds: 100),
         child: InkWell(
-          child: Container(
-            padding: EdgeInsets.all(5),
-            width: 80,
-            height: 70,
-            decoration: BoxDecoration(
-              color: Colors.amber.withOpacity(0.5),
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RotatedBox(
-                    quarterTurns: -1,
-                    child: Icon(
-                      Icons.double_arrow,
+          child: type == 'arrow'
+              ? Container(
+                  padding: EdgeInsets.all(2),
+                  width: 80,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: type == 'arrow'
+                        ? Colors.amber.withOpacity(0.5)
+                        : Util.myColor,
+                    shape:
+                        type == 'arrow' ? BoxShape.circle : BoxShape.rectangle,
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RotatedBox(
+                          quarterTurns: -1,
+                          child: Icon(
+                            Icons.double_arrow,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          text,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ))
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    width: 100,
+                    color: Util.myColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          text,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        // SizedBox(
+                        //   height: 5,
+                        // ),
+                        Image.asset(
+                          'assets/utc.png',
+                          fit: BoxFit.fitWidth,
+                          // height: 100,
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    text,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ),
+                ),
           onTap: () {
             setState(() {
               animSpeed = 0;
@@ -160,7 +214,7 @@ class _PanoScreenState extends State<PanoScreen> {
       sensitivity: 1.5,
       sensorControl: SensorControl.Orientation,
       onViewChanged: onViewChanged,
-      onTap: (longitude, latitude, tilt) {
+      onLongPressStart: (longitude, latitude, tilt) {
         if (animSpeed == 1) {
           setState(() {
             animSpeed = 0;
@@ -180,8 +234,8 @@ class _PanoScreenState extends State<PanoScreen> {
           longitude: hotSpot[id][index]['long'],
           width: 120,
           height: 100,
-          widget: hotspotButton(
-              hotSpot[id][index]['id'], hotSpot[id][index]['name']),
+          widget: hotspotButton(hotSpot[id][index]['id'],
+              hotSpot[id][index]['name'], hotSpot[id][index]['type']),
         );
       }),
     );
@@ -227,10 +281,7 @@ class _PanoScreenState extends State<PanoScreen> {
               bottom: 30,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FloorPlanScreen()));
+                  Navigator.pop(context);
                 },
                 child: Container(
                     width: 100,

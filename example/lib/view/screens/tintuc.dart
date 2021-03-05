@@ -1,5 +1,7 @@
 import 'package:example/model/event.dart';
 import 'package:example/model/event_scraper.dart';
+import 'package:example/model/noti.dart';
+import 'package:example/model/noti_scraper.dart';
 import 'package:example/model/point.dart';
 import 'package:example/model/point_scraper.dart';
 import 'package:example/view/screens/chi_tiet_tintuc.dart';
@@ -20,10 +22,12 @@ class _NewsState extends State<News> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
   final blocEvent = EventScraper();
+  final blocNoti = NotiScraper();
   @override
   void initState() {
     super.initState();
     blocEvent.fetchEvent();
+    blocNoti.fetchProducts();
   }
 
   @override
@@ -57,6 +61,7 @@ class _NewsState extends State<News> with AutomaticKeepAliveClientMixin {
                       borderRadius: BorderRadius.circular(30),
                       color: Colors.white),
                   child: TabBar(
+                    physics: BouncingScrollPhysics(),
                     labelColor: Colors.white,
                     unselectedLabelColor: Colors.grey[600],
                     indicatorColor: Colors.transparent,
@@ -88,8 +93,15 @@ class _NewsState extends State<News> with AutomaticKeepAliveClientMixin {
                 )),
           ),
           body: TabBarView(
+            physics: BouncingScrollPhysics(),
             children: [
-              NotifyList(),
+              StreamBuilder<List<Noti>>(
+                  stream: blocNoti.stream,
+                  builder: (context, snapshot) {
+                    return NotifyList(
+                      list: snapshot,
+                    );
+                  }),
               StreamBuilder<List<Event>>(
                   stream: blocEvent.stream,
                   builder: (context, snapshot) {
@@ -105,71 +117,89 @@ class _NewsState extends State<News> with AutomaticKeepAliveClientMixin {
 }
 
 class NotifyList extends StatefulWidget {
+  AsyncSnapshot<List<Noti>> list;
+  NotifyList({this.list});
   @override
   _NotifyListState createState() => _NotifyListState();
 }
 
-class _NotifyListState extends State<NotifyList> {
+class _NotifyListState extends State<NotifyList>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
-    return CupertinoScrollbar(
-      radius: Radius.circular(20),
-      thickness: 5,
-      thicknessWhileDragging: 10,
-      child: ListView.builder(
-        itemCount: 20,
-        physics: BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Container(
-                  color: Colors.blue[200].withOpacity(0.5),
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-                  child: Column(
+    super.build(context);
+    Size size = Util.getSize(context);
+    return widget.list.hasData
+        ? CupertinoScrollbar(
+            radius: Radius.circular(20),
+            thickness: 5,
+            thicknessWhileDragging: 10,
+            child: ListView.builder(
+              itemCount: 20,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(10),
+                  child: Row(
                     children: [
-                      Text(
-                        '02',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xff29166F),
-                            fontWeight: FontWeight.w600),
-                        textAlign: TextAlign.center,
+                      Container(
+                        color: Colors.blue[200].withOpacity(0.5),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+                        child: Column(
+                          children: [
+                            Text(
+                              widget.list.data[index].thoigian.split('-')[0],
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xff29166F),
+                                  fontWeight: FontWeight.w600),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              widget.list.data[index].thoigian.split('-')[1] +
+                                  '/' +
+                                  widget.list.data[index].thoigian
+                                      .split('-')[2],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 17, color: Color(0xff29166F)),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
-                        height: 5,
+                        width: 8,
                       ),
-                      Text(
-                        '03/2021',
-                        textAlign: TextAlign.center,
-                        style:
-                            TextStyle(fontSize: 17, color: Color(0xff29166F)),
+                      Expanded(
+                        child: Container(
+                          child: Text(
+                            widget.list.data[index].tieude,
+                            maxLines: 3,
+                            style: TextStyle(fontSize: 20),
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Container(
-                    child: Text(
-                      'Lễ ký thỏa thuận hợp tác với Viện nghiên cứu và phát triển Logistics Việt Nam (VLI)',
-                      maxLines: 3,
-                      style: TextStyle(fontSize: 20),
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ],
+                );
+              },
+            ),
+          )
+        : Center(
+            child: SpinKitThreeBounce(
+              color: Util.myColor,
+              size: size.width * 0.06,
             ),
           );
-        },
-      ),
-    );
   }
 }
 
@@ -365,64 +395,89 @@ class _PointListState extends State<PointList> {
                               }),
                             ),
                           )
-                        : Container();
+                        : Center(
+                            child: SpinKitThreeBounce(
+                              color: Util.myColor,
+                              size: size.width * 0.06,
+                            ),
+                          );
                   }),
               secondChild: StreamBuilder<List<Point>>(
                   stream: bloc.streamHB,
                   builder: (context, snapshot) {
-                    return snapshot.hasData
-                        ? Container(
-                            padding: EdgeInsets.all(8),
-                            child: Table(
-                              defaultVerticalAlignment:
-                                  TableCellVerticalAlignment.middle,
-                              columnWidths: {
-                                0: FlexColumnWidth(0.5),
-                                1: FlexColumnWidth(1.5),
-                                2: FlexColumnWidth(4),
-                                // 3: FlexColumnWidth(0.5),
-                                3: FlexColumnWidth(1.8),
-                                // 5: FlexColumnWidth(0.5),
-                              },
-                              border: TableBorder.symmetric(
-                                inside:
-                                    BorderSide(color: Colors.green, width: 0.2),
-                                outside:
-                                    BorderSide(color: Colors.green, width: 0.5),
-                              ),
-                              children:
-                                  List.generate(snapshot.data.length, (index) {
-                                return index == 0
-                                    ? TableRow(
-                                        decoration: BoxDecoration(
-                                            color: Colors.blue[200]
-                                                .withOpacity(0.5)),
-                                        children: [
-                                            cellContent('STT'),
-                                            cellContent('Mã'),
-                                            cellContent('Tên Ngành'),
-                                            // cellContent('Tổ hợp'),
-                                            cellContent('Điểm chuẩn'),
-                                            // cellContent('Ghi chú'),
-                                          ])
-                                    : TableRow(children: [
-                                        cellContent(
-                                            snapshot.data[index - 1].stt),
-                                        cellContent(
-                                            snapshot.data[index - 1].manganh),
-                                        cellContent(
-                                            snapshot.data[index - 1].tennganh),
-                                        // cellContent(
-                                        // snapshot.data[index - 1].tohopmon),
-                                        cellContent(
-                                            snapshot.data[index - 1].diemchuan),
-                                        // cellContent(
-                                        // snapshot.data[index - 1].ghichu),
-                                      ]);
-                              }),
+                    if (snapshot.hasData) {
+                      if (snapshot.data.isEmpty) {
+                        return Container(
+                          height: size.height / 2,
+                          child: Center(
+                            child: Text(
+                              'Năm học $year không xét tuyển điểm học bạ',
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: size.width * 0.04),
                             ),
-                          )
-                        : Container();
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          padding: EdgeInsets.all(8),
+                          child: Table(
+                            defaultVerticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            columnWidths: {
+                              0: FlexColumnWidth(0.5),
+                              1: FlexColumnWidth(1.5),
+                              2: FlexColumnWidth(4),
+                              // 3: FlexColumnWidth(0.5),
+                              3: FlexColumnWidth(1.8),
+                              // 5: FlexColumnWidth(0.5),
+                            },
+                            border: TableBorder.symmetric(
+                              inside:
+                                  BorderSide(color: Colors.green, width: 0.2),
+                              outside:
+                                  BorderSide(color: Colors.green, width: 0.5),
+                            ),
+                            children:
+                                List.generate(snapshot.data.length, (index) {
+                              return index == 0
+                                  ? TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Colors.blue[200]
+                                              .withOpacity(0.5)),
+                                      children: [
+                                          cellContent('STT'),
+                                          cellContent('Mã'),
+                                          cellContent('Tên Ngành'),
+                                          // cellContent('Tổ hợp'),
+                                          cellContent('Điểm chuẩn'),
+                                          // cellContent('Ghi chú'),
+                                        ])
+                                  : TableRow(children: [
+                                      cellContent(snapshot.data[index - 1].stt),
+                                      cellContent(
+                                          snapshot.data[index - 1].manganh),
+                                      cellContent(
+                                          snapshot.data[index - 1].tennganh),
+                                      // cellContent(
+                                      // snapshot.data[index - 1].tohopmon),
+                                      cellContent(
+                                          snapshot.data[index - 1].diemchuan),
+                                      // cellContent(
+                                      // snapshot.data[index - 1].ghichu),
+                                    ]);
+                            }),
+                          ),
+                        );
+                      }
+                    } else {
+                      return Center(
+                        child: SpinKitThreeBounce(
+                          color: Util.myColor,
+                          size: size.width * 0.06,
+                        ),
+                      );
+                    }
                   }),
             ),
           ),
@@ -452,7 +507,7 @@ class _NewsListState extends State<NewsList>
             child: Center(
                 child: SpinKitThreeBounce(
               color: Color(0xff29166F),
-              size: 30,
+              size: size.width * 0.06,
             )),
           )
         : ListView.builder(
