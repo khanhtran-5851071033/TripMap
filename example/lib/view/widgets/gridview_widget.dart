@@ -1,6 +1,5 @@
 import 'package:example/core/models/models.dart';
 import 'package:example/core/viewmodels/floorplan_model.dart';
-import 'package:example/view/shared/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

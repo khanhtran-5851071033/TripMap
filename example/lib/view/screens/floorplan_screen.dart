@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 import 'dart:ui';
 import 'package:example/core/models/models.dart';
 import 'package:example/core/viewmodels/floorplan_model.dart';
 import 'package:example/view/shared/global.dart';
 import 'package:example/view/widgets/appbar_widget.dart';
-import 'package:example/view/widgets/overlay_widget.dart';
 import 'package:example/view/widgets/positioned_widget.dart';
 import 'package:example/view/widgets/raw_gesture_detector_widget.dart';
 import 'package:example/view/widgets/reset_button_widget.dart';
