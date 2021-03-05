@@ -3,7 +3,6 @@ import 'package:example/view/screens/floorplan_screen.dart';
 import 'package:example/view/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:panorama/panorama.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:provider/provider.dart';
 
@@ -19,10 +18,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'UTC2',
-        theme: ThemeData.dark(),
-        home: MyHomePage(title: 'UTC2'),
+        // theme: ThemeData.dark(),
+        //home: MyHomePage(title: 'UTC2'),
         // home: FloorPlanScreen(),
-        //home: LoginScreen(),
+        home: LoginScreen(),
       ),
     );
   }
