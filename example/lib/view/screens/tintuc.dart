@@ -137,7 +137,7 @@ class _NotifyListState extends State<NotifyList>
             thickness: 5,
             thicknessWhileDragging: 10,
             child: ListView.builder(
-              itemCount: 20,
+              itemCount: widget.list.data.length,
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 return Container(

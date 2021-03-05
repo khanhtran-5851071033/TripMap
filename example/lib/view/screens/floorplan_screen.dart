@@ -4,6 +4,7 @@ import 'package:example/core/models/models.dart';
 import 'package:example/core/viewmodels/floorplan_model.dart';
 import 'package:example/view/screens/pano_screen.dart';
 import 'package:example/view/shared/global.dart';
+import 'package:example/view/shared/util.dart';
 import 'package:example/view/widgets/appbar_widget.dart';
 import 'package:example/view/widgets/positioned_widget.dart';
 import 'package:example/view/widgets/raw_gesture_detector_widget.dart';
@@ -86,7 +87,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
     Size scsize = MediaQuery.of(context).size;
     final model = Provider.of<FloorPlanModel>(context);
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Util.myColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBarWidget(),
