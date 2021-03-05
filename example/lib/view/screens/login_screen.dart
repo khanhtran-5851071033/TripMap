@@ -1,3 +1,4 @@
+import 'package:example/view/screens/home_route.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             Container(
@@ -261,7 +263,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           RaisedButton(
                             color: Color(0xff29166F),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeRoute()));
+                            },
                             child: Container(
                               width: width,
                               padding:

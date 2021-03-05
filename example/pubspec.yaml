@@ -11,6 +11,14 @@ dependencies:
   panorama: 
     path: ../
   image_picker: ^0.6.3+4
+  tabbar: ^0.1.1
+  bubble_tab_indicator: ^0.1.4
+  html: ^0.14.0+4
+  web_scraper: ^0.0.9
+  cached_network_image: ^2.5.0
+  rxdart: ^0.25.0
+  flutter_spinkit: ^4.1.2
+  photo_view: ^0.10.3
 
 dev_dependencies:
   flutter_test:

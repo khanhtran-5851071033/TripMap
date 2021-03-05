@@ -257,84 +257,84 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                     ),
                   ),
                 ),
-                Positioned(
-                    bottom: 20,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          // shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(0.6),
-                          border: Border.all(width: 2, color: Colors.black38),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              ResetButtonWidget(),
-                              RaisedButton(
-                                  color: Colors.redAccent,
-                                  onPressed: () {
-                                    setState(() {
-                                      y = y - step;
-                                    });
-                                  },
-                                  child: Icon(Icons.arrow_upward)),
-                              RaisedButton(
-                                  color: Colors.blue,
-                                  onPressed: () {
-                                    setState(() {
-                                      x = xdef;
-                                      y = ydef;
-                                    });
-                                    // model.myScale(0, 0);
-                                  },
-                                  child: Icon(Icons.reset_tv))
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              RaisedButton(
-                                  color: Colors.redAccent,
-                                  onPressed: () {
-                                    setState(() {
-                                      x = x - step;
-                                    });
-                                  },
-                                  child: Icon(Icons.arrow_back)),
-                              SizedBox(
-                                width: 88,
-                              ),
-                              RaisedButton(
-                                  color: Colors.redAccent,
-                                  onPressed: () {
-                                    setState(() {
-                                      x = x + step;
-                                    });
-                                  },
-                                  child: Icon(Icons.arrow_forward))
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 88,
-                              ),
-                              RaisedButton(
-                                  color: Colors.redAccent,
-                                  onPressed: () {
-                                    setState(() {
-                                      y = y + step;
-                                    });
-                                  },
-                                  child: Icon(Icons.arrow_downward)),
-                              SizedBox(
-                                width: 88,
-                                child: Text('$x $y'),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ))
+                // Positioned(
+                //     bottom: 20,
+                //     child: Container(
+                //       decoration: BoxDecoration(
+                //           // shape: BoxShape.circle,
+                //           color: Colors.white.withOpacity(0.6),
+                //           border: Border.all(width: 2, color: Colors.black38),
+                //           borderRadius: BorderRadius.circular(10)),
+                //       child: Column(
+                //         children: [
+                //           Row(
+                //             children: [
+                //               ResetButtonWidget(),
+                //               RaisedButton(
+                //                   color: Colors.redAccent,
+                //                   onPressed: () {
+                //                     setState(() {
+                //                       y = y - step;
+                //                     });
+                //                   },
+                //                   child: Icon(Icons.arrow_upward)),
+                //               RaisedButton(
+                //                   color: Colors.blue,
+                //                   onPressed: () {
+                //                     setState(() {
+                //                       x = xdef;
+                //                       y = ydef;
+                //                     });
+                //                     // model.myScale(0, 0);
+                //                   },
+                //                   child: Icon(Icons.reset_tv))
+                //             ],
+                //           ),
+                //           Row(
+                //             children: [
+                //               RaisedButton(
+                //                   color: Colors.redAccent,
+                //                   onPressed: () {
+                //                     setState(() {
+                //                       x = x - step;
+                //                     });
+                //                   },
+                //                   child: Icon(Icons.arrow_back)),
+                //               SizedBox(
+                //                 width: 88,
+                //               ),
+                //               RaisedButton(
+                //                   color: Colors.redAccent,
+                //                   onPressed: () {
+                //                     setState(() {
+                //                       x = x + step;
+                //                     });
+                //                   },
+                //                   child: Icon(Icons.arrow_forward))
+                //             ],
+                //           ),
+                //           Row(
+                //             children: [
+                //               SizedBox(
+                //                 width: 88,
+                //               ),
+                //               RaisedButton(
+                //                   color: Colors.redAccent,
+                //                   onPressed: () {
+                //                     setState(() {
+                //                       y = y + step;
+                //                     });
+                //                   },
+                //                   child: Icon(Icons.arrow_downward)),
+                //               SizedBox(
+                //                 width: 88,
+                //                 child: Text('$x $y'),
+                //               ),
+                //             ],
+                //           )
+                //         ],
+                //       ),
+                //     ))
               ],
             ),
           ),
