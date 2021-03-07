@@ -32,7 +32,7 @@ class Event {
   }
 }
 
-class EventBlock {
-  String text, imgLink;
-  EventBlock({this.text, this.imgLink});
+class Block {
+  String text, imgLink, luotxem;
+  Block({this.text, this.imgLink, this.luotxem});
 }

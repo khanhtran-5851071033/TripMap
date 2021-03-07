@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:example/model/event.dart';
 import 'package:example/model/event_scraper.dart';
+import 'package:example/model/noti.dart';
+import 'package:example/model/noti_scraper.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:example/view/widgets/photo_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,22 +13,35 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class NewsDetail extends StatefulWidget {
   final Event list;
-  NewsDetail({this.list});
+  final Noti listNoti;
+  NewsDetail({this.list, this.listNoti});
   @override
   _NewsDetailState createState() => _NewsDetailState();
 }
 
 class _NewsDetailState extends State<NewsDetail> {
   ScrollController controller;
-  bool showBack = true, scroll = false;
+  bool showBack = true, scroll = false, isEvent = true;
   double top = 0, offset = 0, showAppbar = 0;
   final blocEvent = EventScraper();
+  final blocNoti = NotiScraper();
   @override
   void initState() {
     super.initState();
     controller = ScrollController();
-    print(widget.list.link);
-    blocEvent.getContent(widget.list.link);
+    if (widget.list != null)
+      blocEvent.getContent(widget.list.link);
+    else {
+      blocNoti.getContent(widget.listNoti.link);
+      isEvent = false;
+    }
+  }
+
+  @override
+  void dispose() {
+    blocEvent.dispose();
+    blocNoti.dispose();
+    super.dispose();
   }
 
   @override
@@ -88,14 +103,20 @@ class _NewsDetailState extends State<NewsDetail> {
             Positioned(
               top: -top,
               child: Center(
-                child: CachedNetworkImage(
-                  imageUrl: widget.list.img,
-                  // height: size.height * 0.3,
-                  width: size.width + offset,
-                  // height: offset == 0 ? null : size.width * 0.67 + offset,
-                  fit: BoxFit.fitWidth,
-                  memCacheWidth: size.width.toInt() * 2,
-                ),
+                child: isEvent
+                    ? CachedNetworkImage(
+                        imageUrl: widget.list.img,
+                        // height: size.height * 0.3,
+                        width: size.width + offset,
+                        // height: offset == 0 ? null : size.width * 0.67 + offset,
+                        fit: BoxFit.fitWidth,
+                        memCacheWidth: size.width.toInt() * 2,
+                      )
+                    : Container(
+                        color: Util.myColor,
+                        width: size.width,
+                        height: size.height * 0.6,
+                      ),
               ),
             ),
             CupertinoScrollbar(
@@ -130,7 +151,9 @@ class _NewsDetailState extends State<NewsDetail> {
                                     ]),
                               ),
                               child: Text(
-                                widget.list.tittle,
+                                isEvent
+                                    ? widget.list.tittle
+                                    : widget.listNoti.tieude,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: size.width * 0.05),
@@ -145,7 +168,7 @@ class _NewsDetailState extends State<NewsDetail> {
                       // height: size.width * 2,
                       padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                          color: Colors.grey[50],
+                          color: Colors.white,
                           borderRadius:
                               BorderRadius.circular(size.width * 0.05)),
                       child: Column(children: [
@@ -201,7 +224,9 @@ class _NewsDetailState extends State<NewsDetail> {
                                             width: 3,
                                           ),
                                           Text(
-                                            widget.list.ngay,
+                                            isEvent
+                                                ? widget.list.ngay
+                                                : widget.listNoti.thoigian,
                                             style: TextStyle(
                                               color: Color(0xff29166F),
                                             ),
@@ -230,10 +255,36 @@ class _NewsDetailState extends State<NewsDetail> {
                                           SizedBox(
                                             width: 3,
                                           ),
-                                          Text(widget.list.luotxem,
-                                              style: TextStyle(
-                                                color: Color(0xff29166F),
-                                              )),
+                                          isEvent
+                                              ? Text(
+                                                  widget.list.luotxem,
+                                                  style: TextStyle(
+                                                    color: Color(0xff29166F),
+                                                  ),
+                                                )
+                                              : StreamBuilder<List<Block>>(
+                                                  stream:
+                                                      blocNoti.streamContent,
+                                                  builder: (context, snapshot) {
+                                                    return snapshot.hasData
+                                                        ? Text(
+                                                            snapshot.data[0]
+                                                                .luotxem,
+                                                            style: TextStyle(
+                                                              color: Color(
+                                                                  0xff29166F),
+                                                            ),
+                                                          )
+                                                        : Container(
+                                                            // child:
+                                                            //     SpinKitThreeBounce(
+                                                            //   size: size.width *
+                                                            //       0.06,
+                                                            //   color:
+                                                            //       Util.myColor,
+                                                            // ),
+                                                          );
+                                                  }),
                                         ],
                                       ),
                                     ),
@@ -246,8 +297,10 @@ class _NewsDetailState extends State<NewsDetail> {
                           thickness: 0.6,
                           height: 15,
                         ),
-                        StreamBuilder<List<EventBlock>>(
-                            stream: blocEvent.streamContent,
+                        StreamBuilder<List<Block>>(
+                            stream: isEvent
+                                ? blocEvent.streamContent
+                                : blocNoti.streamContent,
                             builder: (context, snapshot) {
                               return snapshot.hasData
                                   ? Column(
@@ -301,10 +354,13 @@ class _NewsDetailState extends State<NewsDetail> {
                                         );
                                       }),
                                     )
-                                  : Center(
-                                      child: SpinKitThreeBounce(
-                                        color: Util.myColor,
-                                        size: size.width * 0.06,
+                                  : Container(
+                                      height: size.height * 0.5,
+                                      child: Center(
+                                        child: SpinKitThreeBounce(
+                                          color: Util.myColor,
+                                          size: size.width * 0.06,
+                                        ),
                                       ),
                                     );
                             })
@@ -344,7 +400,7 @@ class _NewsDetailState extends State<NewsDetail> {
                       width: size.width,
                       // height: size.width * 0.3,
                       child: Text(
-                        widget.list.tittle,
+                        isEvent ? widget.list.tittle : widget.listNoti.tieude,
                         style: TextStyle(
                             wordSpacing: 1.5,
                             letterSpacing: 0.5,

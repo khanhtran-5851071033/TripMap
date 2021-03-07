@@ -21,12 +21,10 @@ class News extends StatefulWidget {
 class _NewsState extends State<News> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-  final blocEvent = EventScraper();
   final blocNoti = NotiScraper();
   @override
   void initState() {
     super.initState();
-    blocEvent.fetchEvent();
     blocNoti.fetchProducts();
   }
 
@@ -102,13 +100,7 @@ class _NewsState extends State<News> with AutomaticKeepAliveClientMixin {
                       list: snapshot,
                     );
                   }),
-              StreamBuilder<List<Event>>(
-                  stream: blocEvent.stream,
-                  builder: (context, snapshot) {
-                    return NewsList(
-                      snapshot: snapshot,
-                    );
-                  }),
+              NewsList(),
               PointList(),
             ],
           )),
@@ -117,7 +109,7 @@ class _NewsState extends State<News> with AutomaticKeepAliveClientMixin {
 }
 
 class NotifyList extends StatefulWidget {
-  AsyncSnapshot<List<Noti>> list;
+  final AsyncSnapshot<List<Noti>> list;
   NotifyList({this.list});
   @override
   _NotifyListState createState() => _NotifyListState();
@@ -140,55 +132,65 @@ class _NotifyListState extends State<NotifyList>
               itemCount: widget.list.data.length,
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                return Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      Container(
-                        color: Colors.blue[200].withOpacity(0.5),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-                        child: Column(
-                          children: [
-                            Text(
-                              widget.list.data[index].thoigian.split('-')[0],
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color(0xff29166F),
-                                  fontWeight: FontWeight.w600),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              widget.list.data[index].thoigian.split('-')[1] +
-                                  '/' +
-                                  widget.list.data[index].thoigian
-                                      .split('-')[2],
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 17, color: Color(0xff29166F)),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(
-                        child: Container(
-                          child: Text(
-                            widget.list.data[index].tieude,
-                            maxLines: 3,
-                            style: TextStyle(fontSize: 20),
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NewsDetail(
+                                  listNoti: widget.list.data[index],
+                                )));
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        Container(
+                          color: Colors.blue[200].withOpacity(0.5),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 25),
+                          child: Column(
+                            children: [
+                              Text(
+                                widget.list.data[index].thoigian.split('-')[0],
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color(0xff29166F),
+                                    fontWeight: FontWeight.w600),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                widget.list.data[index].thoigian.split('-')[1] +
+                                    '/' +
+                                    widget.list.data[index].thoigian
+                                        .split('-')[2],
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 17, color: Color(0xff29166F)),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          child: Container(
+                            child: Text(
+                              widget.list.data[index].tieude,
+                              maxLines: 3,
+                              style: TextStyle(fontSize: 20),
+                              softWrap: true,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -488,174 +490,186 @@ class _PointListState extends State<PointList> {
 }
 
 class NewsList extends StatefulWidget {
-  final AsyncSnapshot snapshot;
-  NewsList({this.snapshot});
   @override
   _NewsListState createState() => _NewsListState();
 }
 
 class _NewsListState extends State<NewsList>
     with AutomaticKeepAliveClientMixin {
+  final blocEvent = EventScraper();
+  @override
+  void initState() {
+    super.initState();
+
+    blocEvent.fetchEvent();
+  }
+
   @override
   bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     super.build(context);
     Size size = MediaQuery.of(context).size;
-    return !widget.snapshot.hasData
-        ? Container(
-            child: Center(
-                child: SpinKitThreeBounce(
-              color: Color(0xff29166F),
-              size: size.width * 0.06,
-            )),
-          )
-        : ListView.builder(
-            physics: BouncingScrollPhysics(),
-            itemCount: widget.snapshot.data.length < 11
-                ? widget.snapshot.data.length + 1
-                : widget.snapshot.data.length,
-            itemBuilder: (context, index) {
-              return index == widget.snapshot.data.length &&
-                      widget.snapshot.data.length < 11
-                  ? Container(
-                      height: 100,
-                      child: Center(
-                          child: SpinKitThreeBounce(
-                        color: Color(0xff29166F),
-                        size: 30,
-                      )),
-                    )
-                  : GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => NewsDetail(
-                                    list: widget.snapshot.data[index])));
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(6),
-                        margin: EdgeInsets.all(8),
-                        width: size.width,
-                        height: 150,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(0, 1), // changes position of shadow
-                              ),
-                            ]),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Container(
-                                child: CachedNetworkImage(
-                                  imageUrl: widget.snapshot.data[index].img,
-                                  width: size.width / 3,
-                                  fit: BoxFit.fitHeight,
-                                  height: 130,
-                                  memCacheWidth: 300,
-                                  // memCacheHeight: 200,
-                                  placeholder: (context, url) =>
-                                      CupertinoActivityIndicator(),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+    return StreamBuilder<List<Event>>(
+        stream: blocEvent.stream,
+        builder: (context, snapshot) {
+          return !snapshot.hasData
+              ? Container(
+                  child: Center(
+                      child: SpinKitThreeBounce(
+                    color: Color(0xff29166F),
+                    size: size.width * 0.06,
+                  )),
+                )
+              : ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemCount: snapshot.data.length < 11
+                      ? snapshot.data.length + 1
+                      : snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return index == snapshot.data.length &&
+                            snapshot.data.length < 11
+                        ? Container(
+                            height: 100,
+                            child: Center(
+                                child: SpinKitThreeBounce(
+                              color: Color(0xff29166F),
+                              size: 30,
+                            )),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NewsDetail(
+                                          list: snapshot.data[index])));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(6),
+                              margin: EdgeInsets.all(8),
+                              width: size.width,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 5,
+                                      offset: Offset(
+                                          0, 1), // changes position of shadow
+                                    ),
+                                  ]),
+                              child: Row(
                                 children: [
-                                  Text(
-                                    widget.snapshot.data[index].tittle,
-                                    style: TextStyle(fontSize: 17),
-                                    maxLines: 4,
-                                    overflow: TextOverflow.ellipsis,
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Container(
+                                      child: CachedNetworkImage(
+                                        imageUrl: snapshot.data[index].img,
+                                        width: size.width / 3,
+                                        fit: BoxFit.fitHeight,
+                                        height: 130,
+                                        memCacheWidth: 300,
+                                        // memCacheHeight: 200,
+                                        placeholder: (context, url) =>
+                                            CupertinoActivityIndicator(),
+                                      ),
+                                    ),
                                   ),
-                                  Container(
-                                    child: Row(
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
+                                        Text(
+                                          snapshot.data[index].tittle,
+                                          style: TextStyle(fontSize: 17),
+                                          maxLines: 4,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                         Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 5),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              color: Colors.blue[200]
-                                                  .withOpacity(0.2)),
                                           child: Row(
                                             children: [
-                                              Icon(
-                                                Icons.timelapse,
-                                                color: Colors.grey,
-                                                size: 15,
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8, vertical: 5),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    color: Colors.blue[200]
+                                                        .withOpacity(0.2)),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.timelapse,
+                                                      color: Colors.grey,
+                                                      size: 15,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 3,
+                                                    ),
+                                                    Text(
+                                                      snapshot.data[index].ngay,
+                                                      style: TextStyle(
+                                                          color: Colors.grey,
+                                                          fontSize: 12),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                               SizedBox(
                                                 width: 3,
                                               ),
-                                              Text(
-                                                widget
-                                                    .snapshot.data[index].ngay,
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 12),
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8, vertical: 5),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                    color: Colors.blue[200]
+                                                        .withOpacity(0.2)),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.visibility,
+                                                      color: Colors.grey,
+                                                      size: 15,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 3,
+                                                    ),
+                                                    Text(
+                                                      snapshot.data[index]
+                                                              .luotxem +
+                                                          ' Lượt xem',
+                                                      style: TextStyle(
+                                                          color: Colors.grey,
+                                                          fontSize: 12),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 5),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              color: Colors.blue[200]
-                                                  .withOpacity(0.2)),
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.visibility,
-                                                color: Colors.grey,
-                                                size: 15,
-                                              ),
-                                              SizedBox(
-                                                width: 3,
-                                              ),
-                                              Text(
-                                                widget.snapshot.data[index]
-                                                        .luotxem +
-                                                    ' Lượt xem',
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 12),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                        )
                                       ],
                                     ),
                                   )
                                 ],
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-            });
+                            ),
+                          );
+                  });
+        });
   }
 }
