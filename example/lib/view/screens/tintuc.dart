@@ -345,64 +345,77 @@ class _PointListState extends State<PointList> {
               firstChild: StreamBuilder<List<Point>>(
                   stream: bloc.stream,
                   builder: (context, snapshot) {
-                    return snapshot.hasData
-                        ? Container(
-                            padding: EdgeInsets.all(8),
-                            child: Table(
-                              defaultVerticalAlignment:
-                                  TableCellVerticalAlignment.middle,
-                              columnWidths: {
-                                0: FlexColumnWidth(0.5),
-                                1: FlexColumnWidth(1.5),
-                                2: FlexColumnWidth(3),
-                                3: FlexColumnWidth(2),
-                                4: FlexColumnWidth(1),
-                                5: FlexColumnWidth(2),
-                              },
-                              border: TableBorder.symmetric(
-                                inside:
-                                    BorderSide(color: Colors.green, width: 0.2),
-                                outside:
-                                    BorderSide(color: Colors.green, width: 0.5),
-                              ),
-                              children:
-                                  List.generate(snapshot.data.length, (index) {
-                                return index == 0
-                                    ? TableRow(
-                                        decoration: BoxDecoration(
-                                            color: Colors.blue[200]
-                                                .withOpacity(0.5)),
-                                        children: [
-                                            cellContent('STT'),
-                                            cellContent('Mã'),
-                                            cellContent('Tên Ngành'),
-                                            cellContent('Tổ hợp'),
-                                            cellContent('Điểm chuẩn'),
-                                            cellContent('Ghi chú'),
-                                          ])
-                                    : TableRow(children: [
-                                        cellContent(
-                                            snapshot.data[index - 1].stt),
-                                        cellContent(
-                                            snapshot.data[index - 1].manganh),
-                                        cellContent(
-                                            snapshot.data[index - 1].tennganh),
-                                        cellContent(
-                                            snapshot.data[index - 1].tohopmon),
-                                        cellContent(
-                                            snapshot.data[index - 1].diemchuan),
-                                        cellContent(
-                                            snapshot.data[index - 1].ghichu),
-                                      ]);
-                              }),
+                    if (snapshot.hasData) {
+                      if (snapshot.data.isEmpty) {
+                        return Container(
+                          height: size.height / 2,
+                          child: Center(
+                            child: Text(
+                              'Năm học này chưa có dữ liệu',
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: size.width * 0.04),
                             ),
-                          )
-                        : Center(
-                            child: SpinKitThreeBounce(
-                              color: Util.myColor,
-                              size: size.width * 0.06,
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          padding: EdgeInsets.all(8),
+                          child: Table(
+                            defaultVerticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            columnWidths: {
+                              0: FlexColumnWidth(0.5),
+                              1: FlexColumnWidth(1.5),
+                              2: FlexColumnWidth(3),
+                              3: FlexColumnWidth(2),
+                              4: FlexColumnWidth(1),
+                              5: FlexColumnWidth(2),
+                            },
+                            border: TableBorder.symmetric(
+                              inside:
+                                  BorderSide(color: Colors.green, width: 0.2),
+                              outside:
+                                  BorderSide(color: Colors.green, width: 0.5),
                             ),
-                          );
+                            children:
+                                List.generate(snapshot.data.length, (index) {
+                              return index == 0
+                                  ? TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Colors.blue[200]
+                                              .withOpacity(0.5)),
+                                      children: [
+                                          cellContent('STT'),
+                                          cellContent('Mã'),
+                                          cellContent('Tên Ngành'),
+                                          cellContent('Tổ hợp'),
+                                          cellContent('Điểm chuẩn'),
+                                          cellContent('Ghi chú'),
+                                        ])
+                                  : TableRow(children: [
+                                      cellContent(snapshot.data[index - 1].stt),
+                                      cellContent(
+                                          snapshot.data[index - 1].manganh),
+                                      cellContent(
+                                          snapshot.data[index - 1].tennganh),
+                                      cellContent(
+                                          snapshot.data[index - 1].tohopmon),
+                                      cellContent(
+                                          snapshot.data[index - 1].diemchuan),
+                                      cellContent(
+                                          snapshot.data[index - 1].ghichu),
+                                    ]);
+                            }),
+                          ),
+                        );
+                      }
+                    } else {
+                      return SpinKitThreeBounce(
+                        color: Util.myColor,
+                        size: size.width * 0.06,
+                      );
+                    }
                   }),
               secondChild: StreamBuilder<List<Point>>(
                   stream: bloc.streamHB,
@@ -413,7 +426,7 @@ class _PointListState extends State<PointList> {
                           height: size.height / 2,
                           child: Center(
                             child: Text(
-                              'Năm học $year không xét tuyển điểm học bạ',
+                              'Năm học này chưa có dữ liệu',
                               style: TextStyle(
                                   color: Colors.red,
                                   fontSize: size.width * 0.04),

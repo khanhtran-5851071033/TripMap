@@ -10,6 +10,7 @@ import 'package:example/view/widgets/photo_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetail extends StatefulWidget {
   final Event list;
@@ -122,251 +123,283 @@ class _NewsDetailState extends State<NewsDetail> {
             CupertinoScrollbar(
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    IgnorePointer(
-                      child: Stack(
-                        overflow: Overflow.visible,
-                        alignment: AlignmentDirectional.bottomCenter,
-                        children: [
-                          SizedBox(
-                            height: size.height * 0.3,
-                          ),
-                          Positioned(
-                            bottom: -10 - offset,
-                            child: Container(
-                              // height: 100 + offset,
-                              alignment: Alignment.bottomCenter,
-                              padding:
-                                  EdgeInsets.fromLTRB(10, 10, 10, 20 + offset),
-                              width: size.width,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    begin: Alignment.bottomCenter,
-                                    end: Alignment.topCenter,
-                                    colors: [
-                                      Colors.black.withOpacity(.8),
-                                      Colors.black.withOpacity(.5),
-                                      Colors.black.withOpacity(.0),
-                                    ]),
-                              ),
-                              child: Text(
-                                isEvent
-                                    ? widget.list.tittle
-                                    : widget.listNoti.tieude,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: size.width * 0.05),
+                child: Container(
+                  padding: EdgeInsets.only(bottom: size.height * 0.2),
+                  child: Column(
+                    children: [
+                      IgnorePointer(
+                        child: Stack(
+                          overflow: Overflow.visible,
+                          alignment: AlignmentDirectional.bottomCenter,
+                          children: [
+                            SizedBox(
+                              height: size.height * 0.3,
+                            ),
+                            Positioned(
+                              bottom: -10 - offset,
+                              child: Container(
+                                // height: 100 + offset,
+                                alignment: Alignment.bottomCenter,
+                                padding: EdgeInsets.fromLTRB(
+                                    10, 10, 10, 20 + offset),
+                                width: size.width,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
+                                      colors: [
+                                        Colors.black.withOpacity(.8),
+                                        Colors.black.withOpacity(.5),
+                                        Colors.black.withOpacity(.0),
+                                      ]),
+                                ),
+                                child: Text(
+                                  isEvent
+                                      ? widget.list.tittle
+                                      : widget.listNoti.tieude,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: size.width * 0.05),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: size.width,
-                      // height: size.width * 2,
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadius.circular(size.width * 0.05)),
-                      child: Column(children: [
-                        Container(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Color(0xff29166F),
+                      Container(
+                        width: size.width,
+                        // height: size.width * 2,
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.circular(size.width * 0.05)),
+                        child: Column(children: [
+                          Container(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      color: Color(0xff29166F),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/logoUTC.png',
+                                          width: size.width * 0.07,
+                                        ),
+                                        SizedBox(
+                                          width: 7,
+                                        ),
+                                        Text(
+                                          'UTC2',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  child: Row(
+                                  Row(
                                     children: [
-                                      Image.asset(
-                                        'assets/logoUTC.png',
-                                        width: size.width * 0.07,
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 8),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            color: Colors.blue[200]
+                                                .withOpacity(0.2)),
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.timelapse,
+                                              color: Color(0xff29166F),
+                                              size: 15,
+                                            ),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            Text(
+                                              isEvent
+                                                  ? widget.list.ngay
+                                                  : widget.listNoti.thoigian,
+                                              style: TextStyle(
+                                                color: Color(0xff29166F),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 7,
                                       ),
-                                      Text(
-                                        'UTC2',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 15),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 8),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            color: Colors.blue[200]
+                                                .withOpacity(0.2)),
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.visibility,
+                                              color: Color(0xff29166F),
+                                              size: 15,
+                                            ),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            isEvent
+                                                ? Text(
+                                                    widget.list.luotxem,
+                                                    style: TextStyle(
+                                                      color: Color(0xff29166F),
+                                                    ),
+                                                  )
+                                                : StreamBuilder<List<Block>>(
+                                                    stream:
+                                                        blocNoti.streamContent,
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      return snapshot.hasData
+                                                          ? Text(
+                                                              snapshot.data[0]
+                                                                  .luotxem,
+                                                              style: TextStyle(
+                                                                color: Color(
+                                                                    0xff29166F),
+                                                              ),
+                                                            )
+                                                          : Container(
+                                                              // child:
+                                                              //     SpinKitThreeBounce(
+                                                              //   size: size.width *
+                                                              //       0.06,
+                                                              //   color:
+                                                              //       Util.myColor,
+                                                              // ),
+                                                              );
+                                                    }),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 8),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          color: Colors.blue[200]
-                                              .withOpacity(0.2)),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.timelapse,
-                                            color: Color(0xff29166F),
-                                            size: 15,
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                          Text(
-                                            isEvent
-                                                ? widget.list.ngay
-                                                : widget.listNoti.thoigian,
-                                            style: TextStyle(
-                                              color: Color(0xff29166F),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 7,
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 8),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          color: Colors.blue[200]
-                                              .withOpacity(0.2)),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.visibility,
-                                            color: Color(0xff29166F),
-                                            size: 15,
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                          isEvent
-                                              ? Text(
-                                                  widget.list.luotxem,
-                                                  style: TextStyle(
-                                                    color: Color(0xff29166F),
-                                                  ),
-                                                )
-                                              : StreamBuilder<List<Block>>(
-                                                  stream:
-                                                      blocNoti.streamContent,
-                                                  builder: (context, snapshot) {
-                                                    return snapshot.hasData
-                                                        ? Text(
-                                                            snapshot.data[0]
-                                                                .luotxem,
-                                                            style: TextStyle(
-                                                              color: Color(
-                                                                  0xff29166F),
-                                                            ),
-                                                          )
-                                                        : Container(
-                                                            // child:
-                                                            //     SpinKitThreeBounce(
-                                                            //   size: size.width *
-                                                            //       0.06,
-                                                            //   color:
-                                                            //       Util.myColor,
-                                                            // ),
-                                                          );
-                                                  }),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )),
-                        Divider(
-                          color: Colors.black45,
-                          thickness: 0.6,
-                          height: 15,
-                        ),
-                        StreamBuilder<List<Block>>(
-                            stream: isEvent
-                                ? blocEvent.streamContent
-                                : blocNoti.streamContent,
-                            builder: (context, snapshot) {
-                              return snapshot.hasData
-                                  ? Column(
-                                      children: List.generate(
-                                          snapshot.data.length, (index) {
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 5),
-                                              child: Text(snapshot
-                                                  .data[index].text
-                                                  .trim()),
-                                            ),
-                                            snapshot.data[index].imgLink == null
-                                                ? Container()
-                                                : GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                PhotoViewWidget(
-                                                                  img: snapshot
-                                                                      .data[
-                                                                          index]
-                                                                      .imgLink,
-                                                                )),
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 10),
-                                                      child: CachedNetworkImage(
-                                                        imageUrl: snapshot
-                                                            .data[index]
-                                                            .imgLink,
-                                                        // height: size.height * 0.3,
-                                                        width: size.width,
-                                                        fit: BoxFit.fitWidth,
-                                                        memCacheWidth:
-                                                            size.width.toInt() *
-                                                                2,
+                                ],
+                              )),
+                          Divider(
+                            color: Colors.black45,
+                            thickness: 0.6,
+                            height: 15,
+                          ),
+                          StreamBuilder<List<Block>>(
+                              stream: isEvent
+                                  ? blocEvent.streamContent
+                                  : blocNoti.streamContent,
+                              builder: (context, snapshot) {
+                                return snapshot.hasData
+                                    ? Column(
+                                        children: List.generate(
+                                            snapshot.data.length, (index) {
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              snapshot.data[index].link != null
+                                                  ? InkWell(
+                                                      onTap: () {
+                                                        launch(snapshot
+                                                            .data[index].link);
+                                                      },
+                                                      child: Container(
+                                                        padding:
+                                                            EdgeInsets.all(10),
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            border: Border.all(
+                                                                width: 1,
+                                                                color: Colors
+                                                                    .blue)),
+                                                        child: Text(
+                                                          snapshot
+                                                              .data[index].text
+                                                              .trim(),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.blue),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Text(snapshot
+                                                      .data[index].text
+                                                      .trim()),
+                                              snapshot.data[index].imgLink ==
+                                                      null
+                                                  ? Container()
+                                                  : GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  PhotoViewWidget(
+                                                                    img: snapshot
+                                                                        .data[
+                                                                            index]
+                                                                        .imgLink,
+                                                                  )),
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 10),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl: snapshot
+                                                              .data[index]
+                                                              .imgLink,
+                                                          // height: size.height * 0.3,
+                                                          width: size.width,
+                                                          fit: BoxFit.fitWidth,
+                                                          memCacheWidth: size
+                                                                  .width
+                                                                  .toInt() *
+                                                              2,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                          ],
-                                        );
-                                      }),
-                                    )
-                                  : Container(
-                                      height: size.height * 0.5,
-                                      child: Center(
-                                        child: SpinKitThreeBounce(
-                                          color: Util.myColor,
-                                          size: size.width * 0.06,
+                                            ],
+                                          );
+                                        }),
+                                      )
+                                    : Container(
+                                        height: size.height * 0.5,
+                                        child: Center(
+                                          child: SpinKitThreeBounce(
+                                            color: Util.myColor,
+                                            size: size.width * 0.06,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                            })
-                      ]),
-                    ),
-                  ],
+                                      );
+                              })
+                        ]),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

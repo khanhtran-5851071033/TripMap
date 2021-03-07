@@ -67,7 +67,11 @@ class NotiScraper {
         a = a.replaceAll(new RegExp('}'), '');
         a = a.replaceAll(new RegExp(', attributes: '), '');
         a = a.replaceAll(new RegExp('title: '), '');
-        b = new Block(text: a, imgLink: '', luotxem: luotXem);
+        List<String> d = a.split('href: ');
+        if (d.length > 1) {
+          b = new Block(text: d[0], imgLink: '', luotxem: luotXem, link: d[1]);
+        } else
+          b = new Block(text: a, imgLink: '', luotxem: luotXem);
         c.add(b);
       }
       _streamContent.add(c);
