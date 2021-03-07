@@ -42,7 +42,7 @@ class _HomeRouteState extends State<HomeRoute> {
           naviPage(index, false);
         },
         controller: _controller,
-        physics: BouncingScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         children: [
           FloorPlanScreen(),
           News(),

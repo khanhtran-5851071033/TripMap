@@ -25,13 +25,18 @@ class _NewsState extends State<News> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
-    blocNoti.fetchProducts();
   }
 
   @override
   void dispose() {
     // blocEvent.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    blocNoti.fetchProducts();
   }
 
   @override
@@ -124,77 +129,72 @@ class _NotifyListState extends State<NotifyList>
     super.build(context);
     Size size = Util.getSize(context);
     return widget.list.hasData
-        ? CupertinoScrollbar(
-            radius: Radius.circular(20),
-            thickness: 5,
-            thicknessWhileDragging: 10,
-            child: ListView.builder(
-              itemCount: widget.list.data.length,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NewsDetail(
-                                  listNoti: widget.list.data[index],
-                                )));
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        Container(
-                          color: Colors.blue[200].withOpacity(0.5),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 25),
-                          child: Column(
-                            children: [
-                              Text(
-                                widget.list.data[index].thoigian.split('-')[0],
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xff29166F),
-                                    fontWeight: FontWeight.w600),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                widget.list.data[index].thoigian.split('-')[1] +
-                                    '/' +
-                                    widget.list.data[index].thoigian
-                                        .split('-')[2],
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 17, color: Color(0xff29166F)),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: Text(
-                              widget.list.data[index].tieude,
-                              maxLines: 3,
-                              style: TextStyle(fontSize: 20),
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
+        ? ListView.builder(
+            itemCount: widget.list.data.length,
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => NewsDetail(
+                                listNoti: widget.list.data[index],
+                              )));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Container(
+                        color: Colors.blue[200].withOpacity(0.5),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+                        child: Column(
+                          children: [
+                            Text(
+                              widget.list.data[index].thoigian.split('-')[0],
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xff29166F),
+                                  fontWeight: FontWeight.w600),
+                              textAlign: TextAlign.center,
                             ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              widget.list.data[index].thoigian.split('-')[1] +
+                                  '/' +
+                                  widget.list.data[index].thoigian
+                                      .split('-')[2],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 17, color: Color(0xff29166F)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Container(
+                          child: Text(
+                            widget.list.data[index].tieude,
+                            maxLines: 3,
+                            style: TextStyle(fontSize: 20),
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           )
         : Center(
             child: SpinKitThreeBounce(
@@ -554,7 +554,7 @@ class _NewsListState extends State<NewsList>
                             onTap: () {
                               Navigator.push(
                                   context,
-                                  MaterialPageRoute(
+                                  CupertinoPageRoute(
                                       builder: (context) => NewsDetail(
                                           list: snapshot.data[index])));
                             },
@@ -577,18 +577,21 @@ class _NewsListState extends State<NewsList>
                                   ]),
                               child: Row(
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Container(
-                                      child: CachedNetworkImage(
-                                        imageUrl: snapshot.data[index].img,
-                                        width: size.width / 3,
-                                        fit: BoxFit.fitHeight,
-                                        height: 130,
-                                        memCacheWidth: 300,
-                                        // memCacheHeight: 200,
-                                        placeholder: (context, url) =>
-                                            CupertinoActivityIndicator(),
+                                  Hero(
+                                    tag: Key(snapshot.data[index].img),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Container(
+                                        child: CachedNetworkImage(
+                                          imageUrl: snapshot.data[index].img,
+                                          width: size.width / 3,
+                                          fit: BoxFit.fitHeight,
+                                          height: 130,
+                                          memCacheWidth: 300,
+                                          // memCacheHeight: 200,
+                                          placeholder: (context, url) =>
+                                              CupertinoActivityIndicator(),
+                                        ),
                                       ),
                                     ),
                                   ),

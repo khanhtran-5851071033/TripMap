@@ -40,8 +40,8 @@ class _NewsDetailState extends State<NewsDetail> {
 
   @override
   void dispose() {
-    blocEvent.dispose();
-    blocNoti.dispose();
+    // blocEvent.dispose();
+    // blocNoti.dispose();
     super.dispose();
   }
 
@@ -105,13 +105,16 @@ class _NewsDetailState extends State<NewsDetail> {
               top: -top,
               child: Center(
                 child: isEvent
-                    ? CachedNetworkImage(
-                        imageUrl: widget.list.img,
-                        // height: size.height * 0.3,
-                        width: size.width + offset,
-                        // height: offset == 0 ? null : size.width * 0.67 + offset,
-                        fit: BoxFit.fitWidth,
-                        memCacheWidth: size.width.toInt() * 2,
+                    ? Hero(
+                        tag: Key(widget.list.img),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.list.img,
+                          // height: size.height * 0.3,
+                          width: size.width + offset,
+                          // height: offset == 0 ? null : size.width * 0.67 + offset,
+                          fit: BoxFit.fitWidth,
+                          memCacheWidth: size.width.toInt() * 2,
+                        ),
                       )
                     : Container(
                         color: Util.myColor,
@@ -124,7 +127,7 @@ class _NewsDetailState extends State<NewsDetail> {
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: Container(
-                  padding: EdgeInsets.only(bottom: size.height * 0.2),
+                  // padding: EdgeInsets.only(bottom: size.height * 0.2),
                   child: Column(
                     children: [
                       IgnorePointer(
@@ -169,7 +172,8 @@ class _NewsDetailState extends State<NewsDetail> {
                       Container(
                         width: size.width,
                         // height: size.width * 2,
-                        padding: EdgeInsets.all(8),
+                        padding:
+                            EdgeInsets.fromLTRB(8, 8, 8, size.height * 0.2),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius:
@@ -343,9 +347,9 @@ class _NewsDetailState extends State<NewsDetail> {
                                                         ),
                                                       ),
                                                     )
-                                                  : Text(snapshot
-                                                      .data[index].text
-                                                      .trim()),
+                                                  : Text('    ' +
+                                                      snapshot.data[index].text
+                                                          .trim()),
                                               snapshot.data[index].imgLink ==
                                                       null
                                                   ? Container()
