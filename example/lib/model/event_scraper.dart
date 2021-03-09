@@ -7,6 +7,8 @@ String url = 'https://utc2.edu.vn';
 class EventScraper {
   final _stream = PublishSubject<List<Event>>();
   Stream<List<Event>> get stream => _stream.stream;
+  final _streamContent = PublishSubject<List<Block>>();
+  Stream<List<Block>> get streamContent => _streamContent.stream;
 
   final webScraper = WebScraper(url);
 
@@ -46,7 +48,6 @@ class EventScraper {
             .trim();
         thoigian = thoigian.substring(10, thoigian.length);
         List<String> time = thoigian.split('-');
-        // print(time[0].trim());
         List<String> ngay = time[0].split(' ');
 
         String year = ngay[3].split('/')[2];
@@ -72,13 +73,37 @@ class EventScraper {
             time[2].trim().substring(10, time[2].trim().length));
         ds_TinTuc.add(td);
       }
-      if (i % 3 == 0 && i != 0)
+      if (i % 1 == 0 && i != 0)
         _stream.sink.add(ds_TinTuc);
       else if (i == 10) _stream.sink.add(ds_TinTuc);
     }
   }
 
+  getContent(String link) async {
+    List<Block> listContent = [];
+    if (await webScraper.loadWebPage(link.substring(url.length))) {
+      List<Map<String, dynamic>> noidung = webScraper
+          .getElement('div#noidungtrong>p', ['src'], extraAddress: 'img');
+      for (int i = 0; i < noidung.length; i++) {
+        String a = noidung[i].toString().replaceAll(new RegExp('{'), '');
+        a = a.replaceAll(new RegExp('}'), '');
+        a = a.replaceAll(new RegExp(', attributes: '), '');
+        a = a.replaceAll(new RegExp('title: '), '');
+        List<String> c = a.split('src: ');
+        Block b;
+        if (c.length > 1) {
+          b = Block(text: c[0], imgLink: c[1]);
+        } else {
+          b = Block(text: c[0]);
+        }
+        listContent.add(b);
+      }
+    }
+    _streamContent.sink.add(listContent);
+  }
+
   void dispose() {
     _stream.close();
+    _streamContent.close();
   }
 }

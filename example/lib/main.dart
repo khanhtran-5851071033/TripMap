@@ -1,5 +1,4 @@
 import 'package:example/core/viewmodels/floorplan_model.dart';
-import 'package:example/view/screens/home_route.dart';
 import 'package:example/view/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +14,9 @@ class MyApp extends StatelessWidget {
             create: (context) => FloorPlanModel()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'UTC2',
-        // theme: ThemeData.dark(),
+        theme: ThemeData(fontFamily: 'Nunito'),
         home: SplashScreen(),
       ),
     );

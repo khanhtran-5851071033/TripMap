@@ -1,3 +1,4 @@
+import 'package:example/view/screens/editProFile.dart';
 import 'package:example/view/screens/floorplan_screen.dart';
 import 'package:example/view/screens/login_screen.dart';
 import 'package:example/view/screens/share.dart';
@@ -41,9 +42,9 @@ class _HomeRouteState extends State<HomeRoute> {
           naviPage(index, false);
         },
         controller: _controller,
-        physics: BouncingScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         children: [
-          LoginScreen(),
+          FloorPlanScreen(),
           News(),
           ShareFriend(),
           Person(),

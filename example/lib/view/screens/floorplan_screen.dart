@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:example/core/models/models.dart';
 import 'package:example/core/viewmodels/floorplan_model.dart';
+import 'package:example/view/screens/pano_screen.dart';
 import 'package:example/view/shared/global.dart';
+import 'package:example/view/shared/util.dart';
 import 'package:example/view/widgets/appbar_widget.dart';
 import 'package:example/view/widgets/positioned_widget.dart';
 import 'package:example/view/widgets/raw_gesture_detector_widget.dart';
@@ -27,33 +29,13 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
       <StreamSubscription<dynamic>>[];
   final List<Building> dayNha =
       Global.dayNha.map((item) => Building.fromMap(item)).toList();
-  Timer _timer;
   @override
   void initState() {
     super.initState();
 
-    // ignore: unused_local_variable
-    _timer = new Timer.periodic(
-        Duration(milliseconds: 100),
-        (Timer timer) => setState(() {
-              if (_opacity > 0.0) {
-                if (_opacity < 0.04)
-                  _opacity = 0.0;
-                else
-                  _opacity -= 0.04;
-                size += 2;
-              } else {
-                size = 10;
-                // Future.delayed(Duration(milliseconds: 100), () {
-                _opacity = 0.7;
-                // });
-              }
-            }));
-
     // _streamSubscriptions.add(gyroscopeEvents.listen((GyroscopeEvent event) {
     //   setState(() {
     //     // _gyroscopeValues = <double>[event.x, event.y, event.z];
-    //     // print(event.z);
     //     if (event.z > 2) {
     //       setState(() {
     //         _direction -= 1;
@@ -77,7 +59,6 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _timer.cancel();
   }
 
   @override
@@ -85,7 +66,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
     Size scsize = MediaQuery.of(context).size;
     final model = Provider.of<FloorPlanModel>(context);
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Util.myColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBarWidget(),
@@ -339,6 +320,13 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.screen_rotation),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => PanoScreen()));
+        },
       ),
     );
   }

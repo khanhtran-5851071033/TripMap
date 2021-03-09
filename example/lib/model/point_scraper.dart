@@ -51,7 +51,6 @@ class PointScraper {
         dsNganh.add(dc);
       }
     }
-    // print(thongtin);
     _stream.sink.add(dsNganh);
   }
 
@@ -89,7 +88,6 @@ class PointScraper {
         dsNganh.add(dc);
       }
     }
-    // print(thongtinHB);
     _streamHB.sink.add(dsNganh);
   }
 
