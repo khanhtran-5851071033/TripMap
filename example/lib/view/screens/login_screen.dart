@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: height * 0.02,
                           ),
-                          Text('Email',
+                          Text('Student Email',
                               style: TextStyle(
                                 color: Colors.black,
                               )),

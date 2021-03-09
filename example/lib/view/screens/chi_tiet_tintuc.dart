@@ -399,7 +399,15 @@ class _NewsDetailState extends State<NewsDetail> {
                                           ),
                                         ),
                                       );
-                              })
+                              }),
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Divider(
+                              color: Colors.black45,
+                              thickness: 0.6,
+                              height: 30,
+                            ),
+                          ),
                         ]),
                       ),
                     ],
