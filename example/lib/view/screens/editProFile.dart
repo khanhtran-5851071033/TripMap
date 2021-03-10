@@ -197,7 +197,7 @@ class _EditProFileState extends State<EditProFile> {
                           BorderSide(width: 0.5, color: Color(0xff29166F)),
                     ),
                     hintStyle: TextStyle(color: Colors.grey),
-                    hintText: 'Select day'),
+                    hintText: DateTime.now().toString().substring(0, 10)),
               ),
               SizedBox(
                 height: height * 0.02,
@@ -276,7 +276,7 @@ class _EditProFileState extends State<EditProFile> {
                 height: height * 0.02,
               ),
               TextField(
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.start,
                 keyboardType: TextInputType.number,
                 onTap: () {
                   setState(() {
@@ -300,8 +300,12 @@ class _EditProFileState extends State<EditProFile> {
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                     enabledBorder: InputBorder.none,
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: height * 0.03),
+                    contentPadding: EdgeInsets.fromLTRB(
+                      0,
+                      height * 0.03,
+                      0,
+                      height * 0.03,
+                    ),
                     suffixIcon: isPhone
                         ? Icon(
                             Icons.check_circle,
@@ -327,7 +331,7 @@ class _EditProFileState extends State<EditProFile> {
                         borderRadius: BorderRadius.circular(3),
                         color: Colors.white,
                       ),
-                      margin: EdgeInsets.only(left: 5),
+                      margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
                       padding: EdgeInsets.all(8),
                       child: Center(
                         child: Row(

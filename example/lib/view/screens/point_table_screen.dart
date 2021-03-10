@@ -14,7 +14,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0,
+        elevation: 1,
         centerTitle: true,
         title: Text(
           'Bảng điểm học tập',

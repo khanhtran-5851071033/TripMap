@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:countup/countup.dart';
 import 'package:example/view/screens/editProFile.dart';
+import 'package:example/view/screens/help_screen.dart';
 import 'package:example/view/screens/login_screen.dart';
 import 'package:example/view/screens/point_table_screen.dart';
+import 'package:example/view/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -25,10 +27,10 @@ class _ProFileState extends State<ProFile> {
   List<Widget> screen = [
     EditProFile(),
     PointTableScreen(),
-    EditProFile(),
-    EditProFile(),
-    EditProFile(),
-    EditProFile(),
+    HelpScreen(),
+    EditProFile(), //link web
+    EditProFile(), //link web
+    SettingScreen(),
     LoginScreen(),
   ];
   File _image;
