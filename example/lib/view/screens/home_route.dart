@@ -1,5 +1,6 @@
 import 'package:example/view/screens/editProFile.dart';
 import 'package:example/view/screens/floorplan_screen.dart';
+import 'package:example/view/screens/home_screen.dart';
 import 'package:example/view/screens/login_screen.dart';
 import 'package:example/view/screens/profile.dart';
 import 'package:example/view/screens/share.dart';
@@ -45,7 +46,7 @@ class _HomeRouteState extends State<HomeRoute> {
         controller: _controller,
         physics: NeverScrollableScrollPhysics(),
         children: [
-          FloorPlanScreen(),
+          HomeScreen(),
           News(),
           ShareFriend(),
           Person(),

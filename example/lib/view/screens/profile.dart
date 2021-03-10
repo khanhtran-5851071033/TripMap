@@ -6,6 +6,7 @@ import 'package:example/view/screens/help_screen.dart';
 import 'package:example/view/screens/login_screen.dart';
 import 'package:example/view/screens/point_table_screen.dart';
 import 'package:example/view/screens/setting_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -36,7 +37,7 @@ class _ProFileState extends State<ProFile> {
   File _image;
   String linkImage;
   final picker = ImagePicker();
-  Future getImage(bool isCamere, int id) async {
+  Future getImage(bool isCamere) async {
     final pickedFile = await picker.getImage(
         source: isCamere ? ImageSource.gallery : ImageSource.camera);
 
@@ -47,6 +48,52 @@ class _ProFileState extends State<ProFile> {
         print('No image selected.');
       }
     });
+  }
+
+  _show(
+    Size size,
+  ) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: new Text("Chọn ảnh",
+                style: TextStyle(
+                    color: Colors.black, fontSize: size.width * 0.05)),
+            insetAnimationCurve: Curves.easeOutQuart,
+            content: Container(
+                padding: EdgeInsets.only(top: 10),
+                child: new Text("Bạn vui lòng chọn ảnh !",
+                    style: TextStyle(
+                        color: Colors.black87, fontSize: size.width * 0.035))),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Chụp ảnh mới',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: size.width * 0.04,
+                      fontWeight: FontWeight.w500,
+                    )),
+                onPressed: () {
+                  getImage(false);
+                  Navigator.pop(context);
+                },
+              ),
+              FlatButton(
+                child: Text('Chọn ảnh từ thư viện',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: size.width * 0.04,
+                      fontWeight: FontWeight.w400,
+                    )),
+                onPressed: () {
+                  getImage(true);
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        });
   }
 
   @override
@@ -78,7 +125,12 @@ class _ProFileState extends State<ProFile> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                Center(child: _avatar(_image, size, linkImage)),
+                Center(
+                    child: GestureDetector(
+                        onTap: () {
+                          _show(size);
+                        },
+                        child: _avatar(_image, size, linkImage))),
                 SizedBox(
                   height: size.height * 0.02,
                 ),

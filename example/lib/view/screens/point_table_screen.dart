@@ -1,5 +1,6 @@
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
+import 'package:im_stepper/stepper.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class PointTableScreen extends StatefulWidget {
@@ -8,6 +9,27 @@ class PointTableScreen extends StatefulWidget {
 }
 
 class _PointTableScreenState extends State<PointTableScreen> {
+  List<Step> steps = [
+    Step(
+      title: const Text('New Account'),
+      isActive: true,
+      state: StepState.complete,
+      content: Container(),
+    ),
+    Step(
+      title: const Text('New Account'),
+      isActive: true,
+      state: StepState.complete,
+      content: Container(),
+    ),
+    Step(
+      title: const Text('New Account'),
+      isActive: true,
+      state: StepState.complete,
+      content: Container(),
+    )
+  ];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -222,6 +244,9 @@ class _PointTableScreenState extends State<PointTableScreen> {
             Expanded(
               child: Container(
                 // height: size.height / 5,
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * 0.03,
+                    vertical: size.height * 0.02),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.white,
@@ -232,6 +257,62 @@ class _PointTableScreenState extends State<PointTableScreen> {
                       blurRadius: 10,
                       offset: Offset(-2, 5), // changes position of shadow
                     ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Quá trình',
+                          style: new TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black87,
+                              fontSize: size.width * 0.04),
+                        ),
+                        Text(
+                          'All(8)',
+                          style: new TextStyle(
+                              color: Color(0xff29166F),
+                              fontSize: size.width * 0.035),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: Container(
+                          // color: Colors.black,
+
+                          child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Container(
+                              height: size.height / 2,
+                              alignment: Alignment.center,
+                              child: Column(
+                                children: [
+                                  Stepper(
+                                    physics: ClampingScrollPhysics(),
+                                    controlsBuilder: (BuildContext context,
+                                        {VoidCallback onStepContinue,
+                                        VoidCallback onStepCancel}) {
+                                      return Container();
+                                    },
+                                    // currentStep: 1,
+                                    steps: steps,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+                    )
                   ],
                 ),
               ),

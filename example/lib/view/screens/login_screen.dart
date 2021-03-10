@@ -9,7 +9,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool checkBoxValue = true,
       focus = false,
-      isPass = false,
+      isPass = true,
       isEmail = false,
       isErro = false,
       isIconColorPass = false,
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: height * 0.02,
                           ),
-                          Text('Student Email',
+                          Text('Email',
                               style: TextStyle(
                                 color: Colors.black,
                               )),
