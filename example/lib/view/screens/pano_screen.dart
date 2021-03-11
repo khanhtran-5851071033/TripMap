@@ -1,3 +1,4 @@
+import 'package:example/view/shared/image_list.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:flutter/material.dart';
 
@@ -20,96 +21,7 @@ class _PanoScreenState extends State<PanoScreen> {
   double _tilt = 0;
   double _zoom = 1, animSpeed = 0;
   int _panoId = 0, imageSize = 0;
-  List panoImages = [
-    [
-      Image.asset('assets/cong.jpg'),
-      Image.asset('assets/congx2.jpg'),
-    ],
-    [
-      Image.asset('assets/c2.jpg'),
-      Image.asset('assets/c2x2.jpg'),
-    ],
-    [
-      Image.asset('assets/ngababaixe.jpg'),
-      Image.asset('assets/ngababaixex2.jpg'),
-    ],
-    [
-      Image.asset('assets/nga3sangtao.jpg'),
-      Image.asset('assets/nga3sangtaox2.jpg'),
-    ],
-    [
-      Image.asset('assets/saue2.jpg'),
-      Image.asset('assets/saue2x2.jpg'),
-    ],
-    [
-      Image.asset('assets/nhaxe.jpg'),
-      Image.asset('assets/nhaxex2.jpg'),
-    ],
-    [
-      Image.asset('assets/trcnhaxe.jpg'),
-      Image.asset('assets/trcnhaxex2.jpg'),
-    ],
-    [
-      Image.asset('assets/e2.jpg'),
-      Image.asset('assets/e2x2.jpg'),
-    ],
-  ];
-  List hotSpot = [
-    [
-      {"lat": -10.0, "long": 90.0, "id": 1, "name": 'C2', 'type': 'arrow'},
-      {"lat": -10.0, "long": 0.0, "id": 2, "name": 'Nga ba', 'type': 'arrow'},
-      //Building
-      {"lat": 15.0, "long": 75.0, "id": 1, "name": 'C2', 'type': 'image'},
-    ],
-    [
-      {"lat": -10.0, "long": -90.0, "id": 0, "name": 'Cong', 'type': 'arrow'},
-      // {"lat": -0.0, "long": 0.0, "id": 2, "name": 'nga ba'},
-    ],
-    [
-      // {"lat": -0.0, "long": 0.0, "id": 0, "name": 'Cong'},
-      {"lat": -10.0, "long": 180.0, "id": 0, "name": 'Cong', 'type': 'arrow'},
-      {"lat": -10.0, "long": 90.0, "id": 7, "name": 'E2', 'type': 'arrow'},
-      {"lat": -10.0, "long": 0.0, "id": 3, "name": '', 'type': 'arrow'},
-    ],
-    [
-      {"lat": -10.0, "long": 180.0, "id": 2, "name": 'Nga ba', 'type': 'arrow'},
-      {"lat": -10.0, "long": 90.0, "id": 4, "name": 'sau e2', 'type': 'arrow'},
-    ],
-    [
-      {"lat": -10.0, "long": 90.0, "id": 5, "name": 'Nha xe', 'type': 'arrow'},
-      {
-        "lat": -10.0,
-        "long": -90.0,
-        "id": 3,
-        "name": 'nga3 sang tao',
-        'type': 'arrow'
-      },
-    ],
-    [
-      {
-        "lat": -10.0,
-        "long": 180.0,
-        "id": 6,
-        "name": 'Truoc nha xe',
-        'type': 'arrow'
-      },
-      {"lat": -10.0, "long": -90.0, "id": 4, "name": 'sau e2', 'type': 'arrow'},
-    ],
-    [
-      {"lat": -10.0, "long": -90.0, "id": 7, "name": 'E2', 'type': 'arrow'},
-      {"lat": -10.0, "long": 0.0, "id": 5, "name": 'Nha xe', 'type': 'arrow'},
-    ],
-    [
-      {"lat": -10.0, "long": -90.0, "id": 2, "name": 'Nga ba', 'type': 'arrow'},
-      {
-        "lat": -10.0,
-        "long": 90.0,
-        "id": 6,
-        "name": 'Truoc nha xe',
-        'type': 'arrow'
-      },
-    ]
-  ];
+  int curId = 0;
 
   void onViewChanged(longitude, latitude, tilt) {
     setState(() {
@@ -195,11 +107,14 @@ class _PanoScreenState extends State<PanoScreen> {
               imageSize = 0;
               _panoId = id;
               _zoom = 1;
+              curId = id;
             });
             Future.delayed(Duration(milliseconds: 500), () {
-              setState(() {
-                imageSize = 1;
-              });
+              if (id == curId) {
+                setState(() {
+                  imageSize = 1;
+                });
+              }
             });
           },
         ),
