@@ -1,15 +1,14 @@
 import 'package:example/model/event.dart';
-import 'package:example/model/event_scraper.dart';
+import 'package:example/model/scraper/event_scraper.dart';
 import 'package:example/model/noti.dart';
-import 'package:example/model/noti_scraper.dart';
+import 'package:example/model/scraper/noti_scraper.dart';
 import 'package:example/model/point.dart';
-import 'package:example/model/point_scraper.dart';
+import 'package:example/model/scraper/point_scraper.dart';
 import 'package:example/view/screens/chi_tiet_tintuc.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:tabbar/tabbar.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 

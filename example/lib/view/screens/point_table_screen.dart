@@ -1,4 +1,5 @@
 import 'package:countup/countup.dart';
+import 'package:example/model/scraper/diem_scraper.dart';
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -9,6 +10,7 @@ class PointTableScreen extends StatefulWidget {
 }
 
 class _PointTableScreenState extends State<PointTableScreen> {
+  DiemScraper diemScraper = DiemScraper();
   List<Step> steps = [
     Step(
       title: const Text('New Account'),
@@ -29,6 +31,12 @@ class _PointTableScreenState extends State<PointTableScreen> {
       content: Container(),
     )
   ];
+  @override
+  void initState() {
+    super.initState();
+    diemScraper.getDiemTong();
+    diemScraper.getDiem();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,172 +79,204 @@ class _PointTableScreenState extends State<PointTableScreen> {
                         Color(0xff29166F).withOpacity(.8),
                         Color(0xff29166F).withOpacity(.7),
                       ])),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.only(bottom: 30),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: StreamBuilder<List<String>>(
+                  stream: diemScraper.streamDiemTong,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Container();
+                    } else {
+                      var diemHe4 = double.parse(snapshot.data[0]);
+                      var diemHe10 = double.parse(snapshot.data[1]);
+                      var xepLoai = '';
+                      if (diemHe4 >= 3) {
+                        xepLoai = 'Giỏi';
+                      } else if (diemHe4 >= 2.2 && diemHe4 < 3) {
+                        xepLoai = 'Khá';
+                      } else {
+                        xepLoai = 'Trung bình';
+                      }
+
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
                             children: [
-                              white('Điểm tích lũy'),
-                              Container(
-                                  height: 18,
-                                  child: Row(
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.only(bottom: 30),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      CircleAvatar(
-                                        backgroundColor: Colors.amber,
-                                      ),
-                                      white('Hệ 4 :  2.95'),
+                                      white('Điểm tích lũy'),
+                                      Container(
+                                          height: 18,
+                                          child: Row(
+                                            children: [
+                                              CircleAvatar(
+                                                backgroundColor: Colors.amber,
+                                              ),
+                                              white('Hệ 4 :  ' +
+                                                  diemHe4.toString()),
+                                            ],
+                                          )),
+                                      Container(
+                                          height: 18,
+                                          child: Row(
+                                            children: [
+                                              CircleAvatar(
+                                                backgroundColor:
+                                                    Colors.greenAccent,
+                                              ),
+                                              white('Hệ 10 :  ' +
+                                                  diemHe10.toString()),
+                                            ],
+                                          )),
+                                      Container(
+                                          height: 18,
+                                          child: Row(
+                                            children: [
+                                              CircleAvatar(
+                                                backgroundColor:
+                                                    Colors.blueAccent,
+                                              ),
+                                              white('Số tín chỉ :  100'),
+                                            ],
+                                          )),
                                     ],
-                                  )),
-                              Container(
-                                  height: 18,
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: Colors.greenAccent,
-                                      ),
-                                      white('Hệ 10 :  7.6'),
-                                    ],
-                                  )),
-                              Container(
-                                  height: 18,
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: Colors.blueAccent,
-                                      ),
-                                      white('Số tín chỉ :  100'),
-                                    ],
-                                  )),
+                                  ),
+                                ),
+                              ),
+                              white('Học lực : ' + xepLoai),
                             ],
                           ),
-                        ),
-                      ),
-                      white('Học lực : Khá'),
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(right: 15),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        CircularPercentIndicator(
-                          radius: size.width * 0.3,
-                          lineWidth: size.width * 0.02,
-                          animation: true,
-                          percent: 60 / 100,
-                          animationDuration: 2500,
-                          restartAnimation: true,
-
-                          center: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: size.width * 0.1,
-                                horizontal: size.width * 0.1),
-                            alignment: Alignment.center,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Container(
+                            padding: EdgeInsets.only(right: 15),
+                            child: Stack(
+                              alignment: Alignment.center,
                               children: [
-                                new Countup(
-                                  begin: 0,
-                                  end: 68,
-                                  duration: Duration(milliseconds: 2500),
-                                  style: new TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: size.width * 0.03),
+                                CircularPercentIndicator(
+                                  radius: size.width * 0.3,
+                                  lineWidth: size.width * 0.02,
+                                  animation: true,
+                                  percent: diemHe10 * 100 / 10 / 100,
+                                  animationDuration: 2500,
+                                  restartAnimation: true,
+
+                                  center: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: size.width * 0.1,
+                                        horizontal: size.width * 0.1),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        new Countup(
+                                          begin: 0,
+                                          end: 68,
+                                          duration:
+                                              Duration(milliseconds: 2500),
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: size.width * 0.03),
+                                        ),
+                                        Container(
+                                          //color: Colors.black,
+                                          height: 1,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(50)),
+                                        ),
+                                        new Text(
+                                          "100",
+                                          style: new TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: size.width * 0.03),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  // progressColor: Color(0xffFCD24B),
+                                  backgroundColor: Colors.white,
+                                  backgroundWidth: .2,
+                                  linearGradient: LinearGradient(
+                                    begin: Alignment(-1.3, 0),
+                                    end: Alignment(1.3,
+                                        0), // 10% of the width, so there are ten blinds.
+                                    colors: [
+                                      Colors.green,
+                                      Colors.greenAccent
+                                    ], // red to yellow
+                                    tileMode: TileMode
+                                        .repeated, // repeats the gradient over the canvas
+                                  ),
                                 ),
-                                Container(
-                                  //color: Colors.black,
-                                  height: 1,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(50)),
+                                CircularPercentIndicator(
+                                  radius: size.width * 0.37,
+                                  lineWidth: size.width * 0.02,
+                                  animation: true,
+                                  percent: diemHe4 * 100 / 4 / 100,
+                                  animationDuration: 2500,
+                                  restartAnimation: true,
+
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  // progressColor: Color(0xffFCD24B),
+                                  backgroundColor: Colors.white,
+                                  backgroundWidth: 0.5,
+                                  linearGradient: LinearGradient(
+                                    begin: Alignment(-1.3, 0),
+                                    end: Alignment(1.3,
+                                        0), // 10% of the width, so there are ten blinds.
+                                    colors: [
+                                      Colors.amber,
+                                      Colors.red
+                                    ], // red to yellow
+                                    tileMode: TileMode
+                                        .repeated, // repeats the gradient over the canvas
+                                  ),
                                 ),
-                                new Text(
-                                  "100",
-                                  style: new TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: size.width * 0.03),
+                                CircularPercentIndicator(
+                                  radius: size.width * 0.43,
+                                  lineWidth: size.width * 0.02,
+                                  animation: true,
+                                  percent: 10 / 100,
+                                  animationDuration: 2500,
+                                  restartAnimation: true,
+
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  // progressColor: Color(0xffFCD24B),
+                                  backgroundColor: Colors.white,
+                                  backgroundWidth: 1,
+                                  linearGradient: LinearGradient(
+                                    begin: Alignment(-1.3, 0),
+                                    end: Alignment(1.3,
+                                        0), // 10% of the width, so there are ten blinds.
+                                    colors: [
+                                      Colors.blue,
+                                      Colors.lightBlueAccent
+                                    ], // red to yellow
+                                    tileMode: TileMode
+                                        .repeated, // repeats the gradient over the canvas
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-
-                          circularStrokeCap: CircularStrokeCap.round,
-                          // progressColor: Color(0xffFCD24B),
-                          backgroundColor: Colors.white,
-                          backgroundWidth: .2,
-                          linearGradient: LinearGradient(
-                            begin: Alignment(-1.3, 0),
-                            end: Alignment(1.3,
-                                0), // 10% of the width, so there are ten blinds.
-                            colors: [
-                              Colors.green,
-                              Colors.greenAccent
-                            ], // red to yellow
-                            tileMode: TileMode
-                                .repeated, // repeats the gradient over the canvas
-                          ),
-                        ),
-                        CircularPercentIndicator(
-                          radius: size.width * 0.37,
-                          lineWidth: size.width * 0.02,
-                          animation: true,
-                          percent: 90 / 100,
-                          animationDuration: 2500,
-                          restartAnimation: true,
-
-                          circularStrokeCap: CircularStrokeCap.round,
-                          // progressColor: Color(0xffFCD24B),
-                          backgroundColor: Colors.white,
-                          backgroundWidth: 0.5,
-                          linearGradient: LinearGradient(
-                            begin: Alignment(-1.3, 0),
-                            end: Alignment(1.3,
-                                0), // 10% of the width, so there are ten blinds.
-                            colors: [Colors.amber, Colors.red], // red to yellow
-                            tileMode: TileMode
-                                .repeated, // repeats the gradient over the canvas
-                          ),
-                        ),
-                        CircularPercentIndicator(
-                          radius: size.width * 0.43,
-                          lineWidth: size.width * 0.02,
-                          animation: true,
-                          percent: 10 / 100,
-                          animationDuration: 2500,
-                          restartAnimation: true,
-
-                          circularStrokeCap: CircularStrokeCap.round,
-                          // progressColor: Color(0xffFCD24B),
-                          backgroundColor: Colors.white,
-                          backgroundWidth: 1,
-                          linearGradient: LinearGradient(
-                            begin: Alignment(-1.3, 0),
-                            end: Alignment(1.3,
-                                0), // 10% of the width, so there are ten blinds.
-                            colors: [
-                              Colors.blue,
-                              Colors.lightBlueAccent
-                            ], // red to yellow
-                            tileMode: TileMode
-                                .repeated, // repeats the gradient over the canvas
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                          )
+                        ],
+                      );
+                    }
+                  }),
             ),
             SizedBox(
               height: 10,

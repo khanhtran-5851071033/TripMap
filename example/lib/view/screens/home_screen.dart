@@ -133,20 +133,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Container(
                         width: size.width,
-
                         decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 3,
-                                blurRadius: 7,
-                                offset:
-                                    Offset(0, 5), // changes position of shadow
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white.withOpacity(0.9)),
-                        //color: Colors.blue[200].withOpacity(0.5),
+                          color: Colors.blueAccent,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 3,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 5), // changes position of shadow
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10),
+                          // color: Colors.white.withOpacity(0.9)
+                        ),
                         padding: EdgeInsets.symmetric(
                             horizontal: size.width * 0.02,
                             vertical: size.height * 0.01),
@@ -159,20 +159,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: size.width * 0.1,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Colors.blue.withOpacity(0.3)),
+                                  color: Colors.blue[700]),
                               //color: Colors.blue[200].withOpacity(0.5),
                               padding: EdgeInsets.all(3),
                               child: Icon(
                                 Icons.qr_code_scanner_rounded,
-                                color: Colors.blue[700],
+                                color: Colors.white,
                               ),
                             ),
                             Center(
                                 child: Text(
                               'Điểm danh',
                               style: TextStyle(
-                                  fontSize: size.width * 0.045,
-                                  fontWeight: FontWeight.w500),
+                                  color: Colors.white,
+                                  fontSize: size.width * 0.055,
+                                  fontWeight: FontWeight.bold),
                             )),
                           ],
                         ),
@@ -200,17 +201,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               flex: 7,
                               child: Container(
                                 decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.3),
-                                        spreadRadius: 3,
-                                        blurRadius: 7,
-                                        offset: Offset(
-                                            0, 5), // changes position of shadow
-                                      ),
-                                    ],
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white.withOpacity(0.9)),
+                                  color: Colors.yellow[700],
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      spreadRadius: 3,
+                                      blurRadius: 7,
+                                      offset: Offset(
+                                          0, 5), // changes position of shadow
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(10),
+                                  // color: Colors.white.withOpacity(0.9),
+                                ),
                                 //color: Colors.blue[200].withOpacity(0.5),
                                 padding: EdgeInsets.symmetric(
                                     horizontal: size.width * 0.02,
@@ -226,21 +229,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          color:
-                                              Colors.yellow.withOpacity(0.3)),
+                                          color: Colors.yellow[900]),
                                       //color: Colors.blue[200].withOpacity(0.5),
                                       padding: EdgeInsets.all(3),
                                       child: Icon(
                                         Icons.explore,
-                                        color: Colors.amber,
+                                        color: Colors.white,
                                       ),
                                     ),
                                     Center(
                                         child: Text(
                                       '2D map',
                                       style: TextStyle(
-                                          fontSize: size.width * 0.045,
-                                          fontWeight: FontWeight.w500),
+                                          color: Colors.white,
+                                          fontSize: size.width * 0.05,
+                                          fontWeight: FontWeight.bold),
                                     )),
                                   ],
                                 ),
@@ -251,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Container(),
                             ),
                             Flexible(
-                              flex: 7,
+                              flex: 9,
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -261,17 +264,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 3,
-                                          blurRadius: 7,
-                                          offset: Offset(0,
-                                              5), // changes position of shadow
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white.withOpacity(0.9)),
+                                    color: Colors.greenAccent[700],
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.3),
+                                        spreadRadius: 3,
+                                        blurRadius: 7,
+                                        offset: Offset(
+                                            0, 5), // changes position of shadow
+                                      ),
+                                    ],
+                                    borderRadius: BorderRadius.circular(10),
+                                    // color: Colors.white.withOpacity(0.9),
+                                  ),
                                   //color: Colors.blue[200].withOpacity(0.5),
                                   padding: EdgeInsets.symmetric(
                                       horizontal: size.width * 0.02,
@@ -288,8 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            color:
-                                                Colors.green.withOpacity(0.2)),
+                                            color: Colors.green[700]),
                                         //color: Colors.blue[200].withOpacity(0.5),
                                         padding: EdgeInsets.all(5),
                                         child: ClipRRect(
@@ -303,8 +307,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: Text(
                                         '3D map',
                                         style: TextStyle(
-                                            fontSize: size.width * 0.045,
-                                            fontWeight: FontWeight.w500),
+                                            color: Colors.white,
+                                            fontSize: size.width * 0.055,
+                                            fontWeight: FontWeight.bold),
                                       )),
                                     ],
                                   ),
@@ -332,17 +337,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: size.width,
 
                         decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 3,
-                                blurRadius: 7,
-                                offset:
-                                    Offset(0, 5), // changes position of shadow
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white.withOpacity(0.9)),
+                          color: Colors.red[400],
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 3,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 5), // changes position of shadow
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10),
+                          // color: Colors.white.withOpacity(0.9),
+                        ),
                         //color: Colors.blue[200].withOpacity(0.5),
                         padding: EdgeInsets.symmetric(
                             horizontal: size.width * 0.02,
@@ -356,20 +363,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: size.width * 0.1,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Colors.red.withOpacity(0.2)),
+                                  color: Colors.red[700]),
                               //color: Colors.blue[200].withOpacity(0.5),
                               padding: EdgeInsets.all(3),
                               child: Icon(
                                 Icons.poll_outlined,
-                                color: Colors.red[700],
+                                color: Colors.white,
                               ),
                             ),
                             Center(
                                 child: Text(
                               'Bảng điểm học tập',
                               style: TextStyle(
-                                  fontSize: size.width * 0.045,
-                                  fontWeight: FontWeight.w500),
+                                  color: Colors.white,
+                                  fontSize: size.width * 0.05,
+                                  fontWeight: FontWeight.bold),
                             )),
                           ],
                         ),

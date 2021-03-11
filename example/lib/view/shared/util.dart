@@ -7,3 +7,5 @@ class Util {
 
   static const Color myColor = Color(0xff29166F);
 }
+
+const String url = 'https://utc2.edu.vn';

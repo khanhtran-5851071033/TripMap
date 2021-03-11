@@ -1,8 +1,9 @@
 import 'package:example/model/event.dart';
+import 'package:example/view/shared/util.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:web_scraper/web_scraper.dart';
 
-String url = 'https://utc2.edu.vn';
+
 
 class EventScraper {
   final _stream = PublishSubject<List<Event>>();
