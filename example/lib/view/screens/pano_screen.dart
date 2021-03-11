@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:panorama/panorama.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:example/view/screens/floorplan_screen.dart';
 
 class PanoScreen extends StatefulWidget {
   PanoScreen({Key key, this.title}) : super(key: key);

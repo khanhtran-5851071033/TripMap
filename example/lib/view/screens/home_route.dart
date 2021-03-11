@@ -1,7 +1,5 @@
-import 'package:example/view/screens/editProFile.dart';
-import 'package:example/view/screens/floorplan_screen.dart';
+
 import 'package:example/view/screens/home_screen.dart';
-import 'package:example/view/screens/login_screen.dart';
 import 'package:example/view/screens/profile.dart';
 import 'package:example/view/screens/share.dart';
 import 'package:example/view/screens/thanhvien.dart';

@@ -1,7 +1,6 @@
 import 'package:countup/countup.dart';
 import 'package:example/model/scraper/diem_scraper.dart';
 import 'package:flutter/material.dart';
-import 'package:im_stepper/stepper.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class PointTableScreen extends StatefulWidget {

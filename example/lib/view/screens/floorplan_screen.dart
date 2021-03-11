@@ -8,7 +8,6 @@ import 'package:example/view/shared/util.dart';
 import 'package:example/view/widgets/appbar_widget.dart';
 import 'package:example/view/widgets/positioned_widget.dart';
 import 'package:example/view/widgets/raw_gesture_detector_widget.dart';
-import 'package:example/view/widgets/reset_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import 'package:sensors/sensors.dart';

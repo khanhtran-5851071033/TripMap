@@ -1,4 +1,3 @@
-import 'package:example/view/screens/floorplan_screen.dart';
 import 'package:example/view/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
