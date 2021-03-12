@@ -161,7 +161,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                   radius: size.width * 0.3,
                                   lineWidth: size.width * 0.02,
                                   animation: true,
-                                  percent: diemHe10 * 100 / 10 / 100,
+                                  percent: diemHe10 / 10,
                                   animationDuration: 2500,
                                   restartAnimation: true,
 
@@ -225,7 +225,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                   radius: size.width * 0.37,
                                   lineWidth: size.width * 0.02,
                                   animation: true,
-                                  percent: diemHe4 * 100 / 4 / 100,
+                                  percent: diemHe4 / 4,
                                   animationDuration: 2500,
                                   restartAnimation: true,
 
@@ -249,7 +249,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                   radius: size.width * 0.43,
                                   lineWidth: size.width * 0.02,
                                   animation: true,
-                                  percent: 10 / 100,
+                                  percent: 100 / 170,
                                   animationDuration: 2500,
                                   restartAnimation: true,
 
