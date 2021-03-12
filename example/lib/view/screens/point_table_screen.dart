@@ -78,7 +78,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                         Color(0xff29166F).withOpacity(.8),
                         Color(0xff29166F).withOpacity(.7),
                       ])),
-              child: StreamBuilder<List<String>>(
+              child: StreamBuilder<List>(
                   stream: diemScraper.streamDiemTong,
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
@@ -142,7 +142,9 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                                 backgroundColor:
                                                     Colors.blueAccent,
                                               ),
-                                              white('Số tín chỉ :  100'),
+                                              white('Số tín chỉ :  ' +
+                                                  snapshot.data[2].toString() +
+                                                  '/170'),
                                             ],
                                           )),
                                     ],
@@ -159,7 +161,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                               children: [
                                 CircularPercentIndicator(
                                   radius: size.width * 0.3,
-                                  lineWidth: size.width * 0.02,
+                                  lineWidth: size.width * 0.01,
                                   animation: true,
                                   percent: diemHe10 / 10,
                                   animationDuration: 2500,
@@ -170,32 +172,22 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                         vertical: size.width * 0.1,
                                         horizontal: size.width * 0.1),
                                     alignment: Alignment.center,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                    child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.center,
                                       children: [
                                         new Countup(
                                           begin: 0,
-                                          end: 68,
+                                          end: snapshot.data[2] * 100 / 170,
                                           duration:
                                               Duration(milliseconds: 2500),
                                           style: new TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
-                                              fontSize: size.width * 0.03),
+                                              fontSize: size.width * 0.05),
                                         ),
-                                        Container(
-                                          //color: Colors.black,
-                                          height: 1,
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(50)),
-                                        ),
-                                        new Text(
-                                          "100",
+                                        Text(
+                                          " %",
                                           style: new TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
@@ -246,8 +238,8 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                   ),
                                 ),
                                 CircularPercentIndicator(
-                                  radius: size.width * 0.43,
-                                  lineWidth: size.width * 0.02,
+                                  radius: size.width * 0.45,
+                                  lineWidth: size.width * 0.025,
                                   animation: true,
                                   percent: 100 / 170,
                                   animationDuration: 2500,
@@ -263,7 +255,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                         0), // 10% of the width, so there are ten blinds.
                                     colors: [
                                       Colors.blue,
-                                      Colors.lightBlueAccent
+                                      Colors.blue[200]
                                     ], // red to yellow
                                     tileMode: TileMode
                                         .repeated, // repeats the gradient over the canvas

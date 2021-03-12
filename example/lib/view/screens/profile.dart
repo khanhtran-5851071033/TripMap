@@ -1,16 +1,21 @@
 import 'dart:io';
 
 import 'package:countup/countup.dart';
+import 'package:example/model/scraper/diem_scraper.dart';
+import 'package:example/model/sinh_vien.dart';
 import 'package:example/view/screens/editProFile.dart';
 import 'package:example/view/screens/help_screen.dart';
 import 'package:example/view/screens/login_screen.dart';
 import 'package:example/view/screens/point_table_screen.dart';
 import 'package:example/view/screens/setting_screen.dart';
+import 'package:example/view/shared/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProFile extends StatefulWidget {
+  final SinhVien sinhvien;
+  ProFile({this.sinhvien});
   @override
   _ProFileState createState() => _ProFileState();
 }
@@ -25,14 +30,13 @@ class _ProFileState extends State<ProFile> {
     {'title': 'Cài đặt', 'icon': Icons.settings},
     {'title': 'Đăng xuất', 'icon': Icons.exit_to_app},
   ];
-  List<Widget> screen = [
+  List screen = [
     EditProFile(),
     PointTableScreen(),
     HelpScreen(),
     EditProFile(), //link web
     EditProFile(), //link web
     SettingScreen(),
-    LoginScreen(),
   ];
   File _image;
   String linkImage;
@@ -96,6 +100,13 @@ class _ProFileState extends State<ProFile> {
         });
   }
 
+  DiemScraper diemScraper = DiemScraper();
+  @override
+  void initState() {
+    super.initState();
+    // diemScraper.getThongTin();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -134,7 +145,7 @@ class _ProFileState extends State<ProFile> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
-                _name('Khánh Trần', size),
+                _name(widget.sinhvien.hoten, size),
                 SizedBox(
                   height: size.height * 0.035,
                 ),
@@ -157,13 +168,22 @@ class _ProFileState extends State<ProFile> {
                             children: [
                               Container(
                                 child: ListTile(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                screen[index]));
-                                  },
+                                  onTap: index != buttonList.length - 1
+                                      ? () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      screen[index]));
+                                        }
+                                      : () {
+                                          removeUserInfo();
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LoginScreen()));
+                                        },
                                   leading: Icon(
                                     buttonList[index]['icon'],
                                     color: Color(0xff29166F),

@@ -1,4 +1,6 @@
 import 'package:example/core/models/models.dart';
+import 'package:example/model/sinh_vien.dart';
+import 'package:example/view/screens/attention_screen.dart';
 import 'package:example/view/screens/floorplan_screen.dart';
 import 'package:example/view/screens/pano_screen.dart';
 import 'package:example/view/screens/point_table_screen.dart';
@@ -6,6 +8,8 @@ import 'package:example/view/shared/global.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
+  final SinhVien sinhvien;
+  HomeScreen({this.sinhvien});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -35,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Hi Khánh !',
+                      'Hi ' + widget.sinhvien.hoten + ' !',
                       style: TextStyle(
                           color: Colors.white, fontSize: size.width * 0.06),
                     ),
@@ -129,7 +133,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PointTableScreen()));
+                                builder: (context) => AttentionScreen(
+                                    sinhvien: widget.sinhvien)));
                       },
                       child: Container(
                         width: size.width,

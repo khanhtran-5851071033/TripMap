@@ -1,4 +1,4 @@
-
+import 'package:example/model/sinh_vien.dart';
 import 'package:example/view/screens/home_screen.dart';
 import 'package:example/view/screens/profile.dart';
 import 'package:example/view/screens/share.dart';
@@ -7,6 +7,8 @@ import 'package:example/view/screens/tintuc.dart';
 import 'package:flutter/material.dart';
 
 class HomeRoute extends StatefulWidget {
+  final SinhVien sinhvien;
+  HomeRoute({this.sinhvien});
   @override
   _HomeRouteState createState() => _HomeRouteState();
 }
@@ -44,11 +46,11 @@ class _HomeRouteState extends State<HomeRoute> {
         controller: _controller,
         physics: NeverScrollableScrollPhysics(),
         children: [
-          HomeScreen(),
+          HomeScreen(sinhvien:widget.sinhvien),
           News(),
           ShareFriend(),
           Person(),
-          ProFile(),
+          ProFile(sinhvien:widget.sinhvien),
         ],
       ),
       // IndexedStack(

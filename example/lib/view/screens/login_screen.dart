@@ -1,4 +1,6 @@
+import 'package:example/model/scraper/diem_scraper.dart';
 import 'package:example/view/screens/home_route.dart';
+import 'package:example/view/shared/util.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -7,6 +9,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  DiemScraper diemScraper = DiemScraper();
   bool checkBoxValue = true,
       focus = false,
       isPass = true,
@@ -14,6 +19,20 @@ class _LoginScreenState extends State<LoginScreen> {
       isErro = false,
       isIconColorPass = false,
       isIconColorEmail = false;
+  @override
+  void initState() {
+    super.initState();
+    diemScraper.streamController.stream.listen((msv) async {
+      var sinhvien = await diemScraper.getThongTin(msv);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeRoute(
+                    sinhvien: sinhvien,
+                  )));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -119,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: height * 0.02,
                           ),
                           TextField(
+                            controller: emailController,
                             onTap: () {
                               setState(() {
                                 focus = true;
@@ -186,6 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: height * 0.02,
                           ),
                           TextField(
+                              controller: passController,
                               onTap: () {
                                 setState(() {
                                   focus = true;
@@ -264,10 +285,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           RaisedButton(
                             color: Color(0xff29166F),
                             onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeRoute()));
+                              saveUserInfo(emailController.text.trim(),
+                                  passController.text.trim());
+                              diemScraper.streamController.sink
+                                  .add(emailController.text.trim());
                             },
                             child: Container(
                               width: width,
