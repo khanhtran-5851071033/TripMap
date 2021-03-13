@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       'Hi ' + widget.sinhvien.hoten + ' !',
+                      
                       style: TextStyle(
                           color: Colors.white, fontSize: size.width * 0.06),
                     ),

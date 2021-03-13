@@ -30,6 +30,7 @@ class _ProFileState extends State<ProFile> {
     {'title': 'Cài đặt', 'icon': Icons.settings},
     {'title': 'Đăng xuất', 'icon': Icons.exit_to_app},
   ];
+
   List screen = [
     EditProFile(),
     PointTableScreen(),
@@ -170,11 +171,20 @@ class _ProFileState extends State<ProFile> {
                                 child: ListTile(
                                   onTap: index != buttonList.length - 1
                                       ? () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      screen[index]));
+                                          index == 0
+                                              ? Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EditProFile(
+                                                            sinhvien:
+                                                                widget.sinhvien,
+                                                          )))
+                                              : Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          screen[index]()));
                                         }
                                       : () {
                                           removeUserInfo();

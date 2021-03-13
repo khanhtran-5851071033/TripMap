@@ -144,7 +144,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                               ),
                                               white('Số tín chỉ :  ' +
                                                   snapshot.data[2].toString() +
-                                                  '/170'),
+                                                  '/142'),
                                             ],
                                           )),
                                     ],
@@ -168,9 +168,6 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                   restartAnimation: true,
 
                                   center: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: size.width * 0.1,
-                                        horizontal: size.width * 0.1),
                                     alignment: Alignment.center,
                                     child: Row(
                                       mainAxisAlignment:
@@ -178,7 +175,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                       children: [
                                         new Countup(
                                           begin: 0,
-                                          end: snapshot.data[2] * 100 / 170,
+                                          end: snapshot.data[2] * 100 / 142,
                                           duration:
                                               Duration(milliseconds: 2500),
                                           style: new TextStyle(
@@ -214,7 +211,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                   ),
                                 ),
                                 CircularPercentIndicator(
-                                  radius: size.width * 0.37,
+                                  radius: size.width * 0.35,
                                   lineWidth: size.width * 0.02,
                                   animation: true,
                                   percent: diemHe4 / 4,
@@ -238,8 +235,8 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                   ),
                                 ),
                                 CircularPercentIndicator(
-                                  radius: size.width * 0.45,
-                                  lineWidth: size.width * 0.025,
+                                  radius: size.width * 0.41,
+                                  lineWidth: size.width * 0.02,
                                   animation: true,
                                   percent: 100 / 170,
                                   animationDuration: 2500,

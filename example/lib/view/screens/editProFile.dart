@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:example/model/sinh_vien.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProFile extends StatefulWidget {
+  final SinhVien sinhvien;
+  EditProFile({this.sinhvien});
   @override
   _EditProFileState createState() => _EditProFileState();
 }
@@ -138,7 +141,7 @@ class _EditProFileState extends State<EditProFile> {
                           BorderSide(width: 0.5, color: Color(0xff29166F)),
                     ),
                     hintStyle: TextStyle(color: Colors.grey),
-                    hintText: 'Your name'),
+                    hintText: widget.sinhvien.hoten),
               ),
               SizedBox(
                 height: height * 0.02,
@@ -197,7 +200,9 @@ class _EditProFileState extends State<EditProFile> {
                           BorderSide(width: 0.5, color: Color(0xff29166F)),
                     ),
                     hintStyle: TextStyle(color: Colors.grey),
-                    hintText: DateTime.now().toString().substring(0, 10)),
+                    hintText: widget.sinhvien.ngaysinh +
+                        ' / ' +
+                        widget.sinhvien.noisinh),
               ),
               SizedBox(
                 height: height * 0.02,
@@ -262,7 +267,7 @@ class _EditProFileState extends State<EditProFile> {
                           BorderSide(width: 0.5, color: Color(0xff29166F)),
                     ),
                     hintStyle: TextStyle(color: Colors.grey),
-                    hintText: 'msv@st.utc2.edu.vn'),
+                    hintText: widget.sinhvien.msv + '@st.utc2.edu.vn'),
               ),
               SizedBox(
                 height: height * 0.02,
@@ -361,7 +366,7 @@ class _EditProFileState extends State<EditProFile> {
                           BorderSide(width: 0.5, color: Color(0xff29166F)),
                     ),
                     hintStyle: TextStyle(color: Colors.grey),
-                    hintText: 'Your phone number'),
+                    hintText: widget.sinhvien.lop+' / '+widget.sinhvien.hedaotao),
               ),
               SizedBox(
                 height: height * 0.04,
