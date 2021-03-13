@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:countup/countup.dart';
 import 'package:example/model/scraper/diem_scraper.dart';
 import 'package:example/model/sinh_vien.dart';
+import 'package:example/view/screens/detail_point.dart';
 import 'package:example/view/screens/editProFile.dart';
 import 'package:example/view/screens/help_screen.dart';
 import 'package:example/view/screens/login_screen.dart';
@@ -35,7 +36,7 @@ class _ProFileState extends State<ProFile> {
     EditProFile(),
     PointTableScreen(),
     HelpScreen(),
-    EditProFile(), //link web
+    DetailPoint(), //link web
     EditProFile(), //link web
     SettingScreen(),
   ];
@@ -184,7 +185,7 @@ class _ProFileState extends State<ProFile> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          screen[index]()));
+                                                          screen[index]));
                                         }
                                       : () {
                                           removeUserInfo();

@@ -39,8 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Hi ' + widget.sinhvien.hoten + ' !',
-                      
+                      'Hi ' +
+                          widget.sinhvien.hoten.split(' ')[
+                              widget.sinhvien.hoten.split(' ').length - 2] +
+                          ' ' +
+                          widget.sinhvien.hoten.split(' ')[
+                              widget.sinhvien.hoten.split(' ').length - 1] +
+                          ' !',
                       style: TextStyle(
                           color: Colors.white, fontSize: size.width * 0.06),
                     ),
@@ -165,12 +170,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: size.width * 0.1,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Colors.blue[700]),
+                                  color: Colors.white),
                               //color: Colors.blue[200].withOpacity(0.5),
                               padding: EdgeInsets.all(3),
                               child: Icon(
                                 Icons.qr_code_scanner_rounded,
-                                color: Colors.white,
+                                color: Colors.blue[700],
                               ),
                             ),
                             Center(
@@ -235,12 +240,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          color: Colors.yellow[900]),
+                                          color: Colors.white),
                                       //color: Colors.blue[200].withOpacity(0.5),
                                       padding: EdgeInsets.all(3),
                                       child: Icon(
                                         Icons.explore,
-                                        color: Colors.white,
+                                        color: Colors.yellow[900],
                                       ),
                                     ),
                                     Center(
@@ -299,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            color: Colors.green[700]),
+                                            color: Colors.white),
                                         //color: Colors.blue[200].withOpacity(0.5),
                                         padding: EdgeInsets.all(5),
                                         child: ClipRRect(
@@ -369,12 +374,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: size.width * 0.1,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Colors.red[700]),
+                                  color: Colors.white),
                               //color: Colors.blue[200].withOpacity(0.5),
                               padding: EdgeInsets.all(3),
                               child: Icon(
                                 Icons.poll_outlined,
-                                color: Colors.white,
+                                color: Colors.red[700],
                               ),
                             ),
                             Center(

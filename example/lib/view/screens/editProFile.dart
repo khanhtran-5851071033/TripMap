@@ -366,7 +366,8 @@ class _EditProFileState extends State<EditProFile> {
                           BorderSide(width: 0.5, color: Color(0xff29166F)),
                     ),
                     hintStyle: TextStyle(color: Colors.grey),
-                    hintText: widget.sinhvien.lop+' / '+widget.sinhvien.hedaotao),
+                    hintText:
+                        widget.sinhvien.lop + ' / ' + widget.sinhvien.hedaotao),
               ),
               SizedBox(
                 height: height * 0.04,

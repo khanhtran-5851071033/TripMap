@@ -55,11 +55,12 @@ class DiemScraper {
     return sinhvien;
   }
 
-  getDiem() async {
+  void getDiem() async {
+    var msv = await getMsv();
     List<String> ds_noidung = [];
     List<HocKi> ds_HocKi = [];
     if (await webScraper.loadFullURL(
-        'http://xemdiem.utc2.edu.vn/svxemdiem.aspx?ID=5851071044&istinchi=1')) {
+        'http://xemdiem.utc2.edu.vn/svxemdiem.aspx?ID=$msv&istinchi=1')) {
       List<Map<String, dynamic>> noidung = webScraper.getElement(
           'div#thongtinsinhvien > p > table > tbody > tr > td > table > tbody > tr>td',
           ['']);

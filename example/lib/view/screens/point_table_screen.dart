@@ -1,6 +1,8 @@
 import 'package:countup/countup.dart';
 import 'package:example/model/hoc_ky.dart';
+import 'package:example/model/mon_hoc.dart';
 import 'package:example/model/scraper/diem_scraper.dart';
+import 'package:example/view/screens/detail_point.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -11,6 +13,16 @@ class PointTableScreen extends StatefulWidget {
 }
 
 class _PointTableScreenState extends State<PointTableScreen> {
+  String getTinChi(List<MonHoc> ds_MonHoc) {
+    int tongtc = 0;
+
+    for (int i = 0; i < ds_MonHoc.length; i++) {
+      tongtc += int.parse(ds_MonHoc[i].tinchi);
+    }
+
+    return tongtc.toString();
+  }
+
   int curStep = 0;
   DiemScraper diemScraper = DiemScraper();
   List<Step> steps = [
@@ -388,7 +400,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                             Expanded(
                               child: Container(
                                 height: size.height / 2,
-                                alignment: Alignment.center,
+                                alignment: Alignment.topCenter,
                                 child: Stepper(
                                   currentStep: curStep,
                                   physics: BouncingScrollPhysics(),
@@ -452,12 +464,50 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                                 ],
                                               ),
                                             ),
-                                            Text(
-                                              'Số tín chỉ tích luỹ: 18',
-                                              style: TextStyle(
-                                                  fontSize: size.width * 0.035,
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.bold),
+                                            RichText(
+                                              text: TextSpan(
+                                                text: 'Số tin chỉ tích luỹ:  ',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        size.width * 0.035,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: getTinChi(
+                                                          list[index]
+                                                              .getDsMonHoc()),
+                                                      style: TextStyle(
+                                                        color: Util.myColor,
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            DetailPoint(
+                                                              hocKi:
+                                                                  list[index],
+                                                              list: list,
+                                                            )));
+                                              },
+                                              child: Text(
+                                                'Xem chi tiết',
+                                                style: TextStyle(
+                                                    fontSize:
+                                                        size.width * 0.035,
+                                                    color: Colors.blue[600],
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                              ),
                                             ),
                                           ],
                                         ),
