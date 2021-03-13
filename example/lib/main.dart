@@ -1,5 +1,6 @@
 import 'package:example/core/viewmodels/floorplan_model.dart';
 import 'package:example/view/screens/splash_screen.dart';
+import 'package:example/view/shared/util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'UTC2',
-        theme: ThemeData(fontFamily: 'Nunito'),
+        theme: ThemeData(fontFamily: 'Nunito', primaryColor: Util.myColor),
         home: SplashScreen(),
       ),
     );

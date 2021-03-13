@@ -11,6 +11,8 @@ class DiemScraper {
   Stream<List> get streamDiemTong => _streamDiemTong.stream;
   final _streamThongTin = PublishSubject<SinhVien>();
   Stream<SinhVien> get streamThongTin => _streamThongTin.stream;
+  final _streamHocKy = PublishSubject<List<HocKi>>();
+  Stream<List<HocKi>> get streamHocKy => _streamHocKy.stream;
   StreamController<String> streamController =
       StreamController<String>.broadcast();
 
@@ -53,11 +55,11 @@ class DiemScraper {
     return sinhvien;
   }
 
-  Future<List<HocKi>> getDiem() async {
+  getDiem() async {
     List<String> ds_noidung = [];
     List<HocKi> ds_HocKi = [];
     if (await webScraper.loadFullURL(
-        'http://xemdiem.utc2.edu.vn/svxemdiem.aspx?ID=5851071023&istinchi=1')) {
+        'http://xemdiem.utc2.edu.vn/svxemdiem.aspx?ID=5851071044&istinchi=1')) {
       List<Map<String, dynamic>> noidung = webScraper.getElement(
           'div#thongtinsinhvien > p > table > tbody > tr > td > table > tbody > tr>td',
           ['']);
@@ -86,12 +88,14 @@ class DiemScraper {
         }
       }
     }
-    return ds_HocKi;
+    ds_HocKi.removeAt(0);
+    _streamHocKy.sink.add(ds_HocKi);
   }
 
   void dispose() {
     _streamDiemTong.close();
     _streamThongTin.close();
     streamController.close();
+    _streamHocKy.close();
   }
 }

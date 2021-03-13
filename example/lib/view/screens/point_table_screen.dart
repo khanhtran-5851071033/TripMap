@@ -1,5 +1,7 @@
 import 'package:countup/countup.dart';
+import 'package:example/model/hoc_ky.dart';
 import 'package:example/model/scraper/diem_scraper.dart';
+import 'package:example/view/shared/util.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -9,12 +11,62 @@ class PointTableScreen extends StatefulWidget {
 }
 
 class _PointTableScreenState extends State<PointTableScreen> {
+  int curStep = 0;
   DiemScraper diemScraper = DiemScraper();
   List<Step> steps = [
     Step(
       title: const Text('New Account'),
       isActive: true,
       state: StepState.complete,
+      content: Container(
+        alignment: Alignment.centerLeft,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RichText(
+              text: TextSpan(
+                text: 'Điểm tích luỹ:  ',
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: '2.93',
+                      style: TextStyle(
+                        color: Util.myColor,
+                      )),
+                  TextSpan(text: ' (Hệ 4) | ', style: TextStyle()),
+                  TextSpan(
+                      text: '7.8',
+                      style: TextStyle(
+                        color: Util.myColor,
+                      )),
+                  TextSpan(text: ' (Hệ 10)', style: TextStyle()),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    ),
+    Step(
+      title: const Text('New Account 1'),
+      isActive: true,
+      state: StepState.complete,
+      content: Container(),
+    ),
+    Step(
+      title: const Text('New Account 2'),
+      isActive: true,
+      state: StepState.complete,
+      content: Container(),
+    ),
+    Step(
+      title: const Text('New Account 3'),
+      isActive: true,
+      state: StepState.complete,
       content: Container(),
     ),
     Step(
@@ -24,7 +76,19 @@ class _PointTableScreenState extends State<PointTableScreen> {
       content: Container(),
     ),
     Step(
-      title: const Text('New Account'),
+      title: const Text('New Account 1'),
+      isActive: true,
+      state: StepState.complete,
+      content: Container(),
+    ),
+    Step(
+      title: const Text('New Account 2'),
+      isActive: true,
+      state: StepState.complete,
+      content: Container(),
+    ),
+    Step(
+      title: const Text('New Account 3'),
       isActive: true,
       state: StepState.complete,
       content: Container(),
@@ -35,6 +99,12 @@ class _PointTableScreenState extends State<PointTableScreen> {
     super.initState();
     diemScraper.getDiemTong();
     diemScraper.getDiem();
+  }
+
+  @override
+  void dispose() {
+    diemScraper.dispose();
+    super.dispose();
   }
 
   @override
@@ -287,62 +357,122 @@ class _PointTableScreenState extends State<PointTableScreen> {
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Quá trình',
-                          style: new TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black87,
-                              fontSize: size.width * 0.04),
-                        ),
-                        Text(
-                          'All(8)',
-                          style: new TextStyle(
-                              color: Color(0xff29166F),
-                              fontSize: size.width * 0.035),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Expanded(
-                      child: Container(
-                          // color: Colors.black,
-
-                          child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Container(
-                              height: size.height / 2,
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: [
-                                  Stepper(
-                                    physics: ClampingScrollPhysics(),
-                                    controlsBuilder: (BuildContext context,
-                                        {VoidCallback onStepContinue,
-                                        VoidCallback onStepCancel}) {
-                                      return Container();
-                                    },
-                                    // currentStep: 1,
-                                    steps: steps,
-                                  ),
-                                ],
-                              ),
+                child: StreamBuilder<List<HocKi>>(
+                    stream: diemScraper.streamHocKy,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<HocKi> list = snapshot.data.reversed.toList();
+                        return Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Quá trình',
+                                  style: new TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black87,
+                                      fontSize: size.width * 0.04),
+                                ),
+                                Text(
+                                  'All(${list.length})',
+                                  style: new TextStyle(
+                                      color: Color(0xff29166F),
+                                      fontSize: size.width * 0.035),
+                                ),
+                              ],
                             ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Expanded(
+                              child: Container(
+                                height: size.height / 2,
+                                alignment: Alignment.center,
+                                child: Stepper(
+                                  currentStep: curStep,
+                                  physics: BouncingScrollPhysics(),
+                                  controlsBuilder: (BuildContext context,
+                                      {VoidCallback onStepContinue,
+                                      VoidCallback onStepCancel}) {
+                                    return Container();
+                                  },
+                                  onStepTapped: (step) {
+                                    setState(() {
+                                      curStep = step;
+                                    });
+                                  },
+                                  // currentStep: 1,
+                                  steps: List.generate(list.length, (index) {
+                                    return Step(
+                                      title: Text(
+                                        list[index].namhoc,
+                                        style: TextStyle(
+                                            fontSize: size.width * 0.04,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      isActive: true,
+                                      state: StepState.complete,
+                                      content: Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            RichText(
+                                              text: TextSpan(
+                                                text: 'Điểm tích luỹ:  ',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        size.width * 0.035,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: list[index]
+                                                          .getDiemHe4(),
+                                                      style: TextStyle(
+                                                        color: Util.myColor,
+                                                      )),
+                                                  TextSpan(
+                                                      text: ' (Hệ 4) | ',
+                                                      style: TextStyle()),
+                                                  TextSpan(
+                                                      text: list[index]
+                                                          .getDiemHe10(),
+                                                      style: TextStyle(
+                                                        color: Util.myColor,
+                                                      )),
+                                                  TextSpan(
+                                                      text: ' (Hệ 10)',
+                                                      style: TextStyle()),
+                                                ],
+                                              ),
+                                            ),
+                                            Text(
+                                              'Số tín chỉ tích luỹ: 18',
+                                              style: TextStyle(
+                                                  fontSize: size.width * 0.035,
+                                                  color: Colors.grey,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              ),
+                            )
                           ],
-                        ),
-                      )),
-                    )
-                  ],
-                ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }),
               ),
             )
           ],
