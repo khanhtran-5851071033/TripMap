@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 class PositionedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     final model = Provider.of<FloorPlanModel>(context);
     final List<Building> dayNha =
         Global.dayNha.map((item) => Building.fromMap(item)).toList();
