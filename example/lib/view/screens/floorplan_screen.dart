@@ -176,6 +176,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                   child: Container(
                     color: Colors.transparent,
                     height: scsize.height * 0.15,
+                    width: scsize.width * 0.5,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -219,13 +220,35 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                       dayNha[index].name,
                                       style: TextStyle(color: Colors.black),
                                     ),
-                                    Text(
-                                      dayNha[index].name,
-                                      style: TextStyle(color: Colors.black),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Chỉ đường',
+                                          style: TextStyle(color: Util.myColor),
+                                        ),
+                                        SizedBox(
+                                          width: 7,
+                                        ),
+                                        Icon(
+                                          Icons.directions,
+                                          color: Color(0xff29166F),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      dayNha[index].name,
-                                      style: TextStyle(color: Colors.black),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Review 360',
+                                          style: TextStyle(color: Util.myColor),
+                                        ),
+                                        SizedBox(
+                                          width: 7,
+                                        ),
+                                        Icon(
+                                          Icons.directions,
+                                          color: Color(0xff29166F),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
