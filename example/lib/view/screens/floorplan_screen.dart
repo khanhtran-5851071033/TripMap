@@ -360,15 +360,15 @@ class Painter extends CustomPainter {
     var curNode = start;
     List<Offset> points = [];
     points.add(start.location);
-    for (int i = 0; i < listBuilding.length; i++) {
-      if (listBuilding[i].node.contains(curNode.id)) {
-        points.add(listBuilding[i].location);
-        curNode = listBuilding[i];
-        i = 0;
-      }
-      // if(  sqrt(   pow(listBuilding[i].location.dx-curNode.dx,2)+ pow(listBuilding[i].location.dy-curNode.dy,2)    )  );
-    }
-    
+    // for (int i = 0; i < listBuilding.length; i++) {
+    //   if (listBuilding[i].node.contains(curNode.id)) {
+    //     points.add(listBuilding[i].location);
+    //     curNode = listBuilding[i];
+    //     i = 0;
+    //   }
+    //   // if(  sqrt(   pow(listBuilding[i].location.dx-curNode.dx,2)+ pow(listBuilding[i].location.dy-curNode.dy,2)    )  );
+    // }
+
     points.add(end.location);
     final paint = Paint()
       ..color = Colors.red
