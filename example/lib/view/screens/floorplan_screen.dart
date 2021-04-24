@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:example/core/models/models.dart';
 import 'package:example/core/viewmodels/floorplan_model.dart';
 import 'package:example/model/end_point.dart';
+import 'package:example/path_finder/dijsktra.dart';
+import 'package:example/path_finder/repo_path.dart';
 import 'package:example/view/screens/pano_screen.dart';
 import 'package:example/view/shared/global.dart';
 import 'package:example/view/shared/util.dart';
@@ -25,12 +27,11 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
   double step = 10, _opacity = 0.8, size = 20;
   int _direction = 0;
   String huong = '';
+  int diemDau = 0, diemCuoi = 0;
 
   // List<double> _gyroscopeValues;
   List<StreamSubscription<dynamic>> _streamSubscriptions =
       <StreamSubscription<dynamic>>[];
-  final List<Building> dayNha =
-      Global.dayNha.map((item) => Building.fromMap(item)).toList();
   @override
   void initState() {
     super.initState();
@@ -72,6 +73,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBarWidget(),
+        
       ),
       body: Container(
         height: scsize.height * 0.85,
@@ -89,8 +91,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                     alignment: Alignment.center,
                     children: [
                       Container(
-                        width: scsize.width,
-                        height: scsize.width,
+                        width: 400,
+                        height: 400,
                         // color: Colors.grey,
                         child: Hero(
                           tag: 'mapUtc2',
@@ -104,66 +106,30 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                       Container(
                         // color: Colors.black.withOpacity(0.7),
                         child: CustomPaint(
-                          size: Size(scsize.width, scsize.width),
-                          painter: Painter(),
+                          size: Size(411.4, 411.4),
+                          painter:
+                              Painter(diemDau: diemDau, diemCuoi: diemCuoi),
                         ),
                       ),
                       // GridViewWidget(),
                       Container(
-                          width: scsize.width,
-                          height: scsize.width,
-                          child: PositionedWidget()),
-                      Container(
-                        width: scsize.width,
-                        height: scsize.width,
-                        child: Stack(
-                          children: [
-                            AnimatedPositioned(
-                              duration: Duration(milliseconds: 300),
-                              left: x - 30,
-                              top: y - 30,
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Opacity(
-                                    opacity: _opacity,
-                                    child: Container(
-                                      // duration: Duration(milliseconds: 200),
-                                      decoration: BoxDecoration(
-                                          color: Colors.blueAccent,
-                                          shape: BoxShape.circle),
-                                      height: size,
-                                      width: size,
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 60,
-                                    height: 60,
-                                  ),
-                                  Container(
-                                    width: 20,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.blue,
-                                      // border: Border.all(
-                                      //     width: 2, color: Colors.black)
-                                    ),
-                                    child: RotatedBox(
-                                      quarterTurns: _direction,
-                                      child: Icon(
-                                        Icons.expand_less,
-                                        size: 20,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                          width: 411.4,
+                          height: 411.4,
+                          child: PositionedWidget(
+                            findPath: (diem) {
+                              if (diem.length == 2) {
+                                setState(() {
+                                  diemDau = diem[0];
+                                  diemCuoi = diem[1];
+                                });
+                              } else {
+                                setState(() {
+                                  diemDau = 0;
+                                  diemCuoi = 0;
+                                });
+                              }
+                            },
+                          )),
                     ],
                   ),
                 ),
@@ -172,64 +138,67 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                color: Colors.transparent,
+                color: Colors.white,
                 height: scsize.height * 0.15,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: List.generate(dayNha.length, (index) {
-                      return Container(
-                        // margin: EdgeInsets.symmetric(vertical: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 3,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-                        padding: EdgeInsets.fromLTRB(4, 5, 10, 5),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                'assets/image.png',
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.fitHeight,
+                    children: List.generate(listBuilding.length, (index) {
+                      return listBuilding[index].name == ''
+                          ? Container()
+                          : Container(
+                              // margin: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 3,
+                                    blurRadius: 5,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
                               ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  dayNha[index].name,
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                Text(
-                                  dayNha[index].name,
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                                Text(
-                                  dayNha[index].name,
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 15),
+                              padding: EdgeInsets.fromLTRB(4, 5, 10, 5),
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                      'assets/image.png',
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        listBuilding[index].name,
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      Text(
+                                        listBuilding[index].name,
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      Text(
+                                        listBuilding[index].name,
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
                     }),
                   ),
                 ),
@@ -328,53 +297,40 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
 }
 
 class Painter extends CustomPainter {
-  // final List listBuilding;
-  // Painter({this.listBuilding});
-  var listBuilding = [
-    EndPoint('C2', 'C2', Offset(170, 300), ['T1']),
-    EndPoint('E7', 'E7', Offset(110, 110), ['T7']),
-    EndPoint('T1', '', Offset(170, 288), ['C2', 'T2', 'T3']),
-    EndPoint('T2', '', Offset(186, 288), ['T1', 'T6']),
-    EndPoint('T3', '', Offset(124, 288), ['T1', 'T4']),
-    EndPoint('T4', '', Offset(124, 236), ['T3']),
-    EndPoint('T5', '', Offset(50, 236), ['T4']),
-    EndPoint('T6', '', Offset(186, 236), ['T4']),
-    EndPoint('T7', '', Offset(50, 110), ['T5', 'E7']),
-  ];
-  // var listTurn = [
-  //   Offset(170, 288),
-  //   // TurnPoint(Offset(170, 288),[])
-  //   Offset(186, 288),
-  //   Offset(124, 288),
-  //   Offset(124, 236),
-  //   Offset(50, 236),
-  //   Offset(185, 236),
-  //   Offset(50, 110)
-  // ];
+  final int diemDau, diemCuoi;
+
+  Painter({this.diemDau, this.diemCuoi});
   @override
   void paint(Canvas canvas, Size size) {
-    final pointMode = PointMode.polygon;
+    if (diemDau != 0 && diemCuoi != 0) {
+      final pointMode = PointMode.polygon;
+      List<Offset> path = [];
 
-    var start = listBuilding[0];
-    var end = listBuilding[1];
-    var curNode = start;
-    List<Offset> points = [];
-    points.add(start.location);
-    // for (int i = 0; i < listBuilding.length; i++) {
-    //   if (listBuilding[i].node.contains(curNode.id)) {
-    //     points.add(listBuilding[i].location);
-    //     curNode = listBuilding[i];
-    //     i = 0;
-    //   }
-    //   // if(  sqrt(   pow(listBuilding[i].location.dx-curNode.dx,2)+ pow(listBuilding[i].location.dy-curNode.dy,2)    )  );
-    // }
+      List<int> diem = Dijsktra.findPath(diemDau, diemCuoi);
 
-    points.add(end.location);
-    final paint = Paint()
-      ..color = Colors.red
-      ..strokeWidth = 5
-      ..strokeCap = StrokeCap.round;
-    canvas.drawPoints(pointMode, points, paint);
+      for (int i = 0; i < diem.length; i++) {
+        for (int j = 0; j < listBuilding.length; j++) {
+          if ((listBuilding[j].id) == diem[i]) {
+            path.add(listBuilding[j].location);
+          }
+        }
+      }
+      if (path.isNotEmpty) {
+        final paint = Paint()
+          ..color = Colors.blue
+          ..strokeWidth = 5
+          ..strokeCap = StrokeCap.round;
+        canvas.drawPoints(pointMode, path, paint);
+      }
+    } else if (diemDau == 0 || diemCuoi == 0) {
+      final pointMode = PointMode.polygon;
+      List<Offset> path = [Offset(0, 0), Offset(1, 1)];
+      final paint = Paint()
+        ..color = Colors.transparent
+        ..strokeWidth = 5
+        ..strokeCap = StrokeCap.round;
+      canvas.drawPoints(pointMode, path, paint);
+    }
   }
 
   @override
