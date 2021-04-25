@@ -1,4 +1,4 @@
-import 'package:example/view/screens/thanhvien.dart';
+import 'package:example/view/screens/member/thanhvien.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 

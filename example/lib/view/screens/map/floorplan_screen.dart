@@ -6,7 +6,7 @@ import 'package:example/core/viewmodels/floorplan_model.dart';
 import 'package:example/model/end_point.dart';
 import 'package:example/path_finder/dijsktra.dart';
 import 'package:example/path_finder/repo_path.dart';
-import 'package:example/view/screens/pano_screen.dart';
+import 'package:example/view/screens/map/pano_screen.dart';
 import 'package:example/view/shared/global.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:example/view/widgets/appbar_widget.dart';
@@ -21,7 +21,8 @@ class FloorPlanScreen extends StatefulWidget {
   _FloorPlanScreenState createState() => _FloorPlanScreenState();
 }
 
-class _FloorPlanScreenState extends State<FloorPlanScreen> {
+class _FloorPlanScreenState extends State<FloorPlanScreen>
+    with SingleTickerProviderStateMixin {
   double x = 40, y = 200;
   double xdef = 40, ydef = 200;
   double step = 10, _opacity = 0.8, size = 20;
@@ -32,35 +33,64 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
   // List<double> _gyroscopeValues;
   List<StreamSubscription<dynamic>> _streamSubscriptions =
       <StreamSubscription<dynamic>>[];
+  AnimationController _controller;
+  Animation _animation;
+  Path _path;
+
   @override
   void initState() {
+    _controller = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 5000));
     super.initState();
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
+      ..addListener(() {
+        setState(() {});
+      });
 
-    // _streamSubscriptions.add(gyroscopeEvents.listen((GyroscopeEvent event) {
-    //   setState(() {
-    //     // _gyroscopeValues = <double>[event.x, event.y, event.z];
-    //     if (event.z > 2) {
-    //       setState(() {
-    //         _direction -= 1;
-    //         huong = 'trai';
-    //       });
-    //     } else if (event.z < -2) {
-    //       setState(() {
-    //         _direction += 1;
-    //         huong = 'phai';
-    //       });
-    //     } else {
-    //       setState(() {
-    //         huong = 'thang';
-    //       });
-    //     }
-    //   });
-    // }));
+    _controller.repeat();
+    _path = drawPath();
+  }
+
+  Path drawPath() {
+    Path path = Path();
+
+    if (diemDau != 0 && diemCuoi != 0) {
+      List<int> diem = Dijsktra.findPath(diemDau, diemCuoi);
+      double prevX = 0;
+      double prevY = 0;
+      for (int i = 0; i < diem.length; i++) {
+        for (int j = 0; j < listBuilding.length; j++) {
+          if ((listBuilding[j].id) == diem[i]) {
+            if (prevX == 0 && prevY == 0) {
+              path.moveTo(
+                  listBuilding[j].location.dx, listBuilding[j].location.dy);
+              prevX = listBuilding[j].location.dx;
+              prevY = listBuilding[j].location.dy;
+            } else {
+              path.quadraticBezierTo(prevX, prevY, listBuilding[j].location.dx,
+                  listBuilding[j].location.dy);
+              prevX = listBuilding[j].location.dx;
+              prevY = listBuilding[j].location.dy;
+            }
+          }
+        }
+      }
+    } else if (diemDau == 0 || diemCuoi == 0) {
+      path.moveTo(0, 0);
+    }
+    return path;
+  }
+
+  Offset calculate(value) {
+    PathMetrics pathMetrics = _path.computeMetrics();
+    PathMetric pathMetric = pathMetrics.elementAt(0);
+    value = pathMetric.length * value;
+    Tangent pos = pathMetric.getTangentForOffset(value);
+    return pos.position;
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -73,7 +103,6 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: AppBarWidget(),
-        
       ),
       body: Container(
         height: scsize.height * 0.85,
@@ -103,13 +132,32 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                         ),
                       ),
 
-                      Container(
-                        // color: Colors.black.withOpacity(0.7),
-                        child: CustomPaint(
-                          size: Size(411.4, 411.4),
-                          painter:
-                              Painter(diemDau: diemDau, diemCuoi: diemCuoi),
-                        ),
+                      Stack(
+                        children: [
+                          Container(
+                            // color: Colors.black.withOpacity(0.7),
+                            child: CustomPaint(
+                              size: Size(411.4, 411.4),
+                              painter: Painter(path: _path),
+                            ),
+                          ),
+                          Positioned(
+                            top: (diemDau != 0 && diemCuoi != 0)
+                                ? calculate(_animation.value).dy - 10
+                                : 0,
+                            left: (diemDau != 0 && diemCuoi != 0)
+                                ? calculate(_animation.value).dx - 10
+                                : 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.yellow,
+                                  borderRadius: BorderRadius.circular(10)),
+                              // width: 20,
+                              // height: 20,
+                              child: Icon(Icons.arrow_circle_up_rounded),
+                            ),
+                          ),
+                        ],
                       ),
                       // GridViewWidget(),
                       Container(
@@ -121,11 +169,18 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                                 setState(() {
                                   diemDau = diem[0];
                                   diemCuoi = diem[1];
+                                  _path = drawPath();
+
+                                  _controller.reset();
+                                  _controller.repeat();
                                 });
                               } else {
                                 setState(() {
                                   diemDau = 0;
                                   diemCuoi = 0;
+                                  _path = drawPath();
+
+                                  _controller.repeat();
                                 });
                               }
                             },
@@ -204,84 +259,6 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                 ),
               ),
             ),
-            // Positioned(
-            //     bottom: 20,
-            //     child: Container(
-            //       decoration: BoxDecoration(
-            //           // shape: BoxShape.circle,
-            //           color: Colors.white.withOpacity(0.6),
-            //           border: Border.all(width: 2, color: Colors.black38),
-            //           borderRadius: BorderRadius.circular(10)),
-            //       child: Column(
-            //         children: [
-            //           Row(
-            //             children: [
-            //               ResetButtonWidget(),
-            //               RaisedButton(
-            //                   color: Colors.redAccent,
-            //                   onPressed: () {
-            //                     setState(() {
-            //                       y = y - step;
-            //                     });
-            //                   },
-            //                   child: Icon(Icons.arrow_upward)),
-            //               RaisedButton(
-            //                   color: Colors.blue,
-            //                   onPressed: () {
-            //                     setState(() {
-            //                       x = xdef;
-            //                       y = ydef;
-            //                     });
-            //                     // model.myScale(0, 0);
-            //                   },
-            //                   child: Icon(Icons.reset_tv))
-            //             ],
-            //           ),
-            //           Row(
-            //             children: [
-            //               RaisedButton(
-            //                   color: Colors.redAccent,
-            //                   onPressed: () {
-            //                     setState(() {
-            //                       x = x - step;
-            //                     });
-            //                   },
-            //                   child: Icon(Icons.arrow_back)),
-            //               SizedBox(
-            //                 width: 88,
-            //               ),
-            //               RaisedButton(
-            //                   color: Colors.redAccent,
-            //                   onPressed: () {
-            //                     setState(() {
-            //                       x = x + step;
-            //                     });
-            //                   },
-            //                   child: Icon(Icons.arrow_forward))
-            //             ],
-            //           ),
-            //           Row(
-            //             children: [
-            //               SizedBox(
-            //                 width: 88,
-            //               ),
-            //               RaisedButton(
-            //                   color: Colors.redAccent,
-            //                   onPressed: () {
-            //                     setState(() {
-            //                       y = y + step;
-            //                     });
-            //                   },
-            //                   child: Icon(Icons.arrow_downward)),
-            //               SizedBox(
-            //                 width: 88,
-            //                 child: Text('$x $y'),
-            //               ),
-            //             ],
-            //           )
-            //         ],
-            //       ),
-            //     ))
           ],
         ),
       ),
@@ -297,40 +274,16 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
 }
 
 class Painter extends CustomPainter {
-  final int diemDau, diemCuoi;
+  final Path path;
 
-  Painter({this.diemDau, this.diemCuoi});
+  Painter({this.path});
   @override
   void paint(Canvas canvas, Size size) {
-    if (diemDau != 0 && diemCuoi != 0) {
-      final pointMode = PointMode.polygon;
-      List<Offset> path = [];
-
-      List<int> diem = Dijsktra.findPath(diemDau, diemCuoi);
-
-      for (int i = 0; i < diem.length; i++) {
-        for (int j = 0; j < listBuilding.length; j++) {
-          if ((listBuilding[j].id) == diem[i]) {
-            path.add(listBuilding[j].location);
-          }
-        }
-      }
-      if (path.isNotEmpty) {
-        final paint = Paint()
-          ..color = Colors.blue
-          ..strokeWidth = 5
-          ..strokeCap = StrokeCap.round;
-        canvas.drawPoints(pointMode, path, paint);
-      }
-    } else if (diemDau == 0 || diemCuoi == 0) {
-      final pointMode = PointMode.polygon;
-      List<Offset> path = [Offset(0, 0), Offset(1, 1)];
-      final paint = Paint()
-        ..color = Colors.transparent
-        ..strokeWidth = 5
-        ..strokeCap = StrokeCap.round;
-      canvas.drawPoints(pointMode, path, paint);
-    }
+    Paint paint = Paint()
+      ..color = Colors.redAccent
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 5.0;
+    canvas.drawPath(this.path, paint);
   }
 
   @override

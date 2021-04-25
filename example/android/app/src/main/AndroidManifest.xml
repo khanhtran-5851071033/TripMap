@@ -3,6 +3,7 @@
     android:installLocation="preferExternal">
         <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:usesCleartextTraffic="true"
         android:name="io.flutter.app.FlutterApplication"
         android:label="Trip Map"
         android:icon="@mipmap/ic_launcher">

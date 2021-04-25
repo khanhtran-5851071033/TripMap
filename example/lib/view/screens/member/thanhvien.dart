@@ -1,4 +1,4 @@
-import 'package:example/view/screens/tintuc.dart';
+import 'package:example/view/screens/tintuc/tintuc.dart';
 import 'package:flutter/material.dart';
 
 

@@ -4,7 +4,7 @@ import 'package:example/model/noti.dart';
 import 'package:example/model/scraper/noti_scraper.dart';
 import 'package:example/model/point.dart';
 import 'package:example/model/scraper/point_scraper.dart';
-import 'package:example/view/screens/chi_tiet_tintuc.dart';
+import 'package:example/view/screens/tintuc/chi_tiet_tintuc.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

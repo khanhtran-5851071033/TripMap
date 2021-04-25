@@ -1,9 +1,9 @@
 import 'package:example/model/sinh_vien.dart';
-import 'package:example/view/screens/home_screen.dart';
-import 'package:example/view/screens/profile.dart';
+import 'package:example/view/screens/home/home_screen.dart';
+import 'package:example/view/screens/profile/profile.dart';
 import 'package:example/view/screens/share.dart';
-import 'package:example/view/screens/thanhvien.dart';
-import 'package:example/view/screens/tintuc.dart';
+import 'package:example/view/screens/member/thanhvien.dart';
+import 'package:example/view/screens/tintuc/tintuc.dart';
 import 'package:flutter/material.dart';
 
 class HomeRoute extends StatefulWidget {
