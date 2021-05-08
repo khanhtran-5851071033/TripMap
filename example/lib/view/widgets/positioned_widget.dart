@@ -102,10 +102,11 @@ class _PositionedWidgetState extends State<PositionedWidget> {
                       padding: EdgeInsets.all(15),
                       child: CircleAvatar(
                         backgroundColor: diem.contains(dayNha[index].id)
-                            ? Colors.yellow[700]
+                            ? Colors.blue
                             : Colors.red,
                         child: Icon(
                           Icons.room,
+                          color: Colors.white,
                           size: 15,
                         ),
                       ),

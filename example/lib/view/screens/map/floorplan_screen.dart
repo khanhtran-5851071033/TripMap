@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 import 'dart:ui';
-import 'package:example/core/models/models.dart';
 import 'package:example/core/viewmodels/floorplan_model.dart';
-import 'package:example/model/end_point.dart';
 import 'package:example/path_finder/dijsktra.dart';
 import 'package:example/path_finder/repo_path.dart';
 import 'package:example/view/screens/map/pano_screen.dart';
-import 'package:example/view/shared/global.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:example/view/widgets/appbar_widget.dart';
 import 'package:example/view/widgets/positioned_widget.dart';
@@ -25,8 +21,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
     with SingleTickerProviderStateMixin {
   double x = 40, y = 200;
   double xdef = 40, ydef = 200;
-  double step = 10, _opacity = 0.8, size = 20;
-  int _direction = 0;
+  double step = 10, size = 20;
+
   String huong = '';
   int diemDau = 0, diemCuoi = 0;
 
@@ -126,8 +122,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                         child: Hero(
                           tag: 'mapUtc2',
                           child: Image.asset(
-                            'assets/Utc2Map1.png',
-                            fit: BoxFit.fitWidth,
+                            'assets/Utc2Map1.jpg',
+                            fit: BoxFit.contain,
                           ),
                         ),
                       ),
@@ -135,7 +131,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                       Stack(
                         children: [
                           Container(
-                            // color: Colors.black.withOpacity(0.7),
+                            //color: Colors.black.withOpacity(0.7),
                             child: CustomPaint(
                               size: Size(411.4, 411.4),
                               painter: Painter(path: _path),
@@ -150,11 +146,10 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                                 : 0,
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: Colors.yellow,
-                                  borderRadius: BorderRadius.circular(10)),
-                              // width: 20,
-                              // height: 20,
-                              child: Icon(Icons.arrow_circle_up_rounded),
+                                color: Colors.yellow,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(Icons.directions_walk_rounded),
                             ),
                           ),
                         ],
@@ -203,6 +198,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                           ? Container()
                           : Container(
                               // margin: EdgeInsets.symmetric(vertical: 10),
+
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
@@ -218,7 +214,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                               ),
                               margin: EdgeInsets.symmetric(
                                   horizontal: 5, vertical: 15),
-                              padding: EdgeInsets.fromLTRB(4, 5, 10, 5),
+                              padding: EdgeInsets.fromLTRB(4, 5, 20, 5),
                               child: Row(
                                 children: [
                                   ClipRRect(
@@ -241,13 +237,31 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                                         listBuilding[index].name,
                                         style: TextStyle(color: Colors.black),
                                       ),
-                                      Text(
-                                        listBuilding[index].name,
-                                        style: TextStyle(color: Colors.black),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Chỉ đường',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          Icon(
+                                            Icons.directions,
+                                            size: 18,
+                                          )
+                                        ],
                                       ),
-                                      Text(
-                                        listBuilding[index].name,
-                                        style: TextStyle(color: Colors.black),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            '360',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          Icon(
+                                            Icons.visibility_rounded,
+                                            size: 18,
+                                          )
+                                        ],
                                       ),
                                     ],
                                   ),
