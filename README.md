@@ -1,45 +1,16 @@
-# TripMap
-UTC2
-# Panorama
+# example
 
-[![pub package](https://img.shields.io/pub/v/panorama.svg)](https://pub.dev/packages/panorama)
-
-A 360-degree panorama viewer.
+A new Flutter project.
 
 ## Getting Started
 
-Add panorama as a dependency in your pubspec.yaml file.
+This project is a starting point for a Flutter application.
 
-```yaml
-dependencies:
-  panorama: ^0.3.1
-```
+A few resources to get you started if this is your first Flutter project:
 
-Import and add the Panorama widget to your project.
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-```dart
-import 'package:panorama/panorama.dart';
-... ...
-  
-@override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Panorama(
-          child: Image.asset('assets/panorama.jpg'),
-        ),
-      ),
-    );
-  }
-```
-
-## Screenshot
-
-![screenshot](https://github.com/zesage/panorama/raw/master/resource/screenshot.gif)
-
-## Usage Tutorials
-
-* [Create a Panoramic Image Viewer in Flutter using the panorama plugin](https://developer.school/creating-a-panoramic-image-viewer-in-flutter-using-panorama-plugin/)
-* [Flutter Panorama Plugin](https://www.youtube.com/watch?v=JYSJOQ86spc)
-# TripMap
-UTC2
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

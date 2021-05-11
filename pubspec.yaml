@@ -1,7 +1,6 @@
-name: panorama
-description: Panorama -- A 360-degree panorama viewer.
-version: 0.3.1
-homepage: https://github.com/zesage/panorama
+name: example
+description: A new Flutter project.
+version: 1.0.0+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -9,8 +8,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_cube: ^0.0.6
-  motion_sensors: ^0.0.5
+  panorama: ^0.4.1
+  image_picker: ^0.6.3+4
+  tabbar: ^0.1.1
+  bubble_tab_indicator: ^0.1.4
+  html: ^0.14.0+4
+  web_scraper: ^0.0.9
+  cached_network_image: ^2.5.0
+  rxdart: ^0.25.0
+  flutter_spinkit: ^4.1.2
+  countup: ^0.1.3
+  percent_indicator: "^2.1.7+2"
+  photo_view: ^0.11.1
+  url_launcher: ^6.0.3
+  im_stepper: ^0.1.2+10
   avatar_glow: ^1.2.0
   cupertino_icons: ^0.1.3
   provider: ^4.3.1
@@ -29,10 +40,20 @@ dev_dependencies:
 flutter_launcher_name:
   name: "Trip Map"
 
+
 flutter_icons:
-  image_path_android: "images/icon_launcher.png" 
-  image_path_ios: "assets/icon_launcher_ios.png" 
+  image_path_android: "assets/icon_launcher.png" 
+  image_path_ios: "assets/icon_launcher_ios.jpg" 
   android: true
   ios: true
 
+
 flutter:
+  assets:
+    - assets/
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: font/Nunito-Regular.ttf
+        - asset: font/Nunito-Italic.ttf
+  uses-material-design: true
