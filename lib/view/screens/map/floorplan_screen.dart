@@ -123,7 +123,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                         child: Hero(
                           tag: 'mapUtc2',
                           child: Image.asset(
-                            'assets/Utc2Map1.jpg',
+                            'assets/1305.png',
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -140,17 +140,24 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                           ),
                           Positioned(
                             top: (diemDau != 0 && diemCuoi != 0)
-                                ? calculate(_animation.value).dy - 10
+                                ? calculate(_animation.value).dy - 15
                                 : 0,
                             left: (diemDau != 0 && diemCuoi != 0)
-                                ? calculate(_animation.value).dx - 10
+                                ? calculate(_animation.value).dx - 15
                                 : 0,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.yellow,
-                                shape: BoxShape.circle,
+                            child: Opacity(
+                              opacity: (diemDau != 0 && diemCuoi != 0)
+                                ? 1
+                                : 0,
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  color: Colors.yellow,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(Icons.directions_walk_rounded),
                               ),
-                              child: Icon(Icons.directions_walk_rounded),
                             ),
                           ),
                         ],

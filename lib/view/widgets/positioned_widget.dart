@@ -1,4 +1,4 @@
-
+import 'package:example/core/viewmodels/floorplan_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +21,7 @@ class _PositionedWidgetState extends State<PositionedWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<FloorPlanModel>(context);
     // final List<Room> phongHoc =
     //     Global.phongHoc.map((item) => Room.fromMap(item)).toList();
     return Stack(
@@ -73,69 +74,75 @@ class _PositionedWidgetState extends State<PositionedWidget> {
           List.generate(dayNha.length, (index) {
         return dayNha[index].name != ''
             ? Positioned(
-                left: dayNha[index].location.dx - 45,
-                top: dayNha[index].location.dy - 24,
-                child: RawMaterialButton(
-                  shape: CircleBorder(),
-                  splashColor: Colors.transparent,
-                  onPressed: () {
-                    print(diem.length.toString());
-                    if (diem.length < 2) {
-                      setState(() {
-                        diem.add(dayNha[index].id);
-                      });
-                    } else {
-                      setState(() {
-                        diem.clear();
-                        diem.add(dayNha[index].id);
-                      });
-                    }
-                    widget.findPath(diem);
-                  },
-                  child:
-                      Stack(alignment: Alignment.centerLeft, children: <Widget>[
-                    Container(
-                      width: 50,
-                      height: 50,
-                      // color: Colors.black54,
-                      padding: EdgeInsets.all(15),
-                      child: CircleAvatar(
-                        backgroundColor: diem.contains(dayNha[index].id)
-                            ? Colors.blue
-                            : Colors.red,
-                        child: Icon(
-                          Icons.room,
-                          color: Colors.white,
-                          size: 15,
-                        ),
-                      ),
-                    ),
-                    Transform(
-                      transform: Matrix4.identity()..translate(39.0),
-                      child: Stack(
-                        children: [
-                          Text(
-                            dayNha[index].name,
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w800,
-                              foreground: Paint()
-                                ..style = PaintingStyle.stroke
-                                ..strokeWidth = 1
-                                ..color = Colors.black,
+                left: dayNha[index].location.dx - (35 - model.scale * 4) / 2,
+                top: dayNha[index].location.dy - (35 - model.scale * 4) / 2,
+                child: Container(
+                  child: InkWell(
+                    // shape: CircleBorder(),
+                    // fillColor: Colors.black,
+                    splashColor: Colors.white,
+                    onTap: () {
+                      print(model.scale);
+                      print(diem.length.toString());
+                      if (diem.length < 2) {
+                        setState(() {
+                          diem.add(dayNha[index].id);
+                        });
+                      } else {
+                        setState(() {
+                          diem.clear();
+                          diem.add(dayNha[index].id);
+                        });
+                      }
+                      widget.findPath(diem);
+                    },
+                    child: Stack(
+                        alignment: Alignment.centerLeft,
+                        children: <Widget>[
+                          Container(
+                            width: 35 - model.scale * 4,
+                            height: 35 - model.scale * 4,
+                            // color: Colors.black54,
+                            padding: EdgeInsets.all(5),
+                            child: CircleAvatar(
+                              backgroundColor: diem.contains(dayNha[index].id)
+                                  ? Colors.blue
+                                  : Colors.red,
+                              child: Icon(
+                                Icons.room,
+                                color: Colors.white,
+                                size: 15 - model.scale * 3,
+                              ),
                             ),
                           ),
-                          Text(
-                            dayNha[index].name,
-                            style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                    )
-                  ]),
+                          Transform(
+                            transform: Matrix4.identity()
+                              ..translate(32.0 - model.scale * 4),
+                            child: Stack(
+                              children: [
+                                Text(
+                                  dayNha[index].name,
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w800,
+                                    foreground: Paint()
+                                      ..style = PaintingStyle.stroke
+                                      ..strokeWidth = 1
+                                      ..color = Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  dayNha[index].name,
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                          )
+                        ]),
+                  ),
                 ))
             : Container();
       }),
