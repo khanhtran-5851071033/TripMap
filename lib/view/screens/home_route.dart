@@ -46,11 +46,11 @@ class _HomeRouteState extends State<HomeRoute> {
         controller: _controller,
         physics: NeverScrollableScrollPhysics(),
         children: [
-          HomeScreen(sinhvien:widget.sinhvien),
+          HomeScreen(sinhvien: widget.sinhvien),
           News(),
           ShareFriend(),
           Person(),
-          ProFile(sinhvien:widget.sinhvien),
+          ProFile(sinhvien: widget.sinhvien),
         ],
       ),
       // IndexedStack(

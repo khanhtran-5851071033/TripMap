@@ -4,11 +4,11 @@ class Dijsktra {
   static List<int> findPath(int diemDau, int diemCuoi) {
     diemDau = diemDau - 1;
     diemCuoi = diemCuoi - 1;
-    int n = 31;
+    int n = 39;
     var a = listDiem;
-    List danhDau = List.filled(31, 0);
-    List nhan = List.filled(31, 0);
-    List truoc = List.filled(31, 0);
+    List danhDau = List.filled(39, 0);
+    List nhan = List.filled(39, 0);
+    List truoc = List.filled(39, 0);
     int xp = 0, min = 0;
     for (int i = 0; i < n; i++) {
       nhan[i] = 100000;

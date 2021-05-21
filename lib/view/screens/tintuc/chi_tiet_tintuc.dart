@@ -117,7 +117,7 @@ class _NewsDetailState extends State<NewsDetail> {
                         ),
                       )
                     : Container(
-                        color: Util.myColor,
+                        color: Colors.blue[200].withOpacity(0.5),
                         width: size.width,
                         height: size.height * 0.6,
                       ),
@@ -132,7 +132,7 @@ class _NewsDetailState extends State<NewsDetail> {
                     children: [
                       IgnorePointer(
                         child: Stack(
-                          overflow: Overflow.visible,
+                          clipBehavior: Clip.none,
                           alignment: AlignmentDirectional.bottomCenter,
                           children: [
                             SizedBox(
@@ -326,6 +326,9 @@ class _NewsDetailState extends State<NewsDetail> {
                                                             .data[index].link);
                                                       },
                                                       child: Container(
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 5),
                                                         padding:
                                                             EdgeInsets.all(10),
                                                         decoration: BoxDecoration(
@@ -347,11 +350,19 @@ class _NewsDetailState extends State<NewsDetail> {
                                                         ),
                                                       ),
                                                     )
-                                                  : Text('    ' +
-                                                      snapshot.data[index].text
-                                                          .trim()),
+                                                  : Text(
+                                                      '    ' +
+                                                          snapshot
+                                                              .data[index].text
+                                                              .trim(),
+                                                      style: TextStyle(
+                                                          fontSize: 16),
+                                                    ),
                                               snapshot.data[index].imgLink ==
-                                                      null
+                                                          '' ||
+                                                      snapshot.data[index]
+                                                              .imgLink ==
+                                                          null
                                                   ? Container()
                                                   : GestureDetector(
                                                       onTap: () {

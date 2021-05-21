@@ -6,6 +6,7 @@ import 'package:example/view/screens/map/pano_screen.dart';
 import 'package:example/view/screens/tintuc/point_table_screen.dart';
 import 'package:example/view/shared/global.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
   final SinhVien sinhvien;
@@ -22,6 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light));
     return Scaffold(
       backgroundColor: Color(0xff29166F),
       body: Stack(

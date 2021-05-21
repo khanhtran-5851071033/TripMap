@@ -9,6 +9,7 @@ import 'package:example/view/widgets/appbar_widget.dart';
 import 'package:example/view/widgets/positioned_widget.dart';
 import 'package:example/view/widgets/raw_gesture_detector_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 // import 'package:sensors/sensors.dart';
 
@@ -93,6 +94,9 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light));
     Size scsize = MediaQuery.of(context).size;
     final model = Provider.of<FloorPlanModel>(context);
     return Scaffold(
@@ -146,9 +150,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                                 ? calculate(_animation.value).dx - 15
                                 : 0,
                             child: Opacity(
-                              opacity: (diemDau != 0 && diemCuoi != 0)
-                                ? 1
-                                : 0,
+                              opacity: (diemDau != 0 && diemCuoi != 0) ? 1 : 0,
                               child: Container(
                                 width: 30,
                                 height: 30,

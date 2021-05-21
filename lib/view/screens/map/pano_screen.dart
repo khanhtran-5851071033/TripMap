@@ -18,7 +18,7 @@ class _PanoScreenState extends State<PanoScreen> {
   // double _lon = 0;
   // double _lat = 0;
   // double _tilt = 0;
-  double _zoom = 0.0, animSpeed = 0.0;
+  double _zoom = 1.0, animSpeed = 0.01;
   int _panoId = 0, imageSize = 0;
   int curId = 0;
 
@@ -102,7 +102,7 @@ class _PanoScreenState extends State<PanoScreen> {
                 ),
           onTap: () {
             setState(() {
-              animSpeed = 0;
+              // animSpeed = 0.01;
               imageSize = 0;
               _panoId = id;
               _zoom = 1;
@@ -123,16 +123,16 @@ class _PanoScreenState extends State<PanoScreen> {
 
   Widget panoramaWidget(int id) {
     var pano = Panorama(
-      // animSpeed: 1.0,
-      // zoom: _zoom,
-      // sensitivity: 1.5,
-      // interactive: true,
+      animSpeed: animSpeed,
+      zoom: 0,
+      sensitivity: 1.5,
+      interactive: true,
       sensorControl: SensorControl.Orientation,
       // onViewChanged: onViewChanged,
-      onLongPressStart: (longitude, latitude, tilt) {
+      onTap: (longitude, latitude, tilt) {
         if (animSpeed == 1) {
           setState(() {
-            animSpeed = 0;
+            animSpeed = 0.01;
           });
         } else {
           setState(() {
@@ -204,7 +204,7 @@ class _PanoScreenState extends State<PanoScreen> {
                     color: Colors.white54,
                     child: Hero(
                         tag: 'mapUtc2',
-                        child: Image.asset('assets/Utc2Map1.png'))),
+                        child: Image.asset('assets/1305.png'))),
               ))
         ],
       ),
