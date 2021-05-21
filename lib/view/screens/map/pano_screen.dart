@@ -15,20 +15,20 @@ class PanoScreen extends StatefulWidget {
 }
 
 class _PanoScreenState extends State<PanoScreen> {
-  double _lon = 0;
-  double _lat = 0;
-  double _tilt = 0;
-  double _zoom = 1, animSpeed = 0;
+  // double _lon = 0;
+  // double _lat = 0;
+  // double _tilt = 0;
+  double _zoom = 0.0, animSpeed = 0.0;
   int _panoId = 0, imageSize = 0;
   int curId = 0;
 
-  void onViewChanged(longitude, latitude, tilt) {
-    setState(() {
-      _lon = longitude;
-      _lat = latitude;
-      _tilt = tilt;
-    });
-  }
+  // void onViewChanged(longitude, latitude, tilt) {
+  //   setState(() {
+  //     _lon = longitude;
+  //     _lat = latitude;
+  //     _tilt = tilt;
+  //   });
+  // }
 
   Widget hotspotButton(int id, String text, String type) {
     return Transform(
@@ -123,11 +123,12 @@ class _PanoScreenState extends State<PanoScreen> {
 
   Widget panoramaWidget(int id) {
     var pano = Panorama(
-      animSpeed: animSpeed,
-      zoom: _zoom,
-      sensitivity: 1.5,
+      // animSpeed: 1.0,
+      // zoom: _zoom,
+      // sensitivity: 1.5,
+      // interactive: true,
       sensorControl: SensorControl.Orientation,
-      onViewChanged: onViewChanged,
+      // onViewChanged: onViewChanged,
       onLongPressStart: (longitude, latitude, tilt) {
         if (animSpeed == 1) {
           setState(() {
