@@ -6,7 +6,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:example/view/shared/geo_service.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:permission_handler/permission_handler.dart';
-import 'package:intl/intl.dart';
 
 class AttentionScreen extends StatefulWidget {
   final SinhVien sinhvien;
@@ -385,7 +384,7 @@ class _CompleteCheckPageState extends State<CompleteCheckPage> {
   @override
   void initState() {
     super.initState();
-    time = DateFormat('HH:mm:ss').format(DateTime.now());
+   // time = DateFormat('HH:mm:ss').format(DateTime.now());
   }
 
   @override
