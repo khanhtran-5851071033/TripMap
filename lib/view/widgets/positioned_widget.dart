@@ -13,13 +13,13 @@ class PositionedWidget extends StatefulWidget {
 
   const PositionedWidget({Key key, this.findPath}) : super(key: key);
   @override
-  _PositionedWidgetState createState() => _PositionedWidgetState();
+  PositionedWidgetState createState() => PositionedWidgetState();
 }
 
-class _PositionedWidgetState extends State<PositionedWidget> {
+class PositionedWidgetState extends State<PositionedWidget> {
   final List<EndPoint> dayNha = listBuilding;
 
-  List<int> diem = [];
+  static List<int> diem = [];
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,6 @@ class _PositionedWidgetState extends State<PositionedWidget> {
                           // fillColor: Colors.black,
                           splashColor: Colors.white,
                           onTap: () {
-                            print(diem.length.toString());
                             if (diem.length < 2) {
                               if (!diem.contains(dayNha[index].id)) {
                                 setState(() {

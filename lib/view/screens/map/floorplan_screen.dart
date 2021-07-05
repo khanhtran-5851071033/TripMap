@@ -1,6 +1,6 @@
-import 'dart:async';
 import 'dart:ui';
 import 'package:example/core/viewmodels/floorplan_model.dart';
+import 'package:example/model/end_point.dart';
 import 'package:example/path_finder/dijsktra.dart';
 import 'package:example/path_finder/repo_path.dart';
 import 'package:example/view/screens/map/pano_screen.dart';
@@ -11,7 +11,6 @@ import 'package:example/view/widgets/raw_gesture_detector_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-// import 'package:sensors/sensors.dart';
 
 class FloorPlanScreen extends StatefulWidget {
   @override
@@ -23,7 +22,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
   double x = 40, y = 200;
   double xdef = 40, ydef = 200;
   double step = 10, size = 20;
-
+  TextEditingController _diemDauController;
+  TextEditingController _diemCuoiController;
   String huong = '';
   int diemDau = 0, diemCuoi = 0;
 
@@ -33,9 +33,13 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
   AnimationController _controller;
   Animation _animation;
   Path _path;
+  List<int> listDiem = [];
+  List<EndPoint> listSearchBuilding = listBuilding;
 
   @override
   void initState() {
+    _diemDauController = TextEditingController();
+    _diemCuoiController = TextEditingController();
     _controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: 5000));
     super.initState();
@@ -52,6 +56,18 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void search(String input) {
+    var data = listBuilding
+        .where((item) =>
+            item.name != '' &&
+            item.name.toLowerCase().contains(input.toLowerCase()))
+        .toList();
+    setState(() {
+      listSearchBuilding = data;
+    });
+    print(listSearchBuilding[0].name);
   }
 
   Path drawPath() {
@@ -92,18 +108,61 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
     return pos.position;
   }
 
+  void clearFindPath() {
+    setState(() {
+      _diemDauController.clear();
+      _diemCuoiController.clear();
+
+      diemDau = 0;
+      diemCuoi = 0;
+
+      _path = drawPath();
+
+      _controller.reset();
+      PositionedWidgetState.diem.clear();
+    });
+  }
+
+  void findPath(List<int> diem) {
+    if (diem.length == 2) {
+      setState(() {
+        // diemDau = diem[0];
+        diemCuoi = diem[1];
+        _diemCuoiController.text = listBuilding[diemCuoi - 1].name;
+
+        _path = drawPath();
+
+        _controller.reset();
+        _controller.repeat();
+      });
+    } else if (diem.length == 1) {
+      setState(() {
+        diemDau = diem[0];
+        _diemCuoiController.clear();
+        _diemDauController.text = listBuilding[diemDau - 1].name;
+
+        diemCuoi = 0;
+        _path = drawPath();
+
+        _controller.repeat();
+      });
+    } else {
+      clearFindPath();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light));
     Size scsize = MediaQuery.of(context).size;
-    final model = Provider.of<FloorPlanModel>(context);
+    // final model = Provider.of<FloorPlanModel>(context);
     return Scaffold(
       backgroundColor: Util.myColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: AppBarWidget(),
+        preferredSize: Size.fromHeight(150.0),
+        child: appBarWidget(scsize),
       ),
       body: Container(
         height: scsize.height * 0.85,
@@ -166,123 +225,20 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                       ),
                       // GridViewWidget(),
                       Container(
-                          width: 411.4,
-                          height: 411.4,
-                          child: PositionedWidget(
-                            findPath: (diem) {
-                              if (diem.length == 2) {
-                                setState(() {
-                                  diemDau = diem[0];
-                                  diemCuoi = diem[1];
-                                  _path = drawPath();
-
-                                  _controller.reset();
-                                  _controller.repeat();
-                                });
-                              } else {
-                                setState(() {
-                                  diemDau = 0;
-                                  diemCuoi = 0;
-                                  _path = drawPath();
-
-                                  _controller.repeat();
-                                });
-                              }
-                            },
-                          )),
+                        width: 411.4,
+                        height: 411.4,
+                        child: PositionedWidget(
+                          findPath: (diem) {
+                            findPath(diem);
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                color: Colors.white,
-                height: scsize.height * 0.15,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(listBuilding.length, (index) {
-                      return listBuilding[index].name == ''
-                          ? Container()
-                          : Container(
-                              // margin: EdgeInsets.symmetric(vertical: 10),
-
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 3,
-                                    blurRadius: 5,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 15),
-                              padding: EdgeInsets.fromLTRB(4, 5, 20, 5),
-                              child: Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                      'assets/image.png',
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.fitHeight,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        listBuilding[index].name,
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Chỉ đường',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                          Icon(
-                                            Icons.directions,
-                                            size: 18,
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            '360',
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                          Icon(
-                                            Icons.visibility_rounded,
-                                            size: 18,
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                    }),
-                  ),
-                ),
-              ),
-            ),
+            listWidget(scsize),
           ],
         ),
       ),
@@ -293,6 +249,201 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
               context, MaterialPageRoute(builder: (context) => PanoScreen()));
         },
       ),
+    );
+  }
+
+  Widget listWidget(Size scsize) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        color: Colors.transparent,
+        height: scsize.height * 0.14,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(listBuilding.length, (index) {
+              return listBuilding[index].name == ''
+                  ? Container()
+                  : GestureDetector(
+                      onTap: () {
+                        if (listDiem.length < 2) {
+                          if (!listDiem.contains(listBuilding[index].id)) {
+                            setState(() {
+                              listDiem.add(listBuilding[index].id);
+                            });
+                          }
+                        } else {
+                          setState(() {
+                            listDiem.clear();
+                            listDiem.add(listBuilding[index].id);
+                          });
+                        }
+                        findPath(listDiem);
+                      },
+                      child: Container(
+                        // margin: EdgeInsets.symmetric(vertical: 10),
+
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 3,
+                              blurRadius: 5,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                        padding: EdgeInsets.fromLTRB(4, 5, 20, 5),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                'assets/image.png',
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  listBuilding[index].name,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Chỉ đường',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    Icon(
+                                      Icons.directions,
+                                      size: 18,
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '360',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                    Icon(
+                                      Icons.visibility_rounded,
+                                      size: 18,
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+            }),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget appBarWidget(Size scsize) {
+    return AppBar(
+      elevation: 0.0,
+      bottom: PreferredSize(
+        preferredSize: Size(100, 350),
+        child: Container(
+          // color: Colors.white,
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+          child: Container(
+              width: scsize.width,
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(5)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: scsize.width,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _diemDauController,
+                            onChanged: (val) {
+                              // search(val.trim());
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              hintText: 'Điểm bắt đầu',
+                              fillColor: Color(0xffF6F6FF),
+                              filled: true,
+                              contentPadding: EdgeInsets.all(10),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 50,
+                          height: 50,
+                          padding: EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: IconButton(
+                            onPressed: () {
+                              clearFindPath();
+                            },
+                            icon: Icon(
+                              Icons.close,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  TextField(
+                    controller: _diemCuoiController,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search),
+                      hintText: 'Điểm đến',
+                      // suffixIcon: Container(
+                      //   width: 10,
+                      //   child: MaterialButton(
+                      //     onPressed: () {},
+                      //     height: 10,
+                      //     padding: EdgeInsets.all(2),
+                      //     child: Icon(
+                      //       Icons.directions,
+                      //       color: Color(0xff29166F),
+                      //     ),
+                      //   ),
+                      // ),
+                      fillColor: Color(0xffF6F6FF),
+                      filled: true,
+                      contentPadding: EdgeInsets.all(10),
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ],
+              )),
+        ),
+      ),
+      backgroundColor: Colors.yellow[800],
     );
   }
 }
