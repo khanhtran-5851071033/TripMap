@@ -5,12 +5,10 @@ import 'package:example/path_finder/dijsktra.dart';
 import 'package:example/path_finder/repo_path.dart';
 import 'package:example/view/screens/map/pano_screen.dart';
 import 'package:example/view/shared/util.dart';
-import 'package:example/view/widgets/appbar_widget.dart';
 import 'package:example/view/widgets/positioned_widget.dart';
 import 'package:example/view/widgets/raw_gesture_detector_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class FloorPlanScreen extends StatefulWidget {
   @override
@@ -58,17 +56,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
     super.dispose();
   }
 
-  void search(String input) {
-    var data = listBuilding
-        .where((item) =>
-            item.name != '' &&
-            item.name.toLowerCase().contains(input.toLowerCase()))
-        .toList();
-    setState(() {
-      listSearchBuilding = data;
-    });
-    print(listSearchBuilding[0].name);
-  }
+  
 
   Path drawPath() {
     Path path = Path();

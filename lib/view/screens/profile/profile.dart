@@ -26,7 +26,7 @@ class _ProFileState extends State<ProFile> {
     {'title': 'Thông tin cá nhân', 'icon': Icons.person_pin},
     {'title': 'Bảng điểm học tập', 'icon': Icons.poll_outlined},
     {'title': 'Trợ giúp', 'icon': Icons.help_outline_outlined},
-    {'title': 'Chia sẻ Trip Map với bạn bè', 'icon': Icons.share},
+    {'title': 'Chia sẻ School Map với bạn bè', 'icon': Icons.share},
     {'title': 'Đánh giá ứng dụng', 'icon': Icons.star},
     {'title': 'Cài đặt', 'icon': Icons.settings},
     {'title': 'Đăng xuất', 'icon': Icons.exit_to_app},
