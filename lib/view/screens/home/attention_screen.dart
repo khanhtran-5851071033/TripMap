@@ -22,7 +22,7 @@ class _CheckinScreenState extends State<AttentionScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Util.unfocus(context);
+        unfocus(context);
       },
       child: Scaffold(
         appBar: AppBar(
@@ -275,7 +275,7 @@ class _CheckInPageState extends State<CheckInPage> {
                           height: sizeScreen.width * 0.18,
                           padding: EdgeInsets.all(sizeScreen.width * 0.03),
                           decoration: BoxDecoration(
-                              color: Util.myColor, shape: BoxShape.circle),
+                              color: myColor, shape: BoxShape.circle),
                           child: FittedBox(
                             child: isLoading
                                 ? SpinKitFadingCircle(
@@ -350,7 +350,7 @@ class _CheckInPageState extends State<CheckInPage> {
                         ),
                         IconButton(
                           onPressed: () {
-                            Util.unfocus(context);
+                            unfocus(context);
                             checkIn(textEditingController.text.trim());
                           },
                           icon: Icon(
@@ -392,7 +392,7 @@ class _CompleteCheckPageState extends State<CompleteCheckPage> {
     final sizeScreen = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        Util.unfocus(context);
+        unfocus(context);
       },
       child: SafeArea(
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -466,7 +466,7 @@ class _CompleteCheckPageState extends State<CompleteCheckPage> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: sizeScreen.width * 0.05,
-                            color: Util.myColor,
+                            color: myColor,
                             fontWeight: FontWeight.bold),
                       )),
                   Flexible(
@@ -482,7 +482,7 @@ class _CompleteCheckPageState extends State<CompleteCheckPage> {
                           width: sizeScreen.width * 0.7,
                           height: sizeScreen.width * 0.12,
                           decoration: BoxDecoration(
-                              color: Util.myColor,
+                              color: myColor,
                               borderRadius: BorderRadius.circular(
                                   sizeScreen.width * 0.03)),
                           alignment: Alignment.center,

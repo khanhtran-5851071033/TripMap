@@ -1,14 +1,15 @@
 import 'dart:ui';
-import 'package:example/core/viewmodels/floorplan_model.dart';
 import 'package:example/model/end_point.dart';
 import 'package:example/path_finder/dijsktra.dart';
 import 'package:example/path_finder/repo_path.dart';
+import 'package:example/view/screens/map/2d_controller.dart';
 import 'package:example/view/screens/map/pano_screen.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:example/view/widgets/positioned_widget.dart';
 import 'package:example/view/widgets/raw_gesture_detector_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class FloorPlanScreen extends StatefulWidget {
   @override
@@ -17,27 +18,22 @@ class FloorPlanScreen extends StatefulWidget {
 
 class _FloorPlanScreenState extends State<FloorPlanScreen>
     with SingleTickerProviderStateMixin {
+  var controller = Get.put(Map2dController());
+
+  AnimationController _controller;
+  Animation _animation;
+
   double x = 40, y = 200;
   double xdef = 40, ydef = 200;
   double step = 10, size = 20;
-  TextEditingController _diemDauController;
-  TextEditingController _diemCuoiController;
   String huong = '';
   int diemDau = 0, diemCuoi = 0;
 
-  // List<double> _gyroscopeValues;
-  // List<StreamSubscription<dynamic>> _streamSubscriptions =
-  //     <StreamSubscription<dynamic>>[];
-  AnimationController _controller;
-  Animation _animation;
   Path _path;
   List<int> listDiem = [];
-  List<EndPoint> listSearchBuilding = listBuilding;
 
   @override
   void initState() {
-    _diemDauController = TextEditingController();
-    _diemCuoiController = TextEditingController();
     _controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: 5000));
     super.initState();
@@ -55,8 +51,6 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
     _controller.dispose();
     super.dispose();
   }
-
-  
 
   Path drawPath() {
     Path path = Path();
@@ -97,10 +91,9 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
   }
 
   void clearFindPath() {
+    controller.diemDauController.clear();
+    controller.diemCuoiController.clear();
     setState(() {
-      _diemDauController.clear();
-      _diemCuoiController.clear();
-
       diemDau = 0;
       diemCuoi = 0;
 
@@ -111,12 +104,13 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
     });
   }
 
-  void findPath(List<int> diem) {
+  void findPath(List<int> diem, BuildContext context) {
+    unfocus(context);
     if (diem.length == 2) {
       setState(() {
         // diemDau = diem[0];
         diemCuoi = diem[1];
-        _diemCuoiController.text = listBuilding[diemCuoi - 1].name;
+        controller.diemCuoiController.text = listBuilding[diemCuoi - 1].name;
 
         _path = drawPath();
 
@@ -126,8 +120,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
     } else if (diem.length == 1) {
       setState(() {
         diemDau = diem[0];
-        _diemCuoiController.clear();
-        _diemDauController.text = listBuilding[diemDau - 1].name;
+        controller.diemCuoiController.clear();
+        controller.diemDauController.text = listBuilding[diemDau - 1].name;
 
         diemCuoi = 0;
         _path = drawPath();
@@ -147,7 +141,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
     Size scsize = MediaQuery.of(context).size;
     // final model = Provider.of<FloorPlanModel>(context);
     return Scaffold(
-      backgroundColor: Util.myColor,
+      backgroundColor: myColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(150.0),
         child: appBarWidget(scsize),
@@ -217,7 +211,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                         height: 411.4,
                         child: PositionedWidget(
                           findPath: (diem) {
-                            findPath(diem);
+                            findPath(diem, context);
                           },
                         ),
                       ),
@@ -226,7 +220,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                 ),
               ),
             ),
-            listWidget(scsize),
+            Obx(() => listWidget(scsize)),
           ],
         ),
       ),
@@ -249,24 +243,25 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: List.generate(listBuilding.length, (index) {
-              return listBuilding[index].name == ''
+            children: List.generate(controller.listSearch.length, (index) {
+              return controller.listSearch[index].name == ''
                   ? Container()
                   : GestureDetector(
                       onTap: () {
                         if (listDiem.length < 2) {
-                          if (!listDiem.contains(listBuilding[index].id)) {
+                          if (!listDiem
+                              .contains(controller.listSearch[index].id)) {
                             setState(() {
-                              listDiem.add(listBuilding[index].id);
+                              listDiem.add(controller.listSearch[index].id);
                             });
                           }
                         } else {
                           setState(() {
                             listDiem.clear();
-                            listDiem.add(listBuilding[index].id);
+                            listDiem.add(controller.listSearch[index].id);
                           });
                         }
-                        findPath(listDiem);
+                        findPath(listDiem, context);
                       },
                       child: Container(
                         // margin: EdgeInsets.symmetric(vertical: 10),
@@ -305,7 +300,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  listBuilding[index].name,
+                                  controller.listSearch[index].name,
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 Row(
@@ -367,9 +362,9 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                       children: [
                         Expanded(
                           child: TextField(
-                            controller: _diemDauController,
+                            controller: controller.diemDauController,
                             onChanged: (val) {
-                              // search(val.trim());
+                              controller.onSearch(val.trim());
                             },
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.search),
@@ -405,7 +400,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                     height: 5,
                   ),
                   TextField(
-                    controller: _diemCuoiController,
+                    controller: controller.diemCuoiController,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.search),
                       hintText: 'Điểm đến',

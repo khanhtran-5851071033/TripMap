@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'UTC2',
-        theme: ThemeData(fontFamily: 'Nunito', primaryColor: Util.myColor),
+        theme: ThemeData(fontFamily: 'Nunito', primaryColor: myColor),
         home: SplashScreen(),
       ),
     );

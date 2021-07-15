@@ -56,7 +56,7 @@ class _DetailPointState extends State<DetailPoint> {
             });
           },
           child: Container(
-            color: Util.myColor,
+            color: myColor,
             padding: EdgeInsets.all(8),
             child: Text(
                 !isAll
@@ -148,7 +148,7 @@ class _DetailPointState extends State<DetailPoint> {
                                     ? widget.hocKi.namhoc
                                     : widget.list[i].namhoc,
                                 style: TextStyle(
-                                    color: Util.myColor,
+                                    color: myColor,
                                     fontSize: size.width * 0.04,
                                     fontWeight: FontWeight.w700)),
                           ),

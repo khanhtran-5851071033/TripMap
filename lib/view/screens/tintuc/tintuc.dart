@@ -126,7 +126,7 @@ class _NotifyListState extends State<NotifyList>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    Size size = Util.getSize(context);
+    Size size = getSize(context);
     return widget.list.hasData
         ? ListView.builder(
             itemCount: widget.list.data.length,
@@ -197,7 +197,7 @@ class _NotifyListState extends State<NotifyList>
           )
         : Center(
             child: SpinKitThreeBounce(
-              color: Util.myColor,
+              color: myColor,
               size: size.width * 0.06,
             ),
           );
@@ -246,7 +246,7 @@ class _PointListState extends State<PointList> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = Util.getSize(context);
+    Size size = getSize(context);
     return Column(
       children: [
         Row(
@@ -411,7 +411,7 @@ class _PointListState extends State<PointList> {
                       }
                     } else {
                       return SpinKitThreeBounce(
-                        color: Util.myColor,
+                        color: myColor,
                         size: size.width * 0.06,
                       );
                     }
@@ -487,7 +487,7 @@ class _PointListState extends State<PointList> {
                     } else {
                       return Center(
                         child: SpinKitThreeBounce(
-                          color: Util.myColor,
+                          color: myColor,
                           size: size.width * 0.06,
                         ),
                       );

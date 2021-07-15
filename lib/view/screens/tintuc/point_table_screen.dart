@@ -47,13 +47,13 @@ class _PointTableScreenState extends State<PointTableScreen> {
                   TextSpan(
                       text: '2.93',
                       style: TextStyle(
-                        color: Util.myColor,
+                        color: myColor,
                       )),
                   TextSpan(text: ' (Hệ 4) | ', style: TextStyle()),
                   TextSpan(
                       text: '7.8',
                       style: TextStyle(
-                        color: Util.myColor,
+                        color: myColor,
                       )),
                   TextSpan(text: ' (Hệ 10)', style: TextStyle()),
                 ],
@@ -447,7 +447,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                                       text: list[index]
                                                           .getDiemHe4(),
                                                       style: TextStyle(
-                                                        color: Util.myColor,
+                                                        color: myColor,
                                                       )),
                                                   TextSpan(
                                                       text: ' (Hệ 4) | ',
@@ -456,7 +456,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                                       text: list[index]
                                                           .getDiemHe10(),
                                                       style: TextStyle(
-                                                        color: Util.myColor,
+                                                        color: myColor,
                                                       )),
                                                   TextSpan(
                                                       text: ' (Hệ 10)',
@@ -479,7 +479,7 @@ class _PointTableScreenState extends State<PointTableScreen> {
                                                           list[index]
                                                               .getDsMonHoc()),
                                                       style: TextStyle(
-                                                        color: Util.myColor,
+                                                        color: myColor,
                                                       )),
                                                 ],
                                               ),

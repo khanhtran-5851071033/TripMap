@@ -14,7 +14,7 @@ class PhotoViewWidget extends StatefulWidget {
 class _PhotoViewWidgetState extends State<PhotoViewWidget> {
   @override
   Widget build(BuildContext context) {
-    Size size = Util.getSize(context);
+    Size size = getSize(context);
     return Scaffold(
       body: PhotoView(
         imageProvider: NetworkImage(widget.img),

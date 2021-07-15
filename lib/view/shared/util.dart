@@ -1,20 +1,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
-class Util {
-  static Size getSize(BuildContext context) {
-    return MediaQuery.of(context).size;
-  }
-
-  static void unfocus(BuildContext context) {
-    final FocusScopeNode currentScope = FocusScope.of(context);
-    if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
-      FocusManager.instance.primaryFocus.unfocus();
-    }
-  }
-
-  static const Color myColor = Color(0xff29166F);
+Size getSize(BuildContext context) {
+  return MediaQuery.of(context).size;
 }
+
+void unfocus(BuildContext context) {
+  final FocusScopeNode currentScope = FocusScope.of(context);
+  if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+    FocusManager.instance.primaryFocus.unfocus();
+  }
+}
+
+const Color myColor = Color(0xff29166F);
 
 void saveUserInfo(String _msv, _pass) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
