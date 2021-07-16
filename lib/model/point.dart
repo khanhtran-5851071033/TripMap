@@ -17,7 +17,6 @@ class Point {
   }
   @override
   String toString() {
-    // TODO: implement toString
     return this.stt.trim() +
         '\t' +
         this.manganh.trim() +

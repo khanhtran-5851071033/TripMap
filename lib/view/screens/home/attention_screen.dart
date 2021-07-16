@@ -275,7 +275,8 @@ class _CheckInPageState extends State<CheckInPage> {
                           height: sizeScreen.width * 0.18,
                           padding: EdgeInsets.all(sizeScreen.width * 0.03),
                           decoration: BoxDecoration(
-                              color: myColor, shape: BoxShape.circle),
+                                        color: Color(
+                                                                    0xff29166F), shape: BoxShape.circle),
                           child: FittedBox(
                             child: isLoading
                                 ? SpinKitFadingCircle(
@@ -466,7 +467,8 @@ class _CompleteCheckPageState extends State<CompleteCheckPage> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: sizeScreen.width * 0.05,
-                            color: myColor,
+                                       color: Color(
+                                                                    0xff29166F),
                             fontWeight: FontWeight.bold),
                       )),
                   Flexible(
@@ -482,7 +484,8 @@ class _CompleteCheckPageState extends State<CompleteCheckPage> {
                           width: sizeScreen.width * 0.7,
                           height: sizeScreen.width * 0.12,
                           decoration: BoxDecoration(
-                              color: myColor,
+                                         color: Color(
+                                                                    0xff29166F),
                               borderRadius: BorderRadius.circular(
                                   sizeScreen.width * 0.03)),
                           alignment: Alignment.center,

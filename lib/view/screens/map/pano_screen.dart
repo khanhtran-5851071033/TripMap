@@ -37,7 +37,8 @@ class _PanoScreenState extends State<PanoScreen> {
           : (Matrix4.identity()..rotateX(0)),
       child: AvatarGlow(
         glowColor:
-            type == 'arrow' ? Colors.amber.withOpacity(0.8) : myColor,
+            type == 'arrow' ? Colors.amber.withOpacity(0.8) :          Color(
+                                                                    0xff29166F),
         endRadius: 50.0,
         duration: Duration(milliseconds: 1500),
         repeat: true,
@@ -52,7 +53,8 @@ class _PanoScreenState extends State<PanoScreen> {
                   decoration: BoxDecoration(
                     color: type == 'arrow'
                         ? Colors.amber.withOpacity(0.5)
-                        : myColor,
+                        :            Color(
+                                                                    0xff29166F),
                     shape:
                         type == 'arrow' ? BoxShape.circle : BoxShape.rectangle,
                   ),
@@ -79,7 +81,8 @@ class _PanoScreenState extends State<PanoScreen> {
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
                     width: 100,
-                    color: myColor,
+                  color: Color(
+0xff29166F),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.min,

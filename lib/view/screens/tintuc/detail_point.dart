@@ -1,6 +1,5 @@
 import 'package:example/model/hoc_ky.dart';
 import 'package:example/model/mon_hoc.dart';
-import 'package:example/view/shared/util.dart';
 import 'package:flutter/material.dart';
 
 class DetailPoint extends StatefulWidget {
@@ -56,7 +55,7 @@ class _DetailPointState extends State<DetailPoint> {
             });
           },
           child: Container(
-            color: myColor,
+            color: Color(0xff29166F),
             padding: EdgeInsets.all(8),
             child: Text(
                 !isAll
@@ -148,7 +147,7 @@ class _DetailPointState extends State<DetailPoint> {
                                     ? widget.hocKi.namhoc
                                     : widget.list[i].namhoc,
                                 style: TextStyle(
-                                    color: myColor,
+                                    color: Color(0xff29166F),
                                     fontSize: size.width * 0.04,
                                     fontWeight: FontWeight.w700)),
                           ),

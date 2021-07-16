@@ -290,7 +290,8 @@ class _NewsDetailState extends State<NewsDetail> {
                                                               //   size: size.width *
                                                               //       0.06,
                                                               //   color:
-                                                              //       myColor,
+                                                              // //       Color(
+                                                              //       0xff29166F),
                                                               // ),
                                                               );
                                                     }),
@@ -405,7 +406,8 @@ class _NewsDetailState extends State<NewsDetail> {
                                         height: size.height * 0.5,
                                         child: Center(
                                           child: SpinKitThreeBounce(
-                                            color: myColor,
+                                            color: Color(
+                                                                    0xff29166F),
                                             size: size.width * 0.06,
                                           ),
                                         ),
@@ -469,7 +471,8 @@ class _NewsDetailState extends State<NewsDetail> {
                   Positioned(
                     top: 10,
                     child: RawMaterialButton(
-                      fillColor: myColor,
+                      fillColor: Color(
+                                                                    0xff29166F),
                       onPressed: () {
                         Navigator.pop(context);
                       },

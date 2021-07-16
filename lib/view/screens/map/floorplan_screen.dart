@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:example/model/end_point.dart';
 import 'package:example/path_finder/dijsktra.dart';
 import 'package:example/path_finder/repo_path.dart';
 import 'package:example/view/screens/map/2d_controller.dart';

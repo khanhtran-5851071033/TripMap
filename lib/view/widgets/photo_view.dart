@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
-import '../shared/util.dart';
 
 class PhotoViewWidget extends StatefulWidget {
   final String img;
@@ -14,7 +13,6 @@ class PhotoViewWidget extends StatefulWidget {
 class _PhotoViewWidgetState extends State<PhotoViewWidget> {
   @override
   Widget build(BuildContext context) {
-    Size size = getSize(context);
     return Scaffold(
       body: PhotoView(
         imageProvider: NetworkImage(widget.img),
