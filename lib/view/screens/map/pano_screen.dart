@@ -37,8 +37,7 @@ class _PanoScreenState extends State<PanoScreen> {
           : (Matrix4.identity()..rotateX(0)),
       child: AvatarGlow(
         glowColor:
-            type == 'arrow' ? Colors.amber.withOpacity(0.8) :          Color(
-                                                                    0xff29166F),
+            type == 'arrow' ? Colors.amber.withOpacity(0.8) : Color(0xff29166F),
         endRadius: 50.0,
         duration: Duration(milliseconds: 1500),
         repeat: true,
@@ -53,8 +52,7 @@ class _PanoScreenState extends State<PanoScreen> {
                   decoration: BoxDecoration(
                     color: type == 'arrow'
                         ? Colors.amber.withOpacity(0.5)
-                        :            Color(
-                                                                    0xff29166F),
+                        : Color(0xff29166F),
                     shape:
                         type == 'arrow' ? BoxShape.circle : BoxShape.rectangle,
                   ),
@@ -81,8 +79,7 @@ class _PanoScreenState extends State<PanoScreen> {
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
                     width: 100,
-                  color: Color(
-0xff29166F),
+                    color: Color(0xff29166F),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.min,
@@ -127,7 +124,9 @@ class _PanoScreenState extends State<PanoScreen> {
   Widget panoramaWidget(int id) {
     var pano = Panorama(
       animSpeed: animSpeed,
-      zoom: 0,
+      zoom: -2,
+      minZoom: -5,
+      maxZoom: 5,
       sensitivity: 1.5,
       interactive: true,
       sensorControl: SensorControl.Orientation,
@@ -143,7 +142,12 @@ class _PanoScreenState extends State<PanoScreen> {
           });
         }
       },
-      child: panoImages[id][imageSize],
+
+      ///////////////////////////IMAGE////////////////////////////////////////
+      child: Image.asset(
+        imageSize == 0 ? panoImages[id] : panoImages[id].replaceAll('.', 'x2.'),
+      ),
+
       latitude: 0,
       longitude: 0,
       hotspots: List.generate(hotSpot[id].length, (index) {
@@ -162,7 +166,6 @@ class _PanoScreenState extends State<PanoScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(Duration(milliseconds: 500), () {
@@ -206,8 +209,7 @@ class _PanoScreenState extends State<PanoScreen> {
                     height: 100,
                     color: Colors.white54,
                     child: Hero(
-                        tag: 'mapUtc2',
-                        child: Image.asset('assets/1305.png'))),
+                        tag: 'mapUtc2', child: Image.asset('assets/1305.png'))),
               ))
         ],
       ),

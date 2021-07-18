@@ -374,7 +374,7 @@ class _CheckInPageState extends State<CheckInPage> {
 class CompleteCheckPage extends StatefulWidget {
   final VoidCallback complete;
   final SinhVien sinhvien;
-  String lat, long;
+  final String lat, long;
   CompleteCheckPage({this.complete, this.sinhvien, this.lat, this.long});
   @override
   _CompleteCheckPageState createState() => _CompleteCheckPageState();
