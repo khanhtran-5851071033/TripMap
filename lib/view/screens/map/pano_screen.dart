@@ -1,5 +1,6 @@
 import 'package:example/view/shared/image_list.dart';
 import 'package:example/view/shared/util.dart';
+import 'package:example/view/widgets/hotspot_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:panorama/panorama.dart';
@@ -29,96 +30,21 @@ class _PanoScreenState extends State<PanoScreen> {
   //     _tilt = tilt;
   //   });
   // }
-
-  Widget hotspotButton(int id, String text, String type) {
-    return Transform(
-      transform: type == 'arrow'
-          ? (Matrix4.identity()..rotateX(150))
-          : (Matrix4.identity()..rotateX(0)),
-      child: AvatarGlow(
-        glowColor:
-            type == 'arrow' ? Colors.amber.withOpacity(0.8) : Color(0xff29166F),
-        endRadius: 50.0,
-        duration: Duration(milliseconds: 1500),
-        repeat: true,
-        // showTwoGlows: true,
-        repeatPauseDuration: Duration(milliseconds: 100),
-        child: InkWell(
-          child: type == 'arrow'
-              ? Container(
-                  padding: EdgeInsets.all(2),
-                  width: 80,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    color: type == 'arrow'
-                        ? Colors.amber.withOpacity(0.5)
-                        : Color(0xff29166F),
-                    shape:
-                        type == 'arrow' ? BoxShape.circle : BoxShape.rectangle,
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        RotatedBox(
-                          quarterTurns: -1,
-                          child: Icon(
-                            Icons.double_arrow,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          text,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ))
-              : ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    width: 100,
-                    color: Color(0xff29166F),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          text,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        // SizedBox(
-                        //   height: 5,
-                        // ),
-                        Image.asset(
-                          'assets/utc.png',
-                          fit: BoxFit.fitWidth,
-                          // height: 100,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-          onTap: () {
-            setState(() {
-              // animSpeed = 0.01;
-              imageSize = 0;
-              _panoId = id;
-              _zoom = 1;
-              curId = id;
-            });
-            Future.delayed(Duration(milliseconds: 800), () {
-              if (id == curId) {
-                setState(() {
-                  imageSize = 1;
-                });
-              }
-            });
-          },
-        ),
-      ),
-    );
+  void onHotspotTap(MyHotspot hotspot) {
+    setState(() {
+      // animSpeed = 0.01;
+      imageSize = 0;
+      _panoId = hotspot.id;
+      _zoom = 1;
+      curId = hotspot.id;
+    });
+    Future.delayed(Duration(milliseconds: 500), () {
+      if (hotspot.id == curId) {
+        setState(() {
+          imageSize = 1;
+        });
+      }
+    });
   }
 
   Widget panoramaWidget(int id) {
@@ -153,16 +79,19 @@ class _PanoScreenState extends State<PanoScreen> {
 
       latitude: 0,
       longitude: 0,
-      hotspots: List.generate(hotSpot[id].length, (index) {
-        return Hotspot(
-          latitude: hotSpot[id][index]['lat'],
-          longitude: hotSpot[id][index]['long'],
-          width: 120,
-          height: 100,
-          widget: hotspotButton(hotSpot[id][index]['id'],
-              hotSpot[id][index]['name'], hotSpot[id][index]['type']),
-        );
-      }),
+      hotspots: hotSpot.length - 1 < id
+          ? []
+          : List.generate(hotSpot[id].length, (index) {
+              return Hotspot(
+                latitude: hotSpot[id][index].lat,
+                longitude: hotSpot[id][index].long,
+                width: 120,
+                height: 100,
+                widget: hotspotButton(hotSpot[id][index], () {
+                  onHotspotTap(hotSpot[id][index]);
+                }),
+              );
+            }),
     );
     return pano;
   }

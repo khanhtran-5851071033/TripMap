@@ -19,11 +19,11 @@ const double rightLong = 90.0;
 const double leftLong = -90.0;
 const double behideLong = 180.0;
 
-List hotSpot = [
+List<List<MyHotspot>> hotSpot = [
   //////Cong 0
   [
     MyHotspot(1, name: 'C2', long: rightLong),
-    MyHotspot(2, name: 'Ngã ba', long: rightLong),
+    MyHotspot(2, name: 'Ngã ba', long: frontLong),
     //Building
     MyHotspot(1, name: 'C2', long: 75.0, lat: 15.0, type: HotspotType.image),
   ],
