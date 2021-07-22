@@ -29,7 +29,7 @@ class _PanoScreenState extends State<PanoScreen> {
   //     _tilt = tilt;
   //   });
   // }
-  
+
   Widget hotspotButton(int id, String text, String type) {
     return Transform(
       transform: type == 'arrow'
@@ -124,8 +124,8 @@ class _PanoScreenState extends State<PanoScreen> {
   Widget panoramaWidget(int id) {
     var pano = Panorama(
       animSpeed: animSpeed,
-      zoom: -2,
-      minZoom: -5,
+      zoom: 1,
+      minZoom: 0,
       maxZoom: 5,
       sensitivity: 1.5,
       interactive: true,
