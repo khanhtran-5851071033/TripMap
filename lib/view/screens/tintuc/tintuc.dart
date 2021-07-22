@@ -196,8 +196,7 @@ class _NotifyListState extends State<NotifyList>
           )
         : Center(
             child: SpinKitThreeBounce(
-                          color: Color(
-                                                                    0xff29166F),
+                          color: Color(0xff29166F),
               size: size.width * 0.06,
             ),
           );

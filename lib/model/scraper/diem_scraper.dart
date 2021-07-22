@@ -57,8 +57,8 @@ class DiemScraper {
 
   void getDiem() async {
     var msv = await getMsv();
-    List<String> ds_noidung = [];
-    List<HocKi> ds_HocKi = [];
+    List<String> dsnoidung = [];
+    List<HocKi> dsHocKi = [];
     if (await webScraper.loadFullURL(
         'http://xemdiem.utc2.edu.vn/svxemdiem.aspx?ID=$msv&istinchi=1')) {
       List<Map<String, dynamic>> noidung = webScraper.getElement(
@@ -68,13 +68,13 @@ class DiemScraper {
       bool kt = false;
       for (int i = 7; i < noidung.length; i++) {
         if (noidung[i].toString().contains('Năm học')) {
-          ds_HocKi.add(HocKi(namhoc, ds_noidung));
+          dsHocKi.add(HocKi(namhoc, dsnoidung));
           namhoc = noidung[i]
               .toString()
               .replaceAll('{title:', '')
               .replaceAll(', attributes: {: null}}', '')
               .trim();
-          ds_noidung = [];
+          dsnoidung = [];
           kt = true;
         } else {
           kt = false;
@@ -85,12 +85,12 @@ class DiemScraper {
               .replaceAll('{title:', '')
               .replaceAll(', attributes: {: null}}', '')
               .trim();
-          ds_noidung.add(ndung);
+          dsnoidung.add(ndung);
         }
       }
     }
-    ds_HocKi.removeAt(0);
-    _streamHocKy.sink.add(ds_HocKi);
+    dsHocKi.removeAt(0);
+    _streamHocKy.sink.add(dsHocKi);
   }
 
   void dispose() {

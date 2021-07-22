@@ -5,7 +5,6 @@ import 'package:example/model/event.dart';
 import 'package:example/model/scraper/event_scraper.dart';
 import 'package:example/model/noti.dart';
 import 'package:example/model/scraper/noti_scraper.dart';
-import 'package:example/view/shared/util.dart';
 import 'package:example/view/widgets/photo_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

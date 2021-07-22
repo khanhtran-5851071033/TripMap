@@ -1,6 +1,5 @@
-import 'package:example/core/models/models.dart';
+
 import 'package:example/core/viewmodels/floorplan_model.dart';
-import 'package:example/view/shared/global.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +24,6 @@ class PositionedWidgetState extends State<PositionedWidget> {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<FloorPlanModel>(context);
-    final List<Room> phongHoc =
-        Global.phongHoc.map((item) => Room.fromMap(item)).toList();
     return Stack(
       children:
           // model.isScaled

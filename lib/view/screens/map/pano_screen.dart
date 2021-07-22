@@ -1,16 +1,10 @@
 import 'package:example/view/shared/image_list.dart';
-import 'package:example/view/shared/util.dart';
 import 'package:example/view/widgets/hotspot_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:panorama/panorama.dart';
-import 'package:avatar_glow/avatar_glow.dart';
 
 class PanoScreen extends StatefulWidget {
-  PanoScreen({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _PanoScreenState createState() => _PanoScreenState();
 }
@@ -19,7 +13,7 @@ class _PanoScreenState extends State<PanoScreen> {
   // double _lon = 0;
   // double _lat = 0;
   // double _tilt = 0;
-  double _zoom = 1.0, animSpeed = 0.01;
+  double animSpeed = 0.01;
   int _panoId = 0, imageSize = 0;
   int curId = 0;
 
@@ -35,7 +29,7 @@ class _PanoScreenState extends State<PanoScreen> {
       // animSpeed = 0.01;
       imageSize = 0;
       _panoId = hotspot.id;
-      _zoom = 1;
+
       curId = hotspot.id;
     });
     Future.delayed(Duration(milliseconds: 500), () {
@@ -51,7 +45,7 @@ class _PanoScreenState extends State<PanoScreen> {
     var pano = Panorama(
       animSpeed: animSpeed,
       zoom: 1,
-      minZoom: 0,
+      minZoom: 0.5,
       maxZoom: 5,
       sensitivity: 1.5,
       interactive: true,
@@ -85,7 +79,7 @@ class _PanoScreenState extends State<PanoScreen> {
               return Hotspot(
                 latitude: hotSpot[id][index].lat,
                 longitude: hotSpot[id][index].long,
-                width: 120,
+                width: 150,
                 height: 100,
                 widget: hotspotButton(hotSpot[id][index], () {
                   onHotspotTap(hotSpot[id][index]);
@@ -110,22 +104,7 @@ class _PanoScreenState extends State<PanoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Widget panorama;
-
-    // switch (_panoId % panoImages.length) {
-    //   case 0:
-    //     panorama = panoramaWidget(1);
-    //     break;
-    //   case 2:
-    //     panorama = panoramaWidget(2);
-    //     break;
-    //   default:
-    //     panorama = panoramaWidget(0);
-    // }
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
       body: Stack(
         children: [
           panoramaWidget(_panoId),
@@ -145,18 +124,6 @@ class _PanoScreenState extends State<PanoScreen> {
               ))
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   mini: true,
-      //   onPressed: () {
-      //     ImagePicker.pickImage(source: ImageSource.gallery).then((value) {
-      //       setState(() {
-      //         panoImages.add(Image.file(value));
-      //         _panoId = panoImages.length - 1;
-      //       });
-      //     });
-      //   },
-      //   child: Icon(Icons.panorama),
-      // ),
     );
   }
 }

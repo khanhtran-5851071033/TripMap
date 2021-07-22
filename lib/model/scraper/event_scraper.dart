@@ -3,8 +3,6 @@ import 'package:example/view/shared/util.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:web_scraper/web_scraper.dart';
 
-
-
 class EventScraper {
   final _stream = PublishSubject<List<Event>>();
   Stream<List<Event>> get stream => _stream.stream;
@@ -14,33 +12,31 @@ class EventScraper {
   final webScraper = WebScraper(url);
 
   fetchEvent() async {
-    List<Event> ds_TinTuc = [], ds_TinTuc1 = [];
-    List<String> ds_Tittle;
-    List<Map<String, dynamic>> ds_IMG, ds_Link;
+    List<Event> dsTinTuc = [];
+    List<String> dsTittle;
+    List<Map<String, dynamic>> dsIMG, dsLink;
     if (await webScraper.loadWebPage('/tin-tuc/p=1')) {
-      ds_Tittle =
-          webScraper.getElementTitle('div#kuntraict>div.mucdichvu>h3>a');
-      ds_IMG =
+      dsTittle = webScraper.getElementTitle('div#kuntraict>div.mucdichvu>h3>a');
+      dsIMG =
           webScraper.getElement('div#kuntraict>div.mucdichvu>a>img', ['src']);
-      ds_Link =
-          webScraper.getElement('div#kuntraict>div.mucdichvu>a', ['href']);
+      dsLink = webScraper.getElement('div#kuntraict>div.mucdichvu>a', ['href']);
     }
     String tittle, img, link;
 
-    for (int i = 0; i < ds_Tittle.length; i++) {
-      tittle = ds_Tittle[i].trim();
+    for (int i = 0; i < dsTittle.length; i++) {
+      tittle = dsTittle[i].trim();
       img = url +
           '/' +
-          ds_IMG[i]
+          dsIMG[i]
               .toString()
               .trim()
-              .substring(28, ds_IMG[i].toString().trim().length - 2);
+              .substring(28, dsIMG[i].toString().trim().length - 2);
       link = url +
           '/' +
-          ds_Link[i]
+          dsLink[i]
               .toString()
               .trim()
-              .substring(55, ds_Link[i].toString().trim().length - 2);
+              .substring(55, dsLink[i].toString().trim().length - 2);
       if (await webScraper.loadWebPage(link.substring(url.length))) {
         String thoigian = webScraper
             .getElementTitle('div#kuntraict>div.ngaydangctcon')
@@ -72,11 +68,11 @@ class EventScraper {
         //event model
         Event td = Event(tittle, img, link, ngay[3].trim(), timediff.toString(),
             time[2].trim().substring(10, time[2].trim().length));
-        ds_TinTuc.add(td);
+        dsTinTuc.add(td);
       }
       if (i % 1 == 0 && i != 0)
-        _stream.sink.add(ds_TinTuc);
-      else if (i == 10) _stream.sink.add(ds_TinTuc);
+        _stream.sink.add(dsTinTuc);
+      else if (i == 10) _stream.sink.add(dsTinTuc);
     }
   }
 

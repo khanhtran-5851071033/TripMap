@@ -56,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               height: height,
               child: Stack(
+                
                 overflow: Overflow.visible,
                 children: [
                   Container(

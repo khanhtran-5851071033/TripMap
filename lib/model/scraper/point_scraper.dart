@@ -64,9 +64,7 @@ class PointScraper {
     String stt;
     String manganh;
     String tennganh;
-    String tohopmon;
     String diemchuan;
-    String ghichu;
     for (int i = 0; i < thongtinHB.length; i++) {
       if (i > 5) {
         thongtin2.add(thongtinHB[i]);

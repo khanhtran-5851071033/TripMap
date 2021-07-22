@@ -323,17 +323,7 @@ Widget _name(String name, Size size) {
           fontWeight: FontWeight.w600));
 }
 
-Widget _level(String level, Size size) {
-  return Row(
-    children: [
-      Icon(Icons.emoji_events,
-          color: Colors.amber[600], size: size.width * 0.04),
-      Text(level,
-          style:
-              TextStyle(color: Colors.amber[600], fontSize: size.width * 0.04)),
-    ],
-  );
-}
+
 
 _textValue(int value, Size size) {
   return Countup(
