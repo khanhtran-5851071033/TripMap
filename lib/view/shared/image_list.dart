@@ -1,18 +1,17 @@
-
 List<String> panoImages = [
-  'assets/cong.jpg',
-  'assets/c2.jpg',
-  'assets/ngababaixe.jpg',
-  'assets/nga3sangtao.jpg',
-  'assets/saue2.jpg',
-  'assets/nhaxe.jpg',
-  'assets/trcnhaxe.jpg',
-  'assets/e2.jpg',
-  'assets/e7.jpg',
-  'assets/e10.jpg',
-  'assets/giuae10.jpg',
-  'assets/truocc2.jpg',
-  'assets/c1c2.jpg',
+  'cong',
+  'c2',
+  'ngababaixe',
+  'nga3sangtao',
+  'saue2',
+  'nhaxe',
+  'trcnhaxe',
+  'e2',
+  'e7',
+  'e10',
+  'giuae10',
+  'truocc2',
+  'c1c2',
 ];
 List hotSpot = [
   //////Cong 0

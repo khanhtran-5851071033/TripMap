@@ -29,7 +29,7 @@ class _PanoScreenState extends State<PanoScreen> {
   //     _tilt = tilt;
   //   });
   // }
-
+  
   Widget hotspotButton(int id, String text, String type) {
     return Transform(
       transform: type == 'arrow'
@@ -108,7 +108,7 @@ class _PanoScreenState extends State<PanoScreen> {
               _zoom = 1;
               curId = id;
             });
-            Future.delayed(Duration(milliseconds: 500), () {
+            Future.delayed(Duration(milliseconds: 800), () {
               if (id == curId) {
                 setState(() {
                   imageSize = 1;
@@ -145,7 +145,10 @@ class _PanoScreenState extends State<PanoScreen> {
 
       ///////////////////////////IMAGE////////////////////////////////////////
       child: Image.asset(
-        imageSize == 0 ? panoImages[id] : panoImages[id].replaceAll('.', 'x2.'),
+        'assets/image_360/' +
+            panoImages[id] +
+            (imageSize == 0 ? '' : 'x2') +
+            '.jpg',
       ),
 
       latitude: 0,
