@@ -45,10 +45,10 @@ class _PanoScreenState extends State<PanoScreen> {
   Widget panoramaWidget(int id) {
     var pano = Panorama(
       animSpeed: animSpeed,
-      zoom: 1.0,
+      zoom: 0.7,
       minZoom: 0.5,
       maxZoom: 5.0,
-      sensitivity: 1.5,
+      sensitivity: 1.8,
       interactive: true,
       sensorControl: SensorControl.Orientation,
       // onViewChanged: onViewChanged,
@@ -127,7 +127,7 @@ class _PanoScreenState extends State<PanoScreen> {
                         children: [
                           AvatarGlow(
                             glowColor: Colors.red,
-                            endRadius: 5,
+                            endRadius: 3,
                             duration: Duration(milliseconds: 300),
                             repeat: true,
                             // showTwoGlows: true,

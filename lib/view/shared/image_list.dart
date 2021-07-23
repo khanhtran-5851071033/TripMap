@@ -34,6 +34,12 @@ List<AreHere> youAreHere = [
   AreHere(top: 12, left: 23), //Giữa E10->x
   AreHere(top: 73, left: 32), //truovws C2->x
   AreHere(top: 73, left: 43), //C1->x
+  ///Sua lai position
+  AreHere(top: 73, left: 43), //C1->x
+  AreHere(top: 73, left: 43), //C1->x
+  AreHere(top: 73, left: 43), //C1->x
+  AreHere(top: 73, left: 43), //C1->x
+  AreHere(top: 73, left: 43), //C1->x
 ];
 
 const double frontLong = 0.0;
@@ -77,17 +83,15 @@ List<List<MyHotspot>> hotSpot = [
   ],
   //////C2 1//Cổng qua c2
   [
+    MyHotspot(13, name: 'Sau C2', long: rightLong - 40),
     MyHotspot(0, name: 'Cổng', long: leftLong),
     MyHotspot(11, name: 'C2', long: rightLong + 10),
-    MyHotspot(3,
-        name: 'C1', long: 105.0, lat: 10.0, type: HotspotType.image, scale: .8),
+    MyHotspot(3, name: 'C1', long: 105.0, type: HotspotType.image, scale: .8),
     MyHotspot(3, name: 'C2', long: 75.0, lat: 20.0, type: HotspotType.image),
     MyHotspot(3,
         name: 'E2', long: 45.0, lat: 20.0, type: HotspotType.image, scale: .7),
-    MyHotspot(3,
-        name: 'E10', long: 10.0, lat: 10.0, type: HotspotType.image, scale: .5),
-    MyHotspot(3,
-        name: 'E7', long: 20.0, lat: 10.0, type: HotspotType.image, scale: .6),
+    MyHotspot(3, name: 'E10', long: 10.0, type: HotspotType.image, scale: .5),
+    MyHotspot(3, name: 'E7', long: 20.0, type: HotspotType.image, scale: .6),
     MyHotspot(6,
         name: 'Khu đào tạo', long: 150.0, lat: 25.0, type: HotspotType.image),
     MyHotspot(5,
@@ -104,8 +108,7 @@ List<List<MyHotspot>> hotSpot = [
     MyHotspot(3, name: 'E10-E7', long: frontLong + 5),
     MyHotspot(5,
         name: 'E2', long: 80, lat: 20.0, type: HotspotType.image, scale: .9),
-    MyHotspot(5,
-        name: 'E7', long: 30, lat: 10.0, type: HotspotType.image, scale: .8),
+    MyHotspot(5, name: 'E7', long: 30, type: HotspotType.image, scale: .8),
     MyHotspot(5,
         name: 'E10', long: 5, lat: 5.0, type: HotspotType.image, scale: .6),
     MyHotspot(3,
@@ -138,12 +141,10 @@ List<List<MyHotspot>> hotSpot = [
         name: 'Cổng', long: -177, lat: 4.0, type: HotspotType.image, scale: .4),
     MyHotspot(3,
         name: 'C2', long: 150, lat: 12.0, type: HotspotType.image, scale: .5),
-    MyHotspot(3,
-        name: 'E7', long: 45, lat: 10.0, type: HotspotType.image, scale: .9),
+    MyHotspot(3, name: 'E7', long: 45, type: HotspotType.image, scale: .9),
     MyHotspot(3,
         name: 'E10', long: 10, lat: 5.0, type: HotspotType.image, scale: .6),
-    MyHotspot(3,
-        name: 'E2', long: 105, lat: 10.0, type: HotspotType.image, scale: .9),
+    MyHotspot(3, name: 'E2', long: 105, type: HotspotType.image, scale: .9),
   ],
   ////Sau e2 4
   [
@@ -191,7 +192,7 @@ List<List<MyHotspot>> hotSpot = [
   ],
   ///////truoc nha xe 6
   [
-    MyHotspot(14, name: 'Phòng khảo thí', long: behideLong + 10),
+    MyHotspot(14, name: 'Phòng khảo thí', long: behideLong + 50),
     MyHotspot(7, name: 'E2', long: -80),
     MyHotspot(5, name: 'E3', long: 10),
     MyHotspot(3,
@@ -221,6 +222,7 @@ List<List<MyHotspot>> hotSpot = [
   ],
   ////////E2 7
   [
+    MyHotspot(13, name: 'Sau C2', long: behideLong + 10),
     MyHotspot(2, name: 'Cổng', long: -82),
     MyHotspot(6, name: 'Trước nhà xe', long: 100),
     MyHotspot(3,
@@ -295,8 +297,7 @@ List<List<MyHotspot>> hotSpot = [
     ),
     MyHotspot(3,
         name: 'E2', long: 140, lat: 20.0, type: HotspotType.image, scale: .5),
-    MyHotspot(3,
-        name: 'E7', long: 130, lat: 10.0, type: HotspotType.image, scale: .8),
+    MyHotspot(3, name: 'E7', long: 130, type: HotspotType.image, scale: .8),
     MyHotspot(3,
         name: 'E6', long: 70, lat: 12.0, type: HotspotType.image, scale: .7),
     MyHotspot(3,
@@ -307,8 +308,7 @@ List<List<MyHotspot>> hotSpot = [
     MyHotspot(9, name: 'Cổng', long: leftLong),
     MyHotspot(3,
         name: 'E10', long: 0.0, lat: 5.0, type: HotspotType.image, scale: 1),
-    MyHotspot(3,
-        name: 'E7', long: 165, lat: 10.0, type: HotspotType.image, scale: .8),
+    MyHotspot(3, name: 'E7', long: 165, type: HotspotType.image, scale: .8),
     MyHotspot(3,
         name: 'E2', long: 160, lat: 20.0, type: HotspotType.image, scale: .5),
     MyHotspot(3,
@@ -318,6 +318,7 @@ List<List<MyHotspot>> hotSpot = [
   ],
   //////truoc C2 11
   [
+    MyHotspot(13, name: 'Sau C2', long: rightLong - 20),
     MyHotspot(1, name: 'Cổng', long: leftLong + 5),
     MyHotspot(12, name: 'C1', long: rightLong + 5),
     MyHotspot(3,
@@ -339,6 +340,7 @@ List<List<MyHotspot>> hotSpot = [
   ],
   //////C1 C2 12
   [
+    MyHotspot(13, name: 'Sau C2', long: leftLong + 30),
     MyHotspot(11, name: 'C2', long: leftLong),
     MyHotspot(3,
         name: 'C1',

@@ -11,8 +11,8 @@ Widget hotspotButton(MyHotspot hotspot, VoidCallback onTap) {
         : (Matrix4.identity()..rotateX(0)),
     child: AvatarGlow(
       glowColor: hotspot.type == HotspotType.arrow ? Colors.white : myColor,
-      endRadius: hotspot.type == HotspotType.arrow ? 1000.0 : 27,
-      duration: Duration(milliseconds: 300),
+      endRadius: hotspot.type == HotspotType.arrow ? 70.0 : 27,
+      duration: Duration(seconds: 1),
       repeat: true,
       // showTwoGlows: true,
       repeatPauseDuration: Duration(milliseconds: 500),
