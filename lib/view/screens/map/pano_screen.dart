@@ -45,9 +45,9 @@ class _PanoScreenState extends State<PanoScreen> {
   Widget panoramaWidget(int id) {
     var pano = Panorama(
       animSpeed: animSpeed,
-      zoom: 1,
+      zoom: 1.0,
       minZoom: 0.5,
-      maxZoom: 5,
+      maxZoom: 5.0,
       sensitivity: 1.5,
       interactive: true,
       sensorControl: SensorControl.Orientation,
@@ -66,11 +66,13 @@ class _PanoScreenState extends State<PanoScreen> {
 
       ///////////////////////////IMAGE////////////////////////////////////////
       child: Image.asset(
-        'assets/image_360/' +
-            panoImages[id] +
-            (imageSize == 0 ? '' : 'x2') +
-            '.jpg',
+        'assets/image_360/' + panoImages[id] + '.jpg',
       ),
+      // child: Image.network(
+      //   'https://firebasestorage.googleapis.com/v0/b/utc2-ea569.appspot.com/o/360%2Fcong.jpg?alt=media&token=8ded6d8f-c28d-41b3-981b-9c08e6ceee57',
+      //   cacheHeight: 2000,
+      //   cacheWidth: 4000,
+      // ),
 
       latitude: 0,
       longitude: 0,

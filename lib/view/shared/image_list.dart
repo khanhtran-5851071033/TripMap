@@ -17,19 +17,19 @@ List<String> panoImages = [
 ];
 
 List<AreHere> youAreHere = [
-  AreHere(top: 73,left: 12),//cổng->x
-  AreHere(top: 73,left: 20),//C2->x
-  AreHere(top: 52,left: 12),//ngã 3 bãi xe->x
-  AreHere(top: 40,left: 12),//ngã 3 sáng tạo->x
-  AreHere(top: 40,left: 36),//sau E2->x
-  AreHere(top: 40,left: 58),//nhà xe->x
-  AreHere(top: 52,left: 58),//trc nhà xe-> x
-  AreHere(top: 52,left: 40),//E2->x
-  AreHere(top: 26,left: 12),//E7->x
-  AreHere(top: 12,left: 12),//E10->x
-  AreHere(top: 12,left: 23),//Giữa E10->x
-  AreHere(top: 73,left: 32),//truovws C2->x
-  AreHere(top: 73,left: 43),//C1->x
+  AreHere(top: 73, left: 12), //cổng->x
+  AreHere(top: 73, left: 20), //C2->x
+  AreHere(top: 52, left: 12), //ngã 3 bãi xe->x
+  AreHere(top: 40, left: 12), //ngã 3 sáng tạo->x
+  AreHere(top: 40, left: 36), //sau E2->x
+  AreHere(top: 40, left: 58), //nhà xe->x
+  AreHere(top: 52, left: 58), //trc nhà xe-> x
+  AreHere(top: 52, left: 40), //E2->x
+  AreHere(top: 26, left: 12), //E7->x
+  AreHere(top: 12, left: 12), //E10->x
+  AreHere(top: 12, left: 23), //Giữa E10->x
+  AreHere(top: 73, left: 32), //truovws C2->x
+  AreHere(top: 73, left: 43), //C1->x
 ];
 
 const double frontLong = 0.0;
@@ -381,5 +381,5 @@ enum HotspotType { arrow, image }
 class AreHere {
   double top;
   double left;
-  AreHere({this.top,this.left});
+  AreHere({this.top, this.left});
 }
