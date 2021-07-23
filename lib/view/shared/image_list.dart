@@ -1,19 +1,23 @@
-import 'package:flutter/cupertino.dart';
-
 List<String> panoImages = [
-  'cong',
+  'cong', //0
   'c2',
   'ngababaixe',
   'nga3sangtao',
   'saue2',
-  'nhaxe',
+  'nhaxe', //5
   'trcnhaxe',
   'e2',
   'e7',
   'e10',
-  'giuae10',
+  'giuae10', //10
   'truocc2',
   'c1c2',
+  'sauc2',
+  'phongkhaothi',
+  'e4nhaxe', //15
+  'e5nhaxe',
+  'e9',
+  'giuae6e9',
 ];
 
 List<AreHere> youAreHere = [
@@ -187,6 +191,7 @@ List<List<MyHotspot>> hotSpot = [
   ],
   ///////truoc nha xe 6
   [
+    MyHotspot(14, name: 'Phòng khảo thí', long: behideLong + 10),
     MyHotspot(7, name: 'E2', long: -80),
     MyHotspot(5, name: 'E3', long: 10),
     MyHotspot(3,
@@ -355,7 +360,33 @@ List<List<MyHotspot>> hotSpot = [
         scale: .5),
     MyHotspot(3,
         name: 'C2', long: -60.0, lat: 7.0, type: HotspotType.image, scale: 1),
-    // {"lat": lat, "long": rightLong, "id": 10, "name": 'C1', 'type': arrow},
+  ],
+  //////sau C2 13
+  [
+    MyHotspot(1, name: 'C2', long: leftLong),
+    MyHotspot(7, name: 'E2', long: frontLong),
+    MyHotspot(14, name: 'Phòng khảo thí', long: rightLong),
+    MyHotspot(11, name: 'Trước C2', long: behideLong),
+  ],
+  //////Phong khao thi 14
+  [
+    MyHotspot(13, name: 'Sau C2', long: leftLong),
+    MyHotspot(6, name: 'Trước nhà xe', long: frontLong),
+  ],
+  //////E4 nhà xe 15
+  [
+    MyHotspot(5, name: 'E3 - Nhà xe', long: behideLong),
+    MyHotspot(16, name: 'E5 - Nhà xe', long: frontLong),
+  ],
+  //////E5 nhà xe 16
+  [
+    MyHotspot(15, name: 'E4 - Nhà xe', long: behideLong),
+    MyHotspot(17, name: 'E9', long: frontLong),
+  ],
+  //////E9 17
+  [
+    MyHotspot(16, name: 'E5 - Nhà xe', long: behideLong),
+    MyHotspot(18, name: 'E6 - E9', long: frontLong),
   ],
 ];
 
