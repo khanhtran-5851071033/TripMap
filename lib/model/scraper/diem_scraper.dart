@@ -34,11 +34,13 @@ class DiemScraper {
   }
 
   Future<SinhVien> getThongTin(String msv) async {
+    msv = '5851071033';
     SinhVien sinhvien;
     if (await webScraper.loadFullURL(
         'http://xemdiem.utc2.edu.vn/svxemdiem.aspx?ID=$msv&istinchi=1')) {
       List<String> thongTinSV = webScraper.getElementTitle(
           'div#thongtinsinhvien > table> tbody > tr > td > font');
+      print(thongTinSV.length);
       String hoten = thongTinSV[2];
       String masv = thongTinSV[3];
       String ngaysinh = thongTinSV[4];

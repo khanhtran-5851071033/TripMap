@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:example/view/shared/image_list.dart';
 import 'package:example/view/widgets/hotspot_button.dart';
 import 'package:flutter/material.dart';
@@ -52,13 +53,13 @@ class _PanoScreenState extends State<PanoScreen> {
       sensorControl: SensorControl.Orientation,
       // onViewChanged: onViewChanged,
       onTap: (longitude, latitude, tilt) {
-        if (animSpeed == 1) {
+        if (animSpeed == 2) {
           setState(() {
             animSpeed = 0.01;
           });
         } else {
           setState(() {
-            animSpeed = 1;
+            animSpeed = 2;
           });
         }
       },
@@ -115,12 +116,76 @@ class _PanoScreenState extends State<PanoScreen> {
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.white54,
-                    child: Hero(
-                        tag: 'mapUtc2', child: Image.asset('assets/1305.png'))),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 100,
+                      color: Colors.white.withOpacity(.5),
+                      child: Row(
+                        children: [
+                          AvatarGlow(
+                            glowColor: Colors.red,
+                            endRadius: 5,
+                            duration: Duration(milliseconds: 300),
+                            repeat: true,
+                            // showTwoGlows: true,
+                            repeatPauseDuration: Duration(milliseconds: 500),
+                            child: Container(
+                              width: 5,
+                              height: 5,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.white, width: .5),
+                                  color: Colors.red,
+                                  shape: BoxShape.circle),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              'Vị trí của bạn',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                        width: 100,
+                        height: 100,
+                        color: Colors.white54,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Hero(
+                                tag: 'mapUtc2',
+                                child: Image.asset('assets/1305.png')),
+                            Positioned(
+                              top: youAreHere[_panoId].top,
+                              left: youAreHere[_panoId].left,
+                              child: AvatarGlow(
+                                glowColor: Colors.red,
+                                endRadius: 5,
+                                duration: Duration(milliseconds: 300),
+                                repeat: true,
+                                // showTwoGlows: true,
+                                repeatPauseDuration:
+                                    Duration(milliseconds: 500),
+                                child: Container(
+                                  width: 5,
+                                  height: 5,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.white, width: .5),
+                                      color: Colors.red,
+                                      shape: BoxShape.circle),
+                                ),
+                              ),
+                            )
+                          ],
+                        )),
+                  ],
+                ),
               ))
         ],
       ),
