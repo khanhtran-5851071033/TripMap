@@ -35,11 +35,11 @@ List<AreHere> youAreHere = [
   AreHere(top: 73, left: 32), //truovws C2->x
   AreHere(top: 73, left: 43), //C1->x
   ///Sua lai position
-  AreHere(top: 73, left: 43), //C1->x
-  AreHere(top: 73, left: 43), //C1->x
-  AreHere(top: 73, left: 43), //C1->x
-  AreHere(top: 73, left: 43), //C1->x
-  AreHere(top: 73, left: 43), //C1->x
+  AreHere(top: 73, left: 43),
+  AreHere(top: 73, left: 43),
+  AreHere(top: 73, left: 43),
+  AreHere(top: 73, left: 43),
+  AreHere(top: 73, left: 43),
 ];
 
 const double frontLong = 0.0;
