@@ -34,7 +34,7 @@ class DiemScraper {
   }
 
   Future<SinhVien> getThongTin(String msv) async {
-    msv = '5851071033';
+    // msv = '5851071033';
     SinhVien sinhvien;
     if (await webScraper.loadFullURL(
         'http://xemdiem.utc2.edu.vn/svxemdiem.aspx?ID=$msv&istinchi=1')) {
