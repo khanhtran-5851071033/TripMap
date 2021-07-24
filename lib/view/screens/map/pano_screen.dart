@@ -75,11 +75,7 @@ class _PanoScreenState extends State<PanoScreen> {
       child: Image.asset(
         'assets/image_360/' + panoImages[id] + '.jpg',
       ),
-      // child: Image.network(
-      //   'https://firebasestorage.googleapis.com/v0/b/utc2-ea569.appspot.com/o/360%2Fcong.jpg?alt=media&token=8ded6d8f-c28d-41b3-981b-9c08e6ceee57',
-      //   cacheHeight: 2000,
-      //   cacheWidth: 4000,
-      // ),
+     
 
       latitude: 0,
       longitude: 0,

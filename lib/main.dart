@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Nunito',
           primaryColor: Color(0xff29166F),
         ),
-        home: SplashScreen(),
+        home: PanoScreen(),
       ),
     );
   }

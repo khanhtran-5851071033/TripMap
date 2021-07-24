@@ -58,8 +58,8 @@ Widget hotspotButton(MyHotspot hotspot, VoidCallback onTap, VoidCallback onShow,
                               : Text(
                                   hotspot.name,
                                   textAlign: TextAlign.center,
+                                  textScaleFactor: 1.1,
                                   style: TextStyle(
-                                      fontSize: 16,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
