@@ -14,6 +14,7 @@ class _PanoScreenState extends State<PanoScreen> {
   // double _lon = 0;
   // double _lat = 0;
   // double _tilt = 0;
+  bool isShow = false;
   double animSpeed = 0.01;
   int _panoId = 0, imageSize = 0;
   int curId = 0;
@@ -25,6 +26,12 @@ class _PanoScreenState extends State<PanoScreen> {
   //     _tilt = tilt;
   //   });
   // }
+  void onShow(bool isShow) {
+    setState(() {
+      isShow ? isShow = false : isShow = true;
+    });
+  }
+
   void onHotspotTap(MyHotspot hotspot) {
     setState(() {
       // animSpeed = 0.01;
@@ -80,18 +87,36 @@ class _PanoScreenState extends State<PanoScreen> {
           ? []
           : List.generate(hotSpot[id].length, (index) {
               return Hotspot(
-                latitude: hotSpot[id][index].lat,
-                longitude: hotSpot[id][index].long,
-                width: 150,
-                height: 100,
-                widget: hotspotButton(hotSpot[id][index], () {
-                  onHotspotTap(hotSpot[id][index]);
-                }),
-              );
+                  latitude: hotSpot[id][index].lat,
+                  longitude: hotSpot[id][index].long,
+                  width: 150,
+                  height: 100,
+                  widget: hotspotButton(hotSpot[id][index], () {
+                    onHotspotTap(hotSpot[id][index]);
+                  }, () {
+                   
+                      if (content
+                          .where((element) =>
+                              element.name.trim().contains(hotSpot[id][index].name.trim()))
+                          .first
+                          .content
+                          .isNotEmpty) {
+                             setState(() {
+                        hotSpot[id][index].name = content
+                            .where((element) =>
+                                element.name.trim().contains(hotSpot[id][index].name.trim()))
+                            .first
+                            .content; });
+                      } else
+                        print('ko');
+                   
+                  }, hotSpot[id][index].name));
             }),
     );
     return pano;
   }
+
+  void newMethod() => onShow(isShow);
 
   @override
   void initState() {
