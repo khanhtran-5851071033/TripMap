@@ -34,7 +34,6 @@ List<AreHere> youAreHere = [
   AreHere(top: 12, left: 23), //Giữa E10->x
   AreHere(top: 73, left: 32), //truovws C2->x
   AreHere(top: 73, left: 43), //C1->x
-  ///Sua lai position
   AreHere(top: 65, left: 40), //sau e2 >x
   AreHere(top: 65, left: 56), //phong khao thi->x
   AreHere(top: 27, left: 58), //e4 nha xe->x
