@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:example/path_finder/repo_path.dart';
 import 'package:example/view/screens/map/2d_controller.dart';
 import 'package:example/view/screens/map/pano_screen.dart';
 import 'package:example/view/shared/util.dart';
@@ -31,10 +30,11 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
     controller.animation =
         Tween(begin: 0.0, end: 1.0).animate(controller.animateController)
           ..addListener(() {
-            setState(() {});
+            controller.animateValue.value = controller.animation.value;
           });
 
     controller.animateController.repeat();
+    controller.path = controller.drawPath();
     super.initState();
   }
 
@@ -91,47 +91,51 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                           ),
                         ),
 
-                        Stack(
-                          children: [
-                            Container(
-                              //color: Colors.black.withOpacity(0.7),
-                              child: CustomPaint(
-                                size: Size(411.4, 411.4),
-                                painter: Painter(path: controller.path),
-                              ),
-                            ),
-                            Positioned(
-                              top: (controller.diemDau.value != 0 &&
-                                      controller.diemCuoi.value != 0)
-                                  ? controller
-                                          .calculate(controller.animation.value)
-                                          .dy -
-                                      15
-                                  : 0,
-                              left: (controller.diemDau.value != 0 &&
-                                      controller.diemCuoi.value != 0)
-                                  ? controller
-                                          .calculate(controller.animation.value)
-                                          .dx -
-                                      15
-                                  : 0,
-                              child: Opacity(
-                                opacity: (controller.diemDau.value != 0 &&
-                                        controller.diemCuoi.value != 0)
-                                    ? 1
-                                    : 0,
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: Colors.yellow,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(Icons.directions_walk_rounded),
+                        Obx(
+                          () => Stack(
+                            children: [
+                              Container(
+                                //color: Colors.black.withOpacity(0.7),
+                                child: CustomPaint(
+                                  size: Size(411.4, 411.4),
+                                  painter: Painter(path: controller.path),
                                 ),
                               ),
-                            ),
-                          ],
+                              Positioned(
+                                top: (controller.diemDau.value != 0 &&
+                                        controller.diemCuoi.value != 0)
+                                    ? controller
+                                            .calculate(
+                                                controller.animateValue.value)
+                                            .dy -
+                                        15
+                                    : 0,
+                                left: (controller.diemDau.value != 0 &&
+                                        controller.diemCuoi.value != 0)
+                                    ? controller
+                                            .calculate(
+                                                controller.animateValue.value)
+                                            .dx -
+                                        15
+                                    : 0,
+                                child: Opacity(
+                                  opacity: (controller.diemDau.value != 0 &&
+                                          controller.diemCuoi.value != 0)
+                                      ? 1
+                                      : 0,
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.yellow,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(Icons.directions_walk_rounded),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         // GridViewWidget(),
                         Container(
@@ -155,8 +159,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.screen_rotation),
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => PanoScreen()));
+            Get.off(() => PanoScreen(),);
+            Get.delete<Map2dController>();
           },
         ),
       ),

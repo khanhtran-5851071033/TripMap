@@ -13,6 +13,7 @@ class Map2dController extends GetxController {
   TextEditingController diemDauController = TextEditingController();
   TextEditingController diemCuoiController = TextEditingController();
   RxList<EndPoint> listSearch = listBuilding.obs;
+  var animateValue = 0.0.obs;
 
   Animation animation;
 
@@ -22,11 +23,16 @@ class Map2dController extends GetxController {
   RxList<int> listDiem = <int>[].obs;
 
   void init(dynamic arg) {
-    path = drawPath();
     if (arg != null) {
+      //clear data before add endpoint
+      clearFindPath();
+
+      //add diemDau from pano screen
       diemDau.value = arg;
       PositionedWidgetState.diem.add(arg);
+
       var name = listBuilding[diemDau.value - 1].name;
+
       if (name != '')
         diemDauController.text = name;
       else
@@ -111,8 +117,7 @@ class Map2dController extends GetxController {
     diemCuoi.value = 0;
 
     path = drawPath();
-
-    animateController.reset();
+    if (animateController != null) animateController.reset();
     PositionedWidgetState.diem.clear();
   }
 }

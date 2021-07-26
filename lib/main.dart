@@ -1,4 +1,3 @@
-import 'package:example/view/screens/map/pano_screen.dart';
 import 'package:example/view/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

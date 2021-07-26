@@ -22,13 +22,12 @@ class _PanoScreenState extends State<PanoScreen> {
     Get.lazyPut(() => PanoController(), fenix: true);
     controller = Get.find<PanoController>();
   }
-  // void newMethod() => controller.onShow(isShow);
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Get.delete<PanoController>();
+        // Get.delete<PanoController>();
         return true;
       },
       child: Obx(
@@ -44,7 +43,7 @@ class _PanoScreenState extends State<PanoScreen> {
                       Get.off(() => FloorPlanScreen(),
                           arguments:
                               youAreHere[controller.panoId.value].endPointId);
-                      Get.delete<PanoController>();
+                      // Get.delete<PanoController>();
                     },
                     child: Column(
                       children: [
