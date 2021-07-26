@@ -23,11 +23,14 @@ class Map2dController extends GetxController {
 
   void init(dynamic arg) {
     path = drawPath();
-    print(arg);
     if (arg != null) {
       diemDau.value = arg;
-      diemDauController.text = listBuilding[diemDau.value - 1].name;
       PositionedWidgetState.diem.add(arg);
+      var name = listBuilding[diemDau.value - 1].name;
+      if (name != '')
+        diemDauController.text = name;
+      else
+        diemDauController.text = 'Vị trí của bạn';
     } else
       diemDau.value = 0;
   }
