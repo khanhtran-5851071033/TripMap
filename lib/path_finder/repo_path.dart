@@ -52,7 +52,7 @@ List<EndPoint> listBuilding = [
   EndPoint(6, '', Offset(142, 288)),
   EndPoint(7, '', Offset(184, 288)),
   EndPoint(8, '', Offset(213, 288)),
-  EndPoint(9, '', Offset(250, 288)),
+  EndPoint(9, 'Phòng khảo thí', Offset(250, 288)),
   EndPoint(10, '', Offset(75, 236)),
   EndPoint(11, '', Offset(142, 236)),
   EndPoint(12, 'E2', Offset(184, 236)),

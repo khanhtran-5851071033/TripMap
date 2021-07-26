@@ -1,6 +1,6 @@
-import 'package:example/view/screens/map/pano_screen.dart';
 import 'package:example/view/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'core/viewmodels/floorplan_model.dart';
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<FloorPlanModel>(
             create: (context) => FloorPlanModel()),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'UTC2',
         theme: ThemeData(

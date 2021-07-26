@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:example/path_finder/dijsktra.dart';
 import 'package:example/path_finder/repo_path.dart';
 import 'package:example/view/screens/map/2d_controller.dart';
 import 'package:example/view/screens/map/pano_screen.dart';
@@ -19,117 +18,30 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
     with SingleTickerProviderStateMixin {
   var controller = Get.put(Map2dController());
 
-  AnimationController _controller;
-  Animation _animation;
-
   double x = 40, y = 200;
   double xdef = 40, ydef = 200;
   double step = 10, size = 20;
   String huong = '';
-  int diemDau = 0, diemCuoi = 0;
-
-  Path _path;
-  List<int> listDiem = [];
 
   @override
   void initState() {
-    _controller = AnimationController(
+    controller.init(Get.arguments);
+    controller.animateController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 5000));
-    super.initState();
-    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
-      ..addListener(() {
-        setState(() {});
-      });
+    controller.animation =
+        Tween(begin: 0.0, end: 1.0).animate(controller.animateController)
+          ..addListener(() {
+            setState(() {});
+          });
 
-    _controller.repeat();
-    _path = drawPath();
+    controller.animateController.repeat();
+    super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    controller.animateController.dispose();
     super.dispose();
-  }
-
-  Path drawPath() {
-    Path path = Path();
-
-    if (diemDau != 0 && diemCuoi != 0) {
-      List<int> diem = Dijsktra.findPath(diemDau, diemCuoi);
-      double prevX = 0;
-      double prevY = 0;
-      for (int i = 0; i < diem.length; i++) {
-        for (int j = 0; j < listBuilding.length; j++) {
-          if ((listBuilding[j].id) == diem[i]) {
-            if (prevX == 0 && prevY == 0) {
-              path.moveTo(
-                  listBuilding[j].location.dx, listBuilding[j].location.dy);
-              prevX = listBuilding[j].location.dx;
-              prevY = listBuilding[j].location.dy;
-            } else {
-              path.quadraticBezierTo(prevX, prevY, listBuilding[j].location.dx,
-                  listBuilding[j].location.dy);
-              prevX = listBuilding[j].location.dx;
-              prevY = listBuilding[j].location.dy;
-            }
-          }
-        }
-      }
-    } else if (diemDau == 0 || diemCuoi == 0) {
-      path.moveTo(0, 0);
-    }
-    return path;
-  }
-
-  Offset calculate(value) {
-    PathMetrics pathMetrics = _path.computeMetrics();
-    PathMetric pathMetric = pathMetrics.elementAt(0);
-    value = pathMetric.length * value;
-    Tangent pos = pathMetric.getTangentForOffset(value);
-    return pos.position;
-  }
-
-  void clearFindPath() {
-    controller.diemDauController.clear();
-    controller.diemCuoiController.clear();
-    setState(() {
-      diemDau = 0;
-      diemCuoi = 0;
-
-      _path = drawPath();
-
-      _controller.reset();
-      PositionedWidgetState.diem.clear();
-    });
-  }
-
-  void findPath(List<int> diem, BuildContext context) {
-    unfocus(context);
-    if (diem.length == 2) {
-      setState(() {
-        // diemDau = diem[0];
-        diemCuoi = diem[1];
-        controller.diemCuoiController.text = listBuilding[diemCuoi - 1].name;
-
-        _path = drawPath();
-
-        _controller.reset();
-        _controller.repeat();
-      });
-    } else if (diem.length == 1) {
-      setState(() {
-        diemDau = diem[0];
-        controller.diemCuoiController.clear();
-        controller.diemDauController.text = listBuilding[diemDau - 1].name;
-
-        diemCuoi = 0;
-        _path = drawPath();
-
-        _controller.repeat();
-      });
-    } else {
-      clearFindPath();
-    }
   }
 
   @override
@@ -139,96 +51,114 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
         statusBarIconBrightness: Brightness.light));
     Size scsize = MediaQuery.of(context).size;
     // final model = Provider.of<FloorPlanModel>(context);
-    return Scaffold(
-      backgroundColor: myColor,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150.0),
-        child: appBarWidget(scsize),
-      ),
-      body: Container(
-        height: scsize.height * 0.85,
-        color: Colors.white,
-        child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.center,
-          children: <Widget>[
-            Positioned(
-              bottom: 20,
-              child: Container(
-                color: Colors.red,
-                child: RawGestureDetectorWidget(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        width: 400,
-                        height: 400,
-                        // color: Colors.grey,
-                        child: Hero(
-                          tag: 'mapUtc2',
-                          child: Image.asset(
-                            'assets/1305.png',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-
-                      Stack(
-                        children: [
-                          Container(
-                            //color: Colors.black.withOpacity(0.7),
-                            child: CustomPaint(
-                              size: Size(411.4, 411.4),
-                              painter: Painter(path: _path),
+    return WillPopScope(
+      onWillPop: () async {
+        Get.delete<Map2dController>();
+        PositionedWidgetState.diem.clear();
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: myColor,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(150.0),
+          child: appBarWidget(scsize),
+        ),
+        body: Container(
+          height: scsize.height * 0.85,
+          color: Colors.white,
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: <Widget>[
+              Positioned(
+                bottom: 20,
+                child: Container(
+                  color: Colors.red,
+                  child: RawGestureDetectorWidget(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          width: 400,
+                          height: 400,
+                          // color: Colors.grey,
+                          child: Hero(
+                            tag: 'mapUtc2',
+                            child: Image.asset(
+                              'assets/1305.png',
+                              fit: BoxFit.contain,
                             ),
                           ),
-                          Positioned(
-                            top: (diemDau != 0 && diemCuoi != 0)
-                                ? calculate(_animation.value).dy - 15
-                                : 0,
-                            left: (diemDau != 0 && diemCuoi != 0)
-                                ? calculate(_animation.value).dx - 15
-                                : 0,
-                            child: Opacity(
-                              opacity: (diemDau != 0 && diemCuoi != 0) ? 1 : 0,
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  color: Colors.yellow,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(Icons.directions_walk_rounded),
+                        ),
+
+                        Stack(
+                          children: [
+                            Container(
+                              //color: Colors.black.withOpacity(0.7),
+                              child: CustomPaint(
+                                size: Size(411.4, 411.4),
+                                painter: Painter(path: controller.path),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      // GridViewWidget(),
-                      Container(
-                        width: 411.4,
-                        height: 411.4,
-                        child: PositionedWidget(
-                          findPath: (diem) {
-                            findPath(diem, context);
-                          },
+                            Positioned(
+                              top: (controller.diemDau.value != 0 &&
+                                      controller.diemCuoi.value != 0)
+                                  ? controller
+                                          .calculate(controller.animation.value)
+                                          .dy -
+                                      15
+                                  : 0,
+                              left: (controller.diemDau.value != 0 &&
+                                      controller.diemCuoi.value != 0)
+                                  ? controller
+                                          .calculate(controller.animation.value)
+                                          .dx -
+                                      15
+                                  : 0,
+                              child: Opacity(
+                                opacity: (controller.diemDau.value != 0 &&
+                                        controller.diemCuoi.value != 0)
+                                    ? 1
+                                    : 0,
+                                child: Container(
+                                  width: 30,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: Colors.yellow,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(Icons.directions_walk_rounded),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        // GridViewWidget(),
+                        Container(
+                          width: 411.4,
+                          height: 411.4,
+                          child: PositionedWidget(
+                            findPath: (diem) {
+                              controller.findPath(diem, context);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Obx(() => listWidget(scsize)),
-          ],
+              Obx(() => listWidget(scsize)),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.screen_rotation),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => PanoScreen()));
-        },
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.screen_rotation),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => PanoScreen()));
+          },
+        ),
       ),
     );
   }
@@ -247,20 +177,22 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                   ? Container()
                   : GestureDetector(
                       onTap: () {
-                        if (listDiem.length < 2) {
-                          if (!listDiem
+                        if (controller.listDiem.length < 2) {
+                          if (!controller.listDiem
                               .contains(controller.listSearch[index].id)) {
-                            setState(() {
-                              listDiem.add(controller.listSearch[index].id);
-                            });
+                            controller.listDiem
+                                .add(controller.listSearch[index].id);
+                            controller.listDiem.refresh();
+                            PositionedWidgetState.diem
+                                .add(controller.listSearch[index].id);
                           }
                         } else {
-                          setState(() {
-                            listDiem.clear();
-                            listDiem.add(controller.listSearch[index].id);
-                          });
+                          controller.listDiem.clear();
+                          PositionedWidgetState.diem.clear();
+                          controller.listDiem
+                              .add(controller.listSearch[index].id);
                         }
-                        findPath(listDiem, context);
+                        controller.findPath(controller.listDiem, context);
                       },
                       child: Container(
                         // margin: EdgeInsets.symmetric(vertical: 10),
@@ -384,7 +316,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                               borderRadius: BorderRadius.circular(5)),
                           child: IconButton(
                             onPressed: () {
-                              clearFindPath();
+                              controller.clearFindPath();
                             },
                             icon: Icon(
                               Icons.close,

@@ -1,4 +1,5 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:example/view/screens/map/floorplan_screen.dart';
 import 'package:example/view/screens/map/pano_controller.dart';
 import 'package:example/view/shared/image_list.dart';
 import 'package:example/view/widgets/hotspot_button.dart';
@@ -13,7 +14,7 @@ class PanoScreen extends StatefulWidget {
 }
 
 class _PanoScreenState extends State<PanoScreen> {
-  var controller;
+  PanoController controller;
 
   @override
   void initState() {
@@ -40,7 +41,10 @@ class _PanoScreenState extends State<PanoScreen> {
                   bottom: 30,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.off(() => FloorPlanScreen(),
+                          arguments:
+                              youAreHere[controller.panoId.value].endPointId);
+                      Get.delete<PanoController>();
                     },
                     child: Column(
                       children: [

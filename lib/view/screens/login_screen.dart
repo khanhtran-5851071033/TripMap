@@ -56,8 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               height: height,
               child: Stack(
-                
-                overflow: Overflow.visible,
+                clipBehavior: Clip.none,
                 children: [
                   Container(
                       padding: EdgeInsets.only(top: height * 0.1),
@@ -283,8 +282,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: height * 0.02,
                           ),
-                          RaisedButton(
-                            color: Color(0xff29166F),
+                          ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color(0xff29166F))),
                             onPressed: () {
                               saveUserInfo(emailController.text.trim(),
                                   passController.text.trim());
@@ -316,16 +317,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: height * 0.02,
                           ),
-                          FlatButton(
-                            minWidth: width,
-                            height: height * 0.06,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                side: BorderSide(color: Color(0xff29166F))),
-                            color: Colors.white,
-                            textColor: Color(0xff29166F),
-                            padding: EdgeInsets.symmetric(
-                              vertical: height * 0.02,
+                          TextButton(
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(Size(width, height*0.06)),
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  side: BorderSide(color: Color(0xff29166F)))),
+                              backgroundColor: MaterialStateProperty.all(Colors.white),
+                              textStyle: MaterialStateProperty.all(TextStyle(color: Color(0xff29166F))),
+                              padding: MaterialStateProperty.all(
+                                  EdgeInsets.symmetric(
+                                vertical: height * 0.02,
+                              )),
                             ),
                             onPressed: () {},
                             child: Row(
