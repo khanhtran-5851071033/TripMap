@@ -159,7 +159,9 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.screen_rotation),
           onPressed: () {
-            Get.off(() => PanoScreen(),);
+            Get.off(
+              () => PanoScreen(),
+            );
             Get.delete<Map2dController>();
           },
         ),
@@ -222,7 +224,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.asset(
-                                'assets/image.png',
+                                controller.listSearch[index].image,
                                 width: 100,
                                 height: 100,
                                 fit: BoxFit.fitHeight,

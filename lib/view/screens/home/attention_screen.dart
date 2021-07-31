@@ -406,7 +406,7 @@ class _CompleteCheckPageState extends State<CompleteCheckPage> {
                 child: FittedBox(
                   fit: BoxFit.fill,
                   child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/utc2.png'),
+                    backgroundImage: AssetImage('assets/utc3_10.jpg'),
                     backgroundColor: Color(0xffE6E6E6),
                     // radius: 50,
                   ),
