@@ -19,7 +19,25 @@ List<String> panoImages = [
   'e9',
   'giuae6e9',
 ];
-
+List<String> imageIntro =[
+    'assets/utc3_1.jpg',
+    'assets/utc3_2.jpg',
+    'assets/utc3_3.jpg',
+    'assets/utc3_4.jpg',
+    'assets/utc3_5.jpg',
+    'assets/utc3_6.jpg',
+    'assets/utc3_7.jpg',
+    'assets/utc3_8.jpg',
+    'assets/utc3_9.jpg',
+    'assets/utc3_10.jpg',
+    'assets/utc3_11.jpg',
+    'assets/utc3_12.jpg',
+    'assets/utc3_13.jpg',
+    'assets/utc3_14.jpg',
+    'assets/utc3_15.jpg',
+    'assets/utc3_16.jpg',
+    'assets/utc3_17.jpg',
+];
 List<AreHere> youAreHere = [
   AreHere(top: 73, left: 12, endPointId: 1), //cổng->x
   AreHere(top: 73, left: 20, endPointId: 32), //C2->x

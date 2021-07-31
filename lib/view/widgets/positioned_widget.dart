@@ -152,7 +152,7 @@ class PositionedWidgetState extends State<PositionedWidget> {
                                                   ? Colors.blue
                                                   : Colors.red,
                                           backgroundImage:
-                                              AssetImage('assets/utc2.png'),
+                                              AssetImage(dayNha[index].image),
                                         ),
                                 ),
                                 Transform(

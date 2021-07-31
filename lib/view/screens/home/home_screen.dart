@@ -5,6 +5,7 @@ import 'package:example/view/screens/map/floorplan_screen.dart';
 import 'package:example/view/screens/map/pano_screen.dart';
 import 'package:example/view/screens/tintuc/point_table_screen.dart';
 import 'package:example/view/shared/global.dart';
+import 'package:example/view/shared/image_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -117,15 +118,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             vertical: size.height * 0.01),
                         child: PageView(
                           controller: pageController,
-                          children: List.generate(dayNha.length, (index) {
+                          children: List.generate(imageIntro.length, (index) {
                             return Container(
                               margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
                                 child: Image.asset(
-                                  'assets/image.png',
-                                  //width: 50,
-                                  // height: 100,
+                                  imageIntro[index],                              
                                   fit: BoxFit.fitWidth,
                                 ),
                               ),

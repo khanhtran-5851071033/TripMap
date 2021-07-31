@@ -12,10 +12,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  DiemScraper diemScraper = DiemScraper();
   @override
   void initState() {
     super.initState();
-    loadThongTin();
+    // loadThongTin();
+    diemScraper.getThongTin('5851071033');
   }
 
   void loadThongTin() async {
@@ -30,7 +32,6 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  DiemScraper diemScraper = DiemScraper();
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
