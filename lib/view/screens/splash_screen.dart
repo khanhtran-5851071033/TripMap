@@ -16,8 +16,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // loadThongTin();
-    diemScraper.getThongTin('5851071033');
+     loadThongTin();
+   // diemScraper.getThongTin('5851071033');
   }
 
   void loadThongTin() async {

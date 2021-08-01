@@ -227,7 +227,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                                 controller.listSearch[index].image,
                                 width: 100,
                                 height: 100,
-                                fit: BoxFit.fitHeight,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -241,6 +241,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Chỉ đường',
@@ -252,18 +253,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                                     )
                                   ],
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '360',
-                                      style: TextStyle(color: Colors.black),
-                                    ),
-                                    Icon(
-                                      Icons.visibility_rounded,
-                                      size: 18,
-                                    )
-                                  ],
-                                ),
+                               
                               ],
                             ),
                           ],

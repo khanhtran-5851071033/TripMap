@@ -319,18 +319,26 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           TextButton(
                             style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(Size(width, height*0.06)),
-                              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                  side: BorderSide(color: Color(0xff29166F)))),
-                              backgroundColor: MaterialStateProperty.all(Colors.white),
-                              textStyle: MaterialStateProperty.all(TextStyle(color: Color(0xff29166F))),
+                              minimumSize: MaterialStateProperty.all(
+                                  Size(width, height * 0.06)),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      side: BorderSide(
+                                          color: Color(0xff29166F)))),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              textStyle: MaterialStateProperty.all(
+                                  TextStyle(color: Color(0xff29166F))),
                               padding: MaterialStateProperty.all(
                                   EdgeInsets.symmetric(
                                 vertical: height * 0.02,
                               )),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                             diemScraper.streamController.sink
+                                  .add('5851071033');
+                            },
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
