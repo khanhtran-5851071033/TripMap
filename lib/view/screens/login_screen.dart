@@ -39,12 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     double height = MediaQuery.of(context).size.height;
 
     bool isValidateEmail(String em) {
-      String p =
-          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-
-      RegExp regExp = new RegExp(p);
-
-      return regExp.hasMatch(em);
+      return em.length == 10 ? true : false;
     }
 
     return Scaffold(
@@ -89,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: width * 0.05,
                         ),
                         Text(
-                          'Welcome to \nTrip Map !',
+                          'Welcome to \nSchool Map !',
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: width * 0.06,
@@ -130,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: height * 0.02,
                           ),
-                          Text('Email',
+                          Text('ID Student',
                               style: TextStyle(
                                 color: Colors.black,
                               )),
@@ -193,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       width: 0.5, color: Color(0xff29166F)),
                                 ),
                                 hintStyle: TextStyle(color: Colors.grey),
-                                hintText: 'msv@st.utc2.edu.vn'),
+                                hintText: '58510710**'),
                           ),
                           SizedBox(
                             height: height * 0.02,
@@ -336,7 +331,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               )),
                             ),
                             onPressed: () {
-                             diemScraper.streamController.sink
+                              diemScraper.streamController.sink
                                   .add('5851071033');
                             },
                             child: Row(
