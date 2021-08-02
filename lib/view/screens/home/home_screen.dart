@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:example/core/models/models.dart';
 import 'package:example/model/sinh_vien.dart';
 import 'package:example/view/screens/home/attention_screen.dart';
@@ -17,10 +18,34 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _curPage = 0;
+  bool isRevert = false;
   PageController pageController =
       PageController(initialPage: 0, viewportFraction: 0.85);
   final List<Building> dayNha =
       Global.dayNha.map((item) => Building.fromMap(item)).toList();
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(Duration(seconds: 5), (Timer timer) {
+      if (_curPage == 0)
+        isRevert = false;
+      else if (_curPage == imageIntro.length) isRevert = true;
+      
+      if (!isRevert)
+        _curPage += 1;
+      else
+        _curPage -= 1;
+
+      pageController.animateToPage(
+        _curPage,
+        duration: Duration(milliseconds: 350),
+        curve: Curves.easeIn,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -124,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
                                 child: Image.asset(
-                                  imageIntro[index],                              
+                                  imageIntro[index],
                                   fit: BoxFit.fitWidth,
                                 ),
                               ),
