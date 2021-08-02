@@ -32,18 +32,25 @@ class _HomeScreenState extends State<HomeScreen> {
       if (_curPage == 0)
         isRevert = false;
       else if (_curPage == imageIntro.length) isRevert = true;
-      
+
       if (!isRevert)
         _curPage += 1;
       else
         _curPage -= 1;
-
-      pageController.animateToPage(
-        _curPage,
-        duration: Duration(milliseconds: 350),
-        curve: Curves.easeIn,
-      );
+      if (pageController.hasClients) {
+        pageController.animateToPage(
+          _curPage,
+          duration: Duration(milliseconds: 350),
+          curve: Curves.easeIn,
+        );
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -143,6 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             vertical: size.height * 0.01),
                         child: PageView(
                           controller: pageController,
+                          onPageChanged: (val) {
+                            _curPage = val;
+                          },
                           children: List.generate(imageIntro.length, (index) {
                             return Container(
                               margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
