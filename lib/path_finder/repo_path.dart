@@ -55,7 +55,7 @@ List<EndPoint> listBuilding = [
   EndPoint(9, 'Phòng khảo thí', Offset(250, 288),'assets/utc3_6.jpg'),
   EndPoint(10, '', Offset(75, 236),''),
   EndPoint(11, '', Offset(142, 236),''),
-  EndPoint(12, 'E2', Offset(184, 236),'assets/utc3_8.jpg'),
+  EndPoint(12, 'Giảng đường\nđa năng', Offset(184, 236),'assets/utc3_8.jpg'),
   EndPoint(13, '', Offset(256, 236),''),
   EndPoint(14, 'Cổng\nphụ', Offset(350, 236),'assets/image.png'),
   EndPoint(15, '', Offset(75, 185),''),
