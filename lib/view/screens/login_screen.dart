@@ -155,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
                               }
                             },
+                            keyboardType: TextInputType.number,
                             style: TextStyle(color: Colors.black),
                             decoration: InputDecoration(
                                 enabledBorder: InputBorder.none,
