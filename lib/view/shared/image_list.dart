@@ -60,15 +60,15 @@ List<AreHere> youAreHere = [
   AreHere(top: 0, left: 58, endPointId: 29), // e9 giua e6_x
 ];
 List<Content> content = [
-  Content(name: 'C1', content: 'Hội trường C1'),
+  Content(name: 'C1', content: 'C1 - Hội trường'),
   Content(name: 'C2', content: 'C2 - Khu giảng đường'),
-  Content(name: 'C3', content: 'Thư viện\nPhòng khảo thí'),
+  Content(name: 'C3', content: 'C3 - Thư viện\nPhòng khảo thí'),
   Content(name: 'Giảng đường đa năng', content: 'Giảng đường đa năng'),
   Content(name: 'E3', content: 'E3 - Khu giảng đường'),
   Content(name: 'E4', content: 'E4 - Khu giảng đường'),
   Content(name: 'E5', content: 'E5 - Khu giảng đường'),
   Content(name: 'E6', content: 'E6 - Khu giảng đường'),
-  Content(name: 'E7', content: 'Trung tâm đào tạo thực hành'),
+  Content(name: 'E7', content: 'E7 - Trung tâm đào tạo thực hành'),
   Content(name: 'E9', content: 'E9 - Khu giảng đường'),
   Content(name: 'E10', content: 'E10 - Khu giảng đường'),
   Content(name: 'Bộ môn CNTT', content: 'Bộ môn Công Nghệ Thông Tin'),
