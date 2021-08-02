@@ -21,6 +21,8 @@ class Map2dController extends GetxController {
 
   var diemDau = 0.obs, diemCuoi = 0.obs;
   RxList<int> listDiem = <int>[].obs;
+  var isFirst = true;
+  var isShowSearch = false.obs;
 
   void init(dynamic arg) {
     if (arg != null) {
@@ -47,29 +49,82 @@ class Map2dController extends GetxController {
         .toList();
   }
 
-  void findPath(List<int> diem, BuildContext context) {
-    unfocus(context);
-    if (diem.length == 2) {
-      // diemDau = diem[0];
-      diemCuoi.value = diem[1];
-      diemCuoiController.text = listBuilding[diemCuoi.value - 1].name;
+  onTapTextField(bool isFi) {
+    isShowSearch.value = true;
+    isFirst = isFi;
+    listSearch.value = listBuilding;
+    listSearch.refresh();
+  }
 
+  findPath(List<int> diem) {
+    if (diem.length != 0) {
       path = drawPath();
 
       animateController.reset();
       animateController.repeat();
-    } else if (diem.length == 1) {
-      diemDau.value = diem[0];
-      diemCuoiController.clear();
-      diemDauController.text = listBuilding[diemDau.value - 1].name;
-
-      diemCuoi.value = 0;
-      path = drawPath();
-
-      animateController.repeat();
     } else {
       clearFindPath();
     }
+  }
+
+  onTapPositioned(int itemId, BuildContext context) {
+    unfocus(context);
+
+    isShowSearch.value = false;
+
+    print(isFirst);
+
+    if (!listDiem.contains(itemId)) {
+      if (listDiem.length < 2) {
+        listDiem.add(itemId);
+        listDiem.refresh();
+        PositionedWidgetState.diem.add(itemId);
+      } else {
+        clearFindPath();
+
+        PositionedWidgetState.diem.add(itemId);
+        listDiem.add(itemId);
+      }
+      if (isFirst) {
+        //Diem dau
+        diemDau.value = itemId;
+        diemDauController.text = listBuilding[itemId - 1].name;
+      } else {
+        //Diem Cuoi
+        diemCuoi.value = itemId;
+        diemCuoiController.text = listBuilding[itemId - 1].name;
+      }
+      findPath(listDiem);
+
+      isFirst = !isFirst;
+    }
+  }
+
+  onTapItem(int id, BuildContext context) {
+    unfocus(context);
+
+    if (PositionedWidgetState.diem.length == 2) {
+      for (var item in PositionedWidgetState.diem) {
+        if (item == (isFirst ? diemDau.value : diemCuoi.value)) {
+          PositionedWidgetState.diem.remove(item);
+          PositionedWidgetState.diem.add(id);
+        }
+      }
+    }
+    if (isFirst) {
+      //Diem dau
+      diemDau.value = id;
+      diemDauController.text = listBuilding[id - 1].name;
+    } else {
+      //Diem Cuoi
+      diemCuoi.value = id;
+      diemCuoiController.text = listBuilding[id - 1].name;
+    }
+
+    path = drawPath();
+
+    animateController.reset();
+    animateController.repeat();
   }
 
   Path drawPath() {
@@ -111,6 +166,7 @@ class Map2dController extends GetxController {
   }
 
   void clearFindPath() {
+    isFirst = true;
     diemDauController.clear();
     diemCuoiController.clear();
     diemDau.value = 0;
@@ -118,6 +174,7 @@ class Map2dController extends GetxController {
 
     path = drawPath();
     if (animateController != null) animateController.reset();
+    listDiem.clear();
     PositionedWidgetState.diem.clear();
   }
 }

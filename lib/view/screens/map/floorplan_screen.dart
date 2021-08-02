@@ -143,7 +143,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                           height: 411.4,
                           child: PositionedWidget(
                             findPath: (diem) {
-                              controller.findPath(diem, context);
+                              controller.onTapPositioned(diem, context);
                             },
                           ),
                         ),
@@ -152,7 +152,10 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                   ),
                 ),
               ),
-              Obx(() => listWidget(scsize)),
+              Obx(() => AnimatedOpacity(
+                  opacity: controller.isShowSearch.value ? 1.0 : 0.0,
+                  duration: Duration(milliseconds: 500),
+                  child: listWidget(scsize))),
             ],
           ),
         ),
@@ -183,22 +186,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                   ? Container()
                   : GestureDetector(
                       onTap: () {
-                        if (controller.listDiem.length < 2) {
-                          if (!controller.listDiem
-                              .contains(controller.listSearch[index].id)) {
-                            controller.listDiem
-                                .add(controller.listSearch[index].id);
-                            controller.listDiem.refresh();
-                            PositionedWidgetState.diem
-                                .add(controller.listSearch[index].id);
-                          }
-                        } else {
-                          controller.listDiem.clear();
-                          PositionedWidgetState.diem.clear();
-                          controller.listDiem
-                              .add(controller.listSearch[index].id);
-                        }
-                        controller.findPath(controller.listDiem, context);
+                        controller.onTapItem(
+                            controller.listSearch[index].id, context);
                       },
                       child: Container(
                         // margin: EdgeInsets.symmetric(vertical: 10),
@@ -241,7 +230,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Chỉ đường',
@@ -253,7 +243,6 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                                     )
                                   ],
                                 ),
-                               
                               ],
                             ),
                           ],
@@ -289,6 +278,10 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                       children: [
                         Expanded(
                           child: TextField(
+                            onTap: () {
+                              controller.onTapTextField(true);
+                              print('tap true');
+                            },
                             controller: controller.diemDauController,
                             onChanged: (val) {
                               controller.onSearch(val.trim());
@@ -327,7 +320,15 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
                     height: 5,
                   ),
                   TextField(
+                    onTap: () {
+                      controller.onTapTextField(false);
+
+                      print('tap false');
+                    },
                     controller: controller.diemCuoiController,
+                    onChanged: (val) {
+                      controller.onSearch(val.trim());
+                    },
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.search),
                       hintText: 'Điểm đến',

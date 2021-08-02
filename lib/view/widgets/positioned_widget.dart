@@ -9,7 +9,7 @@ import '../../model/end_point.dart';
 import '../../path_finder/repo_path.dart';
 
 class PositionedWidget extends StatefulWidget {
-  final Function(List<int>) findPath;
+  final Function(int) findPath;
 
   const PositionedWidget({Key key, this.findPath}) : super(key: key);
   @override
@@ -112,19 +112,19 @@ class PositionedWidgetState extends State<PositionedWidget> {
                           splashColor: Colors.white,
                           onTap: () {
                             unfocus(context);
-                            if (diem.length < 2) {
-                              if (!diem.contains(dayNha[index].id)) {
-                                setState(() {
-                                  diem.add(dayNha[index].id);
-                                });
-                              }
-                            } else {
-                              setState(() {
-                                diem.clear();
-                                diem.add(dayNha[index].id);
-                              });
-                            }
-                            widget.findPath(diem);
+                            // if (diem.length < 2) {
+                            //   if (!diem.contains(dayNha[index].id)) {
+                            //     setState(() {
+                            //       diem.add(dayNha[index].id);
+                            //     });
+                            //   }
+                            // } else {
+                            //   setState(() {
+                            //     diem.clear();
+                            //     diem.add(dayNha[index].id);
+                            //   });
+                            // }
+                            widget.findPath(dayNha[index].id);
                           },
                           child: Stack(
                               alignment: Alignment.centerLeft,
