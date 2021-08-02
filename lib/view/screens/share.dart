@@ -114,7 +114,7 @@ class _ShareFriendState extends State<ShareFriend> {
                                 children: [
                                   CircleAvatar(
                                     backgroundImage:
-                                        AssetImage('assets/utc.png'),
+                                        AssetImage('assets/logoUTC.png'),
                                   ),
                                   SizedBox(
                                     width: 7,
@@ -183,7 +183,7 @@ Widget _avatar(String name, String time) {
     child: Row(
       children: [
         CircleAvatar(
-          backgroundImage: AssetImage('assets/utc2.png'),
+          backgroundImage: AssetImage('assets/logoUTC.png'),
         ),
         SizedBox(
           width: 7,
@@ -216,13 +216,13 @@ Widget _image(Size size, BuildContext context) {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return Scaffold(
             body: PhotoView(
-              imageProvider: AssetImage('assets/utc.png'),
+              imageProvider: AssetImage('assets/utc3_15.jpg'),
             ),
           );
         }));
       },
       child:
-          Container(width: size.width, child: Image.asset('assets/utc.png')));
+          Container(width: size.width, child: Image.asset('assets/utc3_15.jpg')));
 }
 
 Widget _name(String name) {

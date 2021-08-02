@@ -75,7 +75,7 @@ Widget _avatar(String name, String content, String time, Size size) {
               height: 50,
               width: 50,
               child: CircleAvatar(
-                backgroundImage: AssetImage('assets/utc2.png'),
+                backgroundImage: AssetImage('assets/logoUTC.png'),
               ),
             ),
             Positioned(
