@@ -27,11 +27,13 @@ dependencies:
   provider: ^5.0.0
   sensors: ^2.0.0
   geolocator: ^7.0.3
+  geocoder: ^0.2.1
   shared_preferences: ^2.0.5
   permission_handler: ^7.1.0
   qrscan: ^0.3.1
   get: ^4.1.4
   flutter_image_slideshow: ^0.1.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

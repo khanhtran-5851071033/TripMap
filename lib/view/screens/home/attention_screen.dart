@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:example/model/sinh_vien.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:example/view/shared/geo_service.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:http/http.dart' as http;
 
 class AttentionScreen extends StatefulWidget {
   final SinhVien sinhvien;
@@ -87,40 +93,40 @@ class _CheckInPageState extends State<CheckInPage> {
   bool isLoading = false;
   String code, error = 'Nhập mã điểm danh';
   TextEditingController textEditingController = TextEditingController();
-
+  Position location;
   GeoService geoService = GeoService();
   Future<Position> getLocation() async {
     var currentPosition = await geoService.getCurrentLocation();
     return currentPosition;
   }
 
-  void checkIn(String code) async {
-    setState(() {
-      isLoading = true;
-    });
-    // var id = await getMsv();
-    Position location = await getLocation();
-    if (location == null) {
-      setState(() {
-        isLoading = false;
-        error = 'Bật dịch vụ vị trí và thử lại';
-      });
-    } else {
-      print(location.latitude.toString() + '/' + location.longitude.toString());
-      if (code == '123') {
-        widget.complete(
-            location.latitude.toString(), location.longitude.toString());
-        setState(() {
-          isLoading = false;
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        showError('2');
-      }
-    }
-  }
+  // void checkIn(String code) async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   // var id = await getMsv();
+  //   Position location = await getLocation();
+  //   if (location == null) {
+  //     setState(() {
+  //       isLoading = false;
+  //       error = 'Bật dịch vụ vị trí và thử lại';
+  //     });
+  //   } else {
+  //     print(location.latitude.toString() + '/' + location.longitude.toString());
+  //     if (code == '123') {
+  //       widget.complete(
+  //           location.latitude.toString(), location.longitude.toString());
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //       showError(2);
+  //     }
+  //   }
+  // }
 
   @override
   void initState() {
@@ -168,24 +174,29 @@ class _CheckInPageState extends State<CheckInPage> {
     // });
   }
 
-  void showError(String result) {
+  void showError(int result) {
     switch (result) {
-      case '1':
+      case 0:
         setState(() {
           error = 'Nhập mã điểm danh';
         });
         break;
-      case '2':
+      case 1:
+        setState(() {
+          error = 'Điểm danh thành công';
+        });
+        break;
+      case 2:
         setState(() {
           error = 'Mã điểm danh không đúng';
         });
         break;
-      case '3':
+      case 3:
         setState(() {
           error = 'Mã điểm danh hết hạn';
         });
         break;
-      case '4':
+      case 4:
         setState(() {
           error = 'Bạn đang không có mặt';
         });
@@ -205,6 +216,61 @@ class _CheckInPageState extends State<CheckInPage> {
     }
   }
 
+  Future checkIn(String code) async {
+    setState(() {
+      isLoading = true;
+    });
+    location = await getLocation();
+    if (location == null) {
+      setState(() {
+        isLoading = false;
+        error = 'Bật dịch vụ vị trí và thử lại';
+      });
+    } else {
+      // if (code == '123') {
+      setState(() {
+        isLoading = false;
+      });
+      try {
+        if (code == '123') {
+          showError(1);
+        } else
+          showError(2);
+
+        var geocoding = Geocoder.local;
+        var longitude = location.longitude;
+        var latitude = location.latitude;
+        var results = await geocoding
+            .findAddressesFromCoordinates(new Coordinates(latitude, longitude));
+
+        var now =
+            DateFormat("yyyy-MM-dd HH:mm:ss").parse(DateTime.now().toString());
+        // var attenTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(widget.time);
+        ///API
+        http.post(
+          Uri.parse(
+              'https://6058c0c5c3f49200173aed5b.mockapi.io/api/khanh/attendance'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'id_student': widget.sinhvien.msv,
+            'name': widget.sinhvien.hoten,
+            'time': now.toString(),
+            'location': location.latitude.toString() +
+                ',' +
+                location.longitude.toString(),
+            'address': widget.sinhvien.msv,
+          }),
+        );
+
+        print(results[0].addressLine);
+      } catch (e) {
+        print("Error occured: $e");
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final sizeScreen = MediaQuery.of(context).size;
@@ -219,7 +285,7 @@ class _CheckInPageState extends State<CheckInPage> {
               child: FittedBox(
                 fit: BoxFit.fill,
                 child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/utc2.png'),
+                  backgroundImage: AssetImage('assets/logoUTC.png'),
                   backgroundColor: Color(0xffE6E6E6),
                   // radius: 50,
                 ),
@@ -275,8 +341,7 @@ class _CheckInPageState extends State<CheckInPage> {
                           height: sizeScreen.width * 0.18,
                           padding: EdgeInsets.all(sizeScreen.width * 0.03),
                           decoration: BoxDecoration(
-                                        color: Color(
-                                                                    0xff29166F), shape: BoxShape.circle),
+                              color: Color(0xff29166F), shape: BoxShape.circle),
                           child: FittedBox(
                             child: isLoading
                                 ? SpinKitFadingCircle(
@@ -385,7 +450,7 @@ class _CompleteCheckPageState extends State<CompleteCheckPage> {
   @override
   void initState() {
     super.initState();
-   // time = DateFormat('HH:mm:ss').format(DateTime.now());
+    // time = DateFormat('HH:mm:ss').format(DateTime.now());
   }
 
   @override
@@ -467,8 +532,7 @@ class _CompleteCheckPageState extends State<CompleteCheckPage> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: sizeScreen.width * 0.05,
-                                       color: Color(
-                                                                    0xff29166F),
+                            color: Color(0xff29166F),
                             fontWeight: FontWeight.bold),
                       )),
                   Flexible(
@@ -484,8 +548,7 @@ class _CompleteCheckPageState extends State<CompleteCheckPage> {
                           width: sizeScreen.width * 0.7,
                           height: sizeScreen.width * 0.12,
                           decoration: BoxDecoration(
-                                         color: Color(
-                                                                    0xff29166F),
+                              color: Color(0xff29166F),
                               borderRadius: BorderRadius.circular(
                                   sizeScreen.width * 0.03)),
                           alignment: Alignment.center,
