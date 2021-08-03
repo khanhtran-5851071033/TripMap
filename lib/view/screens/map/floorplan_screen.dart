@@ -63,100 +63,104 @@ class _FloorPlanScreenState extends State<FloorPlanScreen>
           preferredSize: Size.fromHeight(150.0),
           child: appBarWidget(scsize),
         ),
-        body: Container(
-          height: scsize.height * 0.85,
-          color: Colors.white,
-          child: Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: <Widget>[
-              Positioned(
-                bottom: 20,
-                child: Container(
-                  color: Colors.red,
-                  child: RawGestureDetectorWidget(
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          width: 400,
-                          height: 400,
-                          // color: Colors.grey,
-                          child: Hero(
-                            tag: 'mapUtc2',
-                            child: Image.asset(
-                              'assets/1305.png',
-                              fit: BoxFit.contain,
+        body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: Container(
+            height: scsize.height * 0.85,
+            color: Colors.white,
+            child: Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: <Widget>[
+                Positioned(
+                  bottom: 20,
+                  child: Container(
+                    color: Colors.red,
+                    child: RawGestureDetectorWidget(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 400,
+                            height: 400,
+                            // color: Colors.grey,
+                            child: Hero(
+                              tag: 'mapUtc2',
+                              child: Image.asset(
+                                'assets/1305.png',
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
-                        ),
 
-                        Obx(
-                          () => Stack(
-                            children: [
-                              Container(
-                                //color: Colors.black.withOpacity(0.7),
-                                child: CustomPaint(
-                                  size: Size(411.4, 411.4),
-                                  painter: Painter(path: controller.path),
-                                ),
-                              ),
-                              Positioned(
-                                top: (controller.diemDau.value != 0 &&
-                                        controller.diemCuoi.value != 0)
-                                    ? controller
-                                            .calculate(
-                                                controller.animateValue.value)
-                                            .dy -
-                                        15
-                                    : 0,
-                                left: (controller.diemDau.value != 0 &&
-                                        controller.diemCuoi.value != 0)
-                                    ? controller
-                                            .calculate(
-                                                controller.animateValue.value)
-                                            .dx -
-                                        15
-                                    : 0,
-                                child: Opacity(
-                                  opacity: (controller.diemDau.value != 0 &&
-                                          controller.diemCuoi.value != 0)
-                                      ? 1
-                                      : 0,
-                                  child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                      color: Colors.yellow,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(Icons.directions_walk_rounded),
+                          Obx(
+                            () => Stack(
+                              children: [
+                                Container(
+                                  //color: Colors.black.withOpacity(0.7),
+                                  child: CustomPaint(
+                                    size: Size(411.4, 411.4),
+                                    painter: Painter(path: controller.path),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Positioned(
+                                  top: (controller.diemDau.value != 0 &&
+                                          controller.diemCuoi.value != 0)
+                                      ? controller
+                                              .calculate(
+                                                  controller.animateValue.value)
+                                              .dy -
+                                          15
+                                      : 0,
+                                  left: (controller.diemDau.value != 0 &&
+                                          controller.diemCuoi.value != 0)
+                                      ? controller
+                                              .calculate(
+                                                  controller.animateValue.value)
+                                              .dx -
+                                          15
+                                      : 0,
+                                  child: Opacity(
+                                    opacity: (controller.diemDau.value != 0 &&
+                                            controller.diemCuoi.value != 0)
+                                        ? 1
+                                        : 0,
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        color: Colors.yellow,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child:
+                                          Icon(Icons.directions_walk_rounded),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        // GridViewWidget(),
-                        Container(
-                          width: 411.4,
-                          height: 411.4,
-                          child: PositionedWidget(
-                            findPath: (diem) {
-                              controller.onTapPositioned(diem, context);
-                            },
+                          // GridViewWidget(),
+                          Container(
+                            width: 411.4,
+                            height: 411.4,
+                            child: PositionedWidget(
+                              findPath: (diem) {
+                                controller.onTapPositioned(diem, context);
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Obx(() => AnimatedOpacity(
-                  opacity: controller.isShowSearch.value ? 1.0 : 0.0,
-                  duration: Duration(milliseconds: 500),
-                  child: listWidget(scsize))),
-            ],
+                Obx(() => AnimatedOpacity(
+                    opacity: controller.isShowSearch.value ? 1.0 : 0.0,
+                    duration: Duration(milliseconds: 500),
+                    child: listWidget(scsize))),
+              ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
