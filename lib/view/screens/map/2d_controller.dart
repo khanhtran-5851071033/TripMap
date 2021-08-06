@@ -32,6 +32,7 @@ class Map2dController extends GetxController {
       //add diemDau from pano screen
       diemDau.value = arg;
       PositionedWidgetState.diem.add(arg);
+      isFirst = false;
 
       var name = listBuilding[diemDau.value - 1].name;
 
