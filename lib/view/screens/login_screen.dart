@@ -1,4 +1,5 @@
 import 'package:example/model/scraper/diem_scraper.dart';
+import 'package:example/model/sinh_vien.dart';
 import 'package:example/view/screens/home_route.dart';
 import 'package:example/view/shared/util.dart';
 import 'package:flutter/material.dart';
@@ -335,28 +336,47 @@ class _LoginScreenState extends State<LoginScreen> {
                               diemScraper.streamController.sink
                                   .add('5851071033');
                             },
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                    child: Icon(
-                                  Icons.arrow_right_alt_outlined,
-                                  color: Colors.transparent,
-                                )),
-                                Text(
-                                  "Skip",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Color(0xff29166F),
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w300,
-                                      wordSpacing: 1.5,
-                                      letterSpacing: 1.5),
-                                ),
-                                Container(
-                                    child: Icon(Icons.arrow_right_alt_outlined))
-                              ],
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeRoute(
+                                              sinhvien: SinhVien(
+                                                  'Sinh viên',
+                                                  '5851071044',
+                                                  '',
+                                                  '',
+                                                  '',
+                                                  '',
+                                                  ''),
+                                            )));
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                      child: Icon(
+                                    Icons.arrow_right_alt_outlined,
+                                    color: Colors.transparent,
+                                  )),
+                                  Text(
+                                    "Skip",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Color(0xff29166F),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w300,
+                                        wordSpacing: 1.5,
+                                        letterSpacing: 1.5),
+                                  ),
+                                  Container(
+                                      child:
+                                          Icon(Icons.arrow_right_alt_outlined))
+                                ],
+                              ),
                             ),
                           ),
                         ],
