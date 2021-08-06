@@ -39,9 +39,9 @@ class _ShareFriendState extends State<ShareFriend> {
         ),
         body: ListView.builder(
             physics: BouncingScrollPhysics(),
-              reverse: true,
+             
             // padding: const EdgeInsets.all(8),
-            itemCount: imageIntro.length,
+            itemCount: imageIntro.reversed.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 // margin: EdgeInsets.only(bottom: 10),

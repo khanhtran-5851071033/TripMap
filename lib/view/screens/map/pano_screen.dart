@@ -152,6 +152,7 @@ class PanoWidget extends StatelessWidget {
               panoImages[id] +
               (controller.imageSize.value == 1 ? '.jpg' : '-min.jpg'),
         ),
+        
 
         latitude: 0,
         longitude: 0,
