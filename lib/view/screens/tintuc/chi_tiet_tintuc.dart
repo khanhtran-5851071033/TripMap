@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:example/model/event.dart';
-import 'package:example/model/scraper/event_scraper.dart';
-import 'package:example/model/noti.dart';
-import 'package:example/model/scraper/noti_scraper.dart';
-import 'package:example/view/widgets/photo_view.dart';
+import 'package:utc2/model/event.dart';
+import 'package:utc2/model/scraper/event_scraper.dart';
+import 'package:utc2/model/noti.dart';
+import 'package:utc2/model/scraper/noti_scraper.dart';
+import 'package:utc2/view/widgets/photo_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -405,8 +405,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                         height: size.height * 0.5,
                                         child: Center(
                                           child: SpinKitThreeBounce(
-                                            color: Color(
-                                                                    0xff29166F),
+                                            color: Color(0xff29166F),
                                             size: size.width * 0.06,
                                           ),
                                         ),
@@ -470,8 +469,7 @@ class _NewsDetailState extends State<NewsDetail> {
                   Positioned(
                     top: 10,
                     child: RawMaterialButton(
-                      fillColor: Color(
-                                                                    0xff29166F),
+                      fillColor: Color(0xff29166F),
                       onPressed: () {
                         Navigator.pop(context);
                       },

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:example/view/shared/image_list.dart';
+import 'package:utc2/view/shared/image_list.dart';
 import 'package:get/get.dart';
 
 class PanoController extends GetxController {

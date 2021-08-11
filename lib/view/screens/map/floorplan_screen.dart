@@ -1,9 +1,9 @@
 import 'dart:ui';
-import 'package:example/view/screens/map/2d_controller.dart';
-import 'package:example/view/screens/map/pano_screen.dart';
-import 'package:example/view/shared/util.dart';
-import 'package:example/view/widgets/positioned_widget.dart';
-import 'package:example/view/widgets/raw_gesture_detector_widget.dart';
+import 'package:utc2/view/screens/map/2d_controller.dart';
+import 'package:utc2/view/screens/map/pano_screen.dart';
+import 'package:utc2/view/shared/util.dart';
+import 'package:utc2/view/widgets/positioned_widget.dart';
+import 'package:utc2/view/widgets/raw_gesture_detector_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

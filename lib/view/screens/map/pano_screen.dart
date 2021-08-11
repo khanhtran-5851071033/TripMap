@@ -1,8 +1,8 @@
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:example/view/screens/map/floorplan_screen.dart';
-import 'package:example/view/screens/map/pano_controller.dart';
-import 'package:example/view/shared/image_list.dart';
-import 'package:example/view/widgets/hotspot_button.dart';
+import 'package:utc2/view/screens/map/floorplan_screen.dart';
+import 'package:utc2/view/screens/map/pano_controller.dart';
+import 'package:utc2/view/shared/image_list.dart';
+import 'package:utc2/view/widgets/hotspot_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -152,7 +152,6 @@ class PanoWidget extends StatelessWidget {
               panoImages[id] +
               (controller.imageSize.value == 1 ? '.jpg' : '-min.jpg'),
         ),
-        
 
         latitude: 0,
         longitude: 0,

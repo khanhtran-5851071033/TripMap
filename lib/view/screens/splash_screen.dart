@@ -1,8 +1,8 @@
-import 'package:example/model/scraper/diem_scraper.dart';
-import 'package:example/model/sinh_vien.dart';
-import 'package:example/view/screens/home_route.dart';
-import 'package:example/view/screens/login_screen.dart';
-import 'package:example/view/shared/util.dart';
+import 'package:utc2/model/scraper/diem_scraper.dart';
+import 'package:utc2/model/sinh_vien.dart';
+import 'package:utc2/view/screens/home_route.dart';
+import 'package:utc2/view/screens/login_screen.dart';
+import 'package:utc2/view/shared/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,8 +16,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-     loadThongTin();
-   // diemScraper.getThongTin('5851071033');
+    loadThongTin();
+    // diemScraper.getThongTin('5851071033');
   }
 
   void loadThongTin() async {

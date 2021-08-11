@@ -1,5 +1,5 @@
-import 'package:example/core/models/models.dart';
-import 'package:example/view/shared/global.dart';
+import 'package:utc2/core/models/models.dart';
+import 'package:utc2/view/shared/global.dart';
 import 'package:flutter/cupertino.dart';
 
 class Pos {

@@ -1,10 +1,10 @@
-import 'package:example/model/event.dart';
-import 'package:example/model/scraper/event_scraper.dart';
-import 'package:example/model/noti.dart';
-import 'package:example/model/scraper/noti_scraper.dart';
-import 'package:example/model/point.dart';
-import 'package:example/model/scraper/point_scraper.dart';
-import 'package:example/view/screens/tintuc/chi_tiet_tintuc.dart';
+import 'package:utc2/model/event.dart';
+import 'package:utc2/model/scraper/event_scraper.dart';
+import 'package:utc2/model/noti.dart';
+import 'package:utc2/model/scraper/noti_scraper.dart';
+import 'package:utc2/model/point.dart';
+import 'package:utc2/model/scraper/point_scraper.dart';
+import 'package:utc2/view/screens/tintuc/chi_tiet_tintuc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -196,7 +196,7 @@ class _NotifyListState extends State<NotifyList>
           )
         : Center(
             child: SpinKitThreeBounce(
-                          color: Color(0xff29166F),
+              color: Color(0xff29166F),
               size: size.width * 0.06,
             ),
           );
@@ -245,7 +245,7 @@ class _PointListState extends State<PointList> {
 
   @override
   Widget build(BuildContext context) {
-    Size size =MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Row(
@@ -410,8 +410,7 @@ class _PointListState extends State<PointList> {
                       }
                     } else {
                       return SpinKitThreeBounce(
-                                    color: Color(
-                                                                    0xff29166F),
+                        color: Color(0xff29166F),
                         size: size.width * 0.06,
                       );
                     }
@@ -487,8 +486,7 @@ class _PointListState extends State<PointList> {
                     } else {
                       return Center(
                         child: SpinKitThreeBounce(
-                                      color: Color(
-                                                                    0xff29166F),
+                          color: Color(0xff29166F),
                           size: size.width * 0.06,
                         ),
                       );

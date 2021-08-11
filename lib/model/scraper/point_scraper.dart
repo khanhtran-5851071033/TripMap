@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:example/model/point.dart';
+import 'package:utc2/model/point.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:web_scraper/web_scraper.dart';
 

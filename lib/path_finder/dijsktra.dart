@@ -1,4 +1,4 @@
-import 'package:example/path_finder/repo_path.dart';
+import 'package:utc2/path_finder/repo_path.dart';
 
 class Dijsktra {
   static List<int> findPath(int diemDau, int diemCuoi) {

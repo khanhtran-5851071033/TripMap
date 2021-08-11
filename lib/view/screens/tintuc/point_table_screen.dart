@@ -1,9 +1,9 @@
 import 'package:countup/countup.dart';
-import 'package:example/model/hoc_ky.dart';
-import 'package:example/model/mon_hoc.dart';
-import 'package:example/model/scraper/diem_scraper.dart';
-import 'package:example/view/screens/tintuc/detail_point.dart';
-import 'package:example/view/shared/util.dart';
+import 'package:utc2/model/hoc_ky.dart';
+import 'package:utc2/model/mon_hoc.dart';
+import 'package:utc2/model/scraper/diem_scraper.dart';
+import 'package:utc2/view/screens/tintuc/detail_point.dart';
+import 'package:utc2/view/shared/util.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 

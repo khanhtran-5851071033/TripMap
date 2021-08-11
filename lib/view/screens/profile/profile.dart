@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:countup/countup.dart';
-import 'package:example/model/scraper/diem_scraper.dart';
-import 'package:example/model/sinh_vien.dart';
-import 'package:example/view/screens/tintuc/detail_point.dart';
-import 'package:example/view/screens/profile/editProFile.dart';
-import 'package:example/view/screens/help_screen.dart';
-import 'package:example/view/screens/login_screen.dart';
-import 'package:example/view/screens/tintuc/point_table_screen.dart';
-import 'package:example/view/screens/setting_screen.dart';
-import 'package:example/view/shared/util.dart';
+import 'package:utc2/model/scraper/diem_scraper.dart';
+import 'package:utc2/model/sinh_vien.dart';
+import 'package:utc2/view/screens/tintuc/detail_point.dart';
+import 'package:utc2/view/screens/profile/editProFile.dart';
+import 'package:utc2/view/screens/help_screen.dart';
+import 'package:utc2/view/screens/login_screen.dart';
+import 'package:utc2/view/screens/tintuc/point_table_screen.dart';
+import 'package:utc2/view/screens/setting_screen.dart';
+import 'package:utc2/view/shared/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -322,8 +322,6 @@ Widget _name(String name, Size size) {
           fontSize: size.width * 0.05,
           fontWeight: FontWeight.w600));
 }
-
-
 
 _textValue(int value, Size size) {
   return Countup(

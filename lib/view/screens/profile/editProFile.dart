@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:example/model/sinh_vien.dart';
+import 'package:utc2/model/sinh_vien.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 

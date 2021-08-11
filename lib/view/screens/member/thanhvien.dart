@@ -1,6 +1,5 @@
-import 'package:example/view/screens/tintuc/tintuc.dart';
+import 'package:utc2/view/screens/tintuc/tintuc.dart';
 import 'package:flutter/material.dart';
-
 
 class Person extends StatefulWidget {
   @override

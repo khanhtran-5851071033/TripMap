@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:example/model/sinh_vien.dart';
-import 'package:example/view/shared/util.dart';
+import 'package:utc2/model/sinh_vien.dart';
+import 'package:utc2/view/shared/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:example/view/shared/geo_service.dart';
+import 'package:utc2/view/shared/geo_service.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qrscan/qrscan.dart' as scanner;

@@ -1,6 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:example/view/shared/image_list.dart';
-import 'package:example/view/shared/util.dart';
+import 'package:utc2/view/shared/image_list.dart';
+import 'package:utc2/view/shared/util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ class HotspotButton extends StatelessWidget {
   final MyHotspot hotspot;
   final VoidCallback onTap;
   final VoidCallback onShow;
-  
+
   HotspotButton(this.hotspot, {this.onTap, this.onShow});
 
   @override

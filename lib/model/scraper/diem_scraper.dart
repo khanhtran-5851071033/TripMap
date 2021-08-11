@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:example/model/hoc_ky.dart';
-import 'package:example/model/sinh_vien.dart';
-import 'package:example/view/shared/util.dart';
+import 'package:utc2/model/hoc_ky.dart';
+import 'package:utc2/model/sinh_vien.dart';
+import 'package:utc2/view/shared/util.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:web_scraper/web_scraper.dart';
 

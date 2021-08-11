@@ -1,5 +1,5 @@
-import 'package:example/model/event.dart';
-import 'package:example/view/shared/util.dart';
+import 'package:utc2/model/event.dart';
+import 'package:utc2/view/shared/util.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:web_scraper/web_scraper.dart';
 

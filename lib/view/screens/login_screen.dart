@@ -1,7 +1,7 @@
-import 'package:example/model/scraper/diem_scraper.dart';
-import 'package:example/model/sinh_vien.dart';
-import 'package:example/view/screens/home_route.dart';
-import 'package:example/view/shared/util.dart';
+import 'package:utc2/model/scraper/diem_scraper.dart';
+import 'package:utc2/model/sinh_vien.dart';
+import 'package:utc2/view/screens/home_route.dart';
+import 'package:utc2/view/shared/util.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {

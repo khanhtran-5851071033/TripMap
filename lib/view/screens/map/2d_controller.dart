@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:example/model/end_point.dart';
-import 'package:example/path_finder/dijsktra.dart';
-import 'package:example/path_finder/repo_path.dart';
-import 'package:example/view/shared/util.dart';
-import 'package:example/view/widgets/positioned_widget.dart';
+import 'package:utc2/model/end_point.dart';
+import 'package:utc2/path_finder/dijsktra.dart';
+import 'package:utc2/path_finder/repo_path.dart';
+import 'package:utc2/view/shared/util.dart';
+import 'package:utc2/view/widgets/positioned_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

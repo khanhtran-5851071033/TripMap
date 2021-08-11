@@ -1,5 +1,5 @@
-import 'package:example/view/screens/member/thanhvien.dart';
-import 'package:example/view/shared/image_list.dart';
+import 'package:utc2/view/screens/member/thanhvien.dart';
+import 'package:utc2/view/shared/image_list.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -39,7 +39,7 @@ class _ShareFriendState extends State<ShareFriend> {
         ),
         body: ListView.builder(
             physics: BouncingScrollPhysics(),
-             
+
             // padding: const EdgeInsets.all(8),
             itemCount: imageIntro.reversed.length,
             itemBuilder: (BuildContext context, int index) {
@@ -50,7 +50,7 @@ class _ShareFriendState extends State<ShareFriend> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _avatar('Khánh Trần', '5 giờ'),
-                      _image(size, context,imageIntro[index]),
+                      _image(size, context, imageIntro[index]),
                       _status('Xin chào Utc2'),
                       Container(
                         padding: const EdgeInsets.all(8),
@@ -211,7 +211,7 @@ Widget _status(String status) {
       ));
 }
 
-Widget _image(Size size, BuildContext context,String image) {
+Widget _image(Size size, BuildContext context, String image) {
   return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -222,8 +222,7 @@ Widget _image(Size size, BuildContext context,String image) {
           );
         }));
       },
-      child:
-          Container(width: size.width, child: Image.asset(image)));
+      child: Container(width: size.width, child: Image.asset(image)));
 }
 
 Widget _name(String name) {

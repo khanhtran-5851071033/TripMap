@@ -1,5 +1,5 @@
-import 'package:example/model/hoc_ky.dart';
-import 'package:example/model/mon_hoc.dart';
+import 'package:utc2/model/hoc_ky.dart';
+import 'package:utc2/model/mon_hoc.dart';
 import 'package:flutter/material.dart';
 
 class DetailPoint extends StatefulWidget {

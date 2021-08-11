@@ -1,4 +1,4 @@
-import 'package:example/model/mon_hoc.dart';
+import 'package:utc2/model/mon_hoc.dart';
 
 class HocKi {
   String namhoc;

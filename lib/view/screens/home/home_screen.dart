@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:example/core/models/models.dart';
-import 'package:example/model/sinh_vien.dart';
-import 'package:example/view/screens/home/attention_screen.dart';
-import 'package:example/view/screens/map/floorplan_screen.dart';
-import 'package:example/view/screens/map/pano_screen.dart';
-import 'package:example/view/screens/tintuc/point_table_screen.dart';
-import 'package:example/view/shared/global.dart';
-import 'package:example/view/shared/image_list.dart';
+import 'package:utc2/core/models/models.dart';
+import 'package:utc2/model/sinh_vien.dart';
+import 'package:utc2/view/screens/home/attention_screen.dart';
+import 'package:utc2/view/screens/map/floorplan_screen.dart';
+import 'package:utc2/view/screens/map/pano_screen.dart';
+import 'package:utc2/view/screens/tintuc/point_table_screen.dart';
+import 'package:utc2/view/shared/global.dart';
+import 'package:utc2/view/shared/image_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -1,4 +1,4 @@
-package com.example.example
+package vn.utc2.schoolmap
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
